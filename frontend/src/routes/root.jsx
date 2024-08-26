@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import HeaderNavBar from "../Header";
 import { useEffect, useState } from "react";
+import HeaderNavBar from "../components/Header";
 
 const Root = () => {
   const [message, setMessage] = useState("");

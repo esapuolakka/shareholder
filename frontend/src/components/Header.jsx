@@ -10,7 +10,6 @@ import {
 import MenuIcon from "@mui/icons-material/Menu"; // Burger icon, switched to svg
 import CloseIcon from "@mui/icons-material/Close"; // X icon
 import { Link } from "react-router-dom";
-import "./reset.css";
 import "./header.css";
 
 const pages = [

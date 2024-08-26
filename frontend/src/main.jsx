@@ -7,6 +7,7 @@ import Osakenumerot from "./routes/osakenumerot";
 import Merkintahistoria from "./routes/merkintahistoria";
 import Osakkaidentiedot from "./routes/osakkaidentiedot";
 import LisaaUusi from "./routes/lisaa-uusi";
+import "./reset.css";
 
 const router = createBrowserRouter([
   {
