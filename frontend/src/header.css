@@ -1,14 +1,15 @@
 :root {
-  --primary-color: #ed692f; /* Käytetään navbarin kohteiden värinä ja hover-tilassa */
-  --background-color: #fff; /* Navbarin ja muiden taustojen väri */
-  --text-color: #ed692f; /* Tekstin pääväri */
-  --border-color: #9c9fa4; /* Navbarin reunojen väri */
-  --box-shadow-color: #c6c6c6; /* Varjojen väri */
+  --primary-color: #ed692f;
+  --background-color: #fff;
+  --text-color: #ed692f;
+  --border-color: #9ca2aa;
+  --hover-color: #4a4a4a;
+  --hover-background-color: #f2f2f2;
   --font-family: "system-ui", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif; /* Fonttiperhe */
-  --navbar-height: 3.25rem; /* Navbarin korkeus */
-  --padding-small: 0.5rem; /* Pieni padding */
-  --padding-medium: 0.75rem; /* Keskikokoinen padding */
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --navbar-height: 3.25rem;
+  --padding-small: 0.5rem;
+  --padding-medium: 0.75rem;
 }
 
 .navbar.is-fixed-top {
@@ -16,34 +17,23 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 30;
+  z-index: 9999;
 }
 
 .navbar {
   font-family: var(--font-family);
   font-weight: 300;
-  padding: 0;
+  font-size: 1rem;
+
   background-color: var(--background-color);
   min-height: var(--navbar-height);
   position: relative;
   z-index: 30;
   color: var(--text-color);
   justify-content: space-between;
-  box-shadow: none;
-  border: 0px 0px 2px 0px solid var(--border-color);
-}
-
-.navbar::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background-color: var(--background-color);
-  display: block;
-  border: 0 0 2px 0 solid var(--border-color);
-  box-shadow: none;
+  box-shadow: none !important;
+  border-block-end: 0.5px solid var(--border-color) !important;
+  flex-wrap: wrap;
 }
 
 .navbar-brand {
@@ -57,12 +47,40 @@
   height: var(--navbar-height);
 }
 
-.navbar-menu {
+.navbar-mobile-menu .navbar-item {
+  color: var(--primary-color);
+  font-weight: 300;
+  padding: 0 0.75rem;
   display: flex;
-  align-items: stretch;
-  justify-content: flex-end;
-  height: 100%;
-  margin: 0;
+  align-items: center;
+  justify-content: left;
+  min-height: var(--navbar-height);
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: none;
+  width: 100vw;
+  border-block-end: 0.5px solid var(--border-color) !important;
+}
+
+.navbar-mobile-menu .navbar-item:hover {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  border-radius: 1px;
+}
+
+.navbar-burger {
+  color: var(--primary-color);
+  cursor: pointer;
+  display: block;
+  width: var(--navbar-height);
+  height: var(--navbar-height);
+  /* position: relative; */
+}
+
+.navbar-burger:hover {
+  color: var(--hover-color);
+  background-color: var(--hover-background-color);
+  border-radius: 0;
 }
 
 .navbar-item {
@@ -77,21 +95,6 @@
   text-transform: none;
 }
 
-.navbar-item:hover {
-  background-color: var(--primary-color);
-  color: var(--background-color);
-  border-radius: 2px;
-}
-
-.navbar-burger {
-  color: var(--primary-color);
-  cursor: pointer;
-  display: block;
-  width: var(--navbar-height);
-  height: var(--navbar-height);
-  position: relative;
-}
-
 @media screen and (min-width: 1024px) {
   .navbar,
   .navbar-menu {
@@ -102,6 +105,12 @@
   .navbar-menu {
     justify-content: flex-end;
     margin-left: auto;
+  }
+
+  .navbar-item:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    border-radius: 1px;
   }
 
   .navbar-burger {
