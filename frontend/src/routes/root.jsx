@@ -2,6 +2,10 @@ import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import HeaderNavBar from "../components/Header";
 
+export async function loader() {
+  return null;
+}
+
 const Root = () => {
   const [message, setMessage] = useState("");
 
