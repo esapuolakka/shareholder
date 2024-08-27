@@ -1,17 +1,3 @@
-:root {
-  --primary-color: #ed692f;
-  --background-color: #fff;
-  --text-color: #ed692f;
-  --border-color: #9ca2aa;
-  --hover-color: #4a4a4a;
-  --hover-background-color: #f2f2f2;
-  --font-family: "system-ui", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-  --navbar-height: 3.25rem;
-  --padding-small: 0.5rem;
-  --padding-medium: 0.75rem;
-}
-
 .navbar.is-fixed-top {
   position: fixed;
   top: 0;

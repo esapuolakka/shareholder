@@ -1,3 +1,17 @@
+:root {
+  --primary-color: #ed692f;
+  --background-color: #fff;
+  --text-color: #ed692f;
+  --border-color: #9ca2aa;
+  --hover-color: #4a4a4a;
+  --hover-background-color: #f2f2f2;
+  --font-family: "system-ui", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --navbar-height: 4rem;
+  --padding-small: 0.5rem;
+  --padding-medium: 0.75rem;
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -107,6 +121,7 @@ section {
 }
 body {
   line-height: 1;
+  padding-top: var(--navbar-height);
 }
 ol,
 ul {
