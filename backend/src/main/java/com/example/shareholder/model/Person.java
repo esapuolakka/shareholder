@@ -1,16 +1,27 @@
 package com.example.shareholder.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "henkilo")
 public class Person {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
   private Long id;
+
+  @Column(name = "etunimi")
   private String firstname;
+
+  @Column(name = "sukunimi")
   private String lastname;
+
+  @Column(name = "sahkoposti")
   private String email;
+
+  @Column(name = "puhelin")
   private String phone;
   
   public Person() {

@@ -2,16 +2,23 @@ package com.example.shareholder.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "osakas")
-public class Osakas {
+public class Shareholder {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
   private Long id;
 
   @Column(name = "saanto_pvm")
@@ -20,10 +27,12 @@ public class Osakas {
   @Column(name = "maksu_pvm")
   private LocalDate term;
 
-  @Column(name = "myyja")
+  @PrimaryKeyJoinColumn(name = "myyja_id")
+  @OneToOne
   private Person seller;
 
-  @Column(name = "ostaja")
+  @PrimaryKeyJoinColumn(name = "ostaja_id")
+  @OneToOne
   private Person buyer;
 
   @Column(name = "varainsiirtovero_maksettu")
@@ -41,11 +50,11 @@ public class Osakas {
   @Column(name = "huom")
   private String notes;
 
-  public Osakas() {
+  public Shareholder() {
   }
 
-  public Osakas(Long id, LocalDate collectionDate, LocalDate term, Person seller, Person buyer, boolean transferTaxPaid,
-      int numberOfShares, BigDecimal pricePerShare, BigDecimal totalAmount, String notes) {
+  public Shareholder(Long id, LocalDate collectionDate, LocalDate term, Person seller, Person buyer,
+      boolean transferTaxPaid, int numberOfShares, BigDecimal pricePerShare, BigDecimal totalAmount, String notes) {
     this.id = id;
     this.collectionDate = collectionDate;
     this.term = term;
