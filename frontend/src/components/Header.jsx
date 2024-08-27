@@ -10,7 +10,6 @@ import {
 import MenuIcon from "@mui/icons-material/Menu"; // Burger icon, switched to svg
 import CloseIcon from "@mui/icons-material/Close"; // X icon
 import { Link } from "react-router-dom";
-import "./reset.css";
 import "./header.css";
 
 const pages = [
@@ -37,41 +36,26 @@ export default function HeaderNavBar() {
     <AppBar className="navbar is-fixed-top">
       <Toolbar className="navbar">
         <Box className="navbar-brand">
-          <img
-            src="/phz.png"
-            alt="PHZ Full Stack Logo"
-            className="navbar__logo"
-          />
-          {/* <Link to="/osakasluettelo">
+          <Link to="/osakasluettelo">
             <img
               src="/phz.png"
               alt="PHZ Full Stack Logo"
               className="navbar__logo"
             />
-          </Link> */}
+          </Link>
         </Box>
-        {/* descktop */}
+        {/* desktop */}
         <Box
           sx={{ display: { xs: "none", md: "flex" } }}
           className="navbar-menu"
         >
           {pages.map((page) => (
-            <a
-              key={page.label}
-              href={`#${page.label.toLowerCase().replace(/ /g, "-")}`}
-              className="navbar-item"
-            >
+            <Link key={page.label} to={page.path} className="navbar-item">
               {page.label}
-            </a>
+            </Link>
           ))}
-          {/* <Link
-        key={page.label}
-          to={page.path}
-          className="navbar-item"
-           >
-          {page.label}
-          </Link> */}
         </Box>
+
         {/* mobile view */}
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <IconButton
@@ -111,21 +95,12 @@ export default function HeaderNavBar() {
             <MenuItem
               key={page.label}
               onClick={handleMenuClose}
-              component="a"
-              href={`#${page.label.toLowerCase().replace(/ /g, "-")}`}
+              component={Link}
+              to={page.path}
               className="navbar-item"
             >
               {page.label}
             </MenuItem>
-            //            <MenuItem
-            //         key={page.label}
-            //         onClick={handleMenuClose}
-            //         component={Link}
-            //         to={page.path}
-            //         className="navbar-item"
-            //       >
-            //         {page.label}
-            //       </MenuItem>
           ))}
         </Menu>
       </Toolbar>
