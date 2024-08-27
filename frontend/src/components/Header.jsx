@@ -80,7 +80,7 @@ export default function HeaderNavBar() {
             "& .MuiPaper-root": {
               boxShadow: "none",
               width: "100vw",
-              marginTop: "7px",
+              //marginTop: "0px",
               borderRadius: "1px",
             },
             "& .MuiList-root": {

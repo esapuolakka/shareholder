@@ -8,14 +8,11 @@
 
 .navbar {
   font-family: var(--font-family);
-  font-weight: 300;
-  font-size: 1rem;
-
   background-color: var(--background-color);
-  min-height: var(--navbar-height);
+  height: var(--navbar-height);
   position: relative;
   z-index: 30;
-  color: var(--text-color);
+  color: var(--link-text-color);
   justify-content: space-between;
   box-shadow: none !important;
   border-block-end: 0.5px solid var(--border-color) !important;
@@ -26,7 +23,7 @@
   display: flex;
   align-items: stretch;
   flex-shrink: 0;
-  min-height: var(--navbar-height);
+  height: var(--navbar-height);
 }
 
 .navbar__logo {
@@ -35,12 +32,13 @@
 
 .navbar-mobile-menu .navbar-item {
   color: var(--primary-color);
-  font-weight: 300;
+  font-weight: 200;
+  font-size: 1.6rem;
   padding: 0 0.75rem;
   display: flex;
   align-items: center;
   justify-content: left;
-  min-height: var(--navbar-height);
+  height: var(--navbar-height);
   cursor: pointer;
   text-decoration: none;
   text-transform: none;
@@ -75,7 +73,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: var(--navbar-height);
+  height: var(--navbar-height);
   cursor: pointer;
   text-decoration: none;
   text-transform: none;

@@ -1,5 +1,9 @@
 const Merkintahistoria = () => {
-  return <>Merkintähistoria</>;
+  return (
+    <>
+      <h1>Merkintähistoria</h1>
+    </>
+  );
 };
 
 export default Merkintahistoria;
