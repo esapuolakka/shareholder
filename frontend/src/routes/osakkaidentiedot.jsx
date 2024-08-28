@@ -1,5 +1,9 @@
 const Osakkaidentiedot = () => {
-  return <>Osakkaidentiedot</>;
+  return (
+    <>
+      <h1>Osakkaiden tiedot</h1>
+    </>
+  );
 };
 
 export default Osakkaidentiedot;

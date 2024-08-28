@@ -1,5 +1,9 @@
 const LisaaUusi = () => {
-  return <>Lisää Uusi</>;
+  return (
+    <>
+      <h1>Lisää uusi</h1>
+    </>
+  );
 };
 
 export default LisaaUusi;
