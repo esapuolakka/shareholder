@@ -1,0 +1,65 @@
+.TableRow {
+  position: relative;
+}
+
+.TableCell:first-child {
+  position: sticky;
+  left: 0;
+  background: white;
+}
+
+.TableCell {
+  border-inline-end: 0.5px solid var(--primary-color);
+}
+
+.TableRow .TableCell:last-child {
+  border-inline-end: none;
+}
+
+.TableHead .TableRow .TableCell {
+  background: var(--background-color);
+  border-block-end: 0.5px solid var(--primary-color);
+  font-size: 1.4rem;
+  font-family: var(--font-family);
+  font-weight: 300;
+}
+
+.TableRow .TableCell {
+  color: var(--heading-and-text-color);
+  font-size: 1.2rem;
+  font-family: var(--font-family);
+  font-weight: 200;
+}
+
+.TableRow:nth-child(odd) {
+  background-color: #f7f7f7;
+}
+
+.TableRow:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.TableRow:hover {
+  background-color: rgb(255, 252, 226) !important;
+}
+
+.TableHead .TableRow .TableCell:first-child {
+  z-index: 30;
+}
+
+.MuiTablePagination-toolbar,
+.MuiTablePagination-selectLabel,
+.MuiTablePagination-input,
+.MuiTablePagination-displayedRows,
+.MuiTablePagination-menuItem,
+.MuiTablePagination-actions {
+  font-size: 1.2rem !important;
+  font-family: var(--font-family);
+  font-weight: 200;
+  color: var(--heading-and-text-color);
+}
+
+.MuiTablePagination-root {
+  display: flex;
+  justify-content: center;
+}
