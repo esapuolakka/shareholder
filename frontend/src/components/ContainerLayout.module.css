@@ -1,0 +1,49 @@
+.container {
+  font-family: var(--font-family);
+  color: var(--heading-and-text-color);
+  background-color: var(--background-color);
+  line-height: 2.5rem;
+  margin-block-start: 2rem;
+  padding: 3rem 2rem;
+  border: 0.5px solid var(--border-color);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  gap: 2rem;
+}
+
+.details-item {
+  flex-basis: 100%;
+}
+
+.details-item p {
+  font-size: 1.4rem;
+}
+
+.block {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.small-box-container,
+.share-number-box-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.small-box {
+  padding: 2rem;
+  border: 0.5px solid var(--primary-color);
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.small-box p {
+  font-size: 1.4rem;
+}

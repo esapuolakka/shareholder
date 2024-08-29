@@ -17,8 +17,8 @@ export async function loader() {
         { beginning: 203, ending: 300 },
         { beginning: 870, ending: 2000 },
       ],
-      collectionDate: "2023-01-01",
-      term: "2023-01-05",
+      collectionDate: "01-01-2023",
+      term: "05-05-2023",
       transferTaxPaid: true,
       personalIdentityCode: "Y-2225069-2",
       city: "Helsinki",
@@ -42,7 +42,18 @@ const Osakkaidentiedot = () => {
   return (
     <>
       <h1>Osakkaiden tiedot</h1>
-      <select onChange={handleSelectChange}>
+      <select
+        onChange={handleSelectChange}
+        style={{
+          padding: "1rem",
+          fontFamily: "var(--font-family)",
+          fontSize: "1.2rem",
+          fontWeight: "300",
+          border: "1px solid var(--border-color)",
+          borderRadius: "5px",
+          width: "25rem",
+        }}
+      >
         <option value="">Valitse omistaja</option>
         {owners.map((owner) => (
           <option key={owner.id} value={owner.id}>

@@ -1,90 +1,97 @@
 import React from "react";
-import styles from "./ContainerLayout.module.css"; // Päivitetty import
+import styles from "./ContainerLayout.module.css";
 
 const OwnerDetails = ({ owner }) => {
   return (
     <div className={styles.container}>
-      <h2 className={styles.header}>
-        {owner.firstname} {owner.lastname}
-      </h2>
-
       <div className={styles["details-item"]}>
         <p>
-          <strong>Osakkaan numero:</strong> {owner.id}
+          Osakkaan numero:<span className={styles.block}>{owner.id}</span>
         </p>
       </div>
 
       <div className={styles["details-item"]}>
         <p>
-          Etunimi Sukunimi/Yrityksen nimi: {owner.firstname} {owner.lastname}
+          Etunimi Sukunimi/Yrityksen nimi:
+          <span className={styles.block}>
+            {owner.firstname} {owner.lastname}
+          </span>
         </p>
       </div>
 
-      <div className={styles["small-box"]}>
-        <p>
-          <strong>Osakkeiden määrä:</strong> {owner.numberOfShares}
-        </p>
-      </div>
-      <div className={styles["small-box"]}>
-        <p>
-          <strong>Omistusprosentti:</strong> {owner.ownershipPercentage}
-        </p>
-      </div>
-
-      {owner.shareNumbers.map((range, index) => (
-        <div key={index} className={styles["share-number-box"]}>
-          <p>
-            <strong>Osakenumerot alkaen - osakenumerot loppuen:</strong>{" "}
-            {range.beginning} - {range.ending}
-          </p>
-          <p>
-            <strong>Saantopäivä:</strong> {owner.collectionDate}
-          </p>
-          <p>
-            <strong>Maksupäivä:</strong> {owner.term}
-          </p>
-          <p>
-            <strong>Varainsiirtovero:</strong>{" "}
-            {owner.transferTaxPaid ? "Maksettu" : "Ei maksettu"}
-          </p>
+      <div className={styles["small-box-container"]}>
+        <div className={styles["small-box"]}>
+          <p>Osakkeiden määrä: {owner.numberOfShares}</p>
         </div>
-      ))}
+        <div className={styles["small-box"]}>
+          <p>Omistusprosentti: {owner.ownershipPercentage}</p>
+        </div>
+      </div>
+
+      <div className={styles["share-number-box-container"]}>
+        {owner.shareNumbers.map((range, index) => (
+          <div key={index} className={styles["small-box"]}>
+            <p>
+              Osakenumerot alkaen - loppuen:
+              <span className={styles.block}>
+                {range.beginning} - {range.ending}
+              </span>
+            </p>
+            <p>
+              Saantopäivä:
+              <span className={styles.block}>{owner.collectionDate}</span>
+            </p>
+            <p>
+              Maksupäivä:<span className={styles.block}>{owner.term}</span>
+            </p>
+            <p>
+              Varainsiirtovero:
+              <span className={styles.block}>
+                {owner.transferTaxPaid ? "Maksettu" : "Ei maksettu"}
+              </span>
+            </p>
+          </div>
+        ))}
+      </div>
 
       <div className={styles["details-item"]}>
         <p>
-          <strong>Henkilötunnus/Y-tunnus:</strong> {owner.personalIdentityCode}
+          Henkilötunnus/Y-tunnus:
+          <span className={styles.block}>{owner.personalIdentityCode}</span>
         </p>
       </div>
 
       <div className={styles["details-item"]}>
         <p>
-          <strong>Kotipaikka:</strong> {owner.city}
+          Kotipaikka:<span className={styles.block}>{owner.city}</span>
         </p>
       </div>
 
       <div className={styles["details-item"]}>
         <p>
-          <strong>Yhteystiedot:</strong> {owner.address}
+          Yhteystiedot:<span className={styles.block}>{owner.address}</span>
         </p>
       </div>
 
       <div className={styles["details-item"]}>
         <p>
-          <strong>Sähköposti:</strong> {owner.email}
+          Sähköposti:<span className={styles.block}>{owner.email}</span>
         </p>
       </div>
 
       <div className={styles["details-item"]}>
         <p>
-          <strong>Puhelinnumero:</strong> {owner.phone}
+          Puhelinnumero:<span className={styles.block}>{owner.phone}</span>
         </p>
       </div>
 
       <div className={styles["details-item"]}>
         <p>
-          <strong>Tilinumero:</strong> {owner.accountNumber}
+          Tilinumero:<span className={styles.block}>{owner.accountNumber}</span>
         </p>
       </div>
+
+      <p>UPDATE BUTTON</p>
     </div>
   );
 };
