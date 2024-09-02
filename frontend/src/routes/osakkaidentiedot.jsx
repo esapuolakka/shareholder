@@ -16,6 +16,7 @@ export async function loader() {
         { beginning: 1, ending: 4 },
         { beginning: 203, ending: 300 },
         { beginning: 870, ending: 2000 },
+        { beginning: 9000, ending: 12000 },
       ],
       collectionDate: "01-01-2023",
       term: "05-05-2023",
