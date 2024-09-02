@@ -12,7 +12,7 @@ import Merkintahistoria from "./routes/merkintahistoria";
 import Osakkaidentiedot, {
   loader as osakkaidentiedotLoader,
 } from "./routes/osakkaidentiedot";
-import LisaaUusi from "./routes/lisaa-uusi";
+import LisaaUusi, { loader as LisaaUusiLoader } from "./routes/lisaa-uusi";
 import "./reset.css";
 import "./index.css";
 
@@ -45,6 +45,7 @@ const router = createBrowserRouter([
       {
         path: "lisaa-uusi",
         element: <LisaaUusi />,
+        loader: LisaaUusiLoader,
       },
     ],
   },

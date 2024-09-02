@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Addnew.module.css";
 
-const AddNew = () => {
+const AddNew = ({ shareholders }) => {
   return (
     <>
       <section className={styles.AddNew}>
@@ -12,14 +12,28 @@ const AddNew = () => {
               <label> Luovuttajan/Myyjä</label>
               <select>
                 <option value="">Valitse henkilö</option>
-                <option value="11">Saima</option>
+                {shareholders.map((shareholder) => {
+                  const { id, firstname, lastname } = shareholder.buyer;
+                  return (
+                    <option key={id} value={id}>
+                      {firstname} {lastname}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className={styles.formRow}>
               <label>Saajan/Ostaja</label>
               <select>
                 <option value="">Valitse henkilö</option>
-                <option value="12">Narges</option>
+                {shareholders.map((shareholder) => {
+                  const { id, firstname, lastname } = shareholder.seller;
+                  return (
+                    <option key={id} value={id}>
+                      {firstname} {lastname}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className={styles.inlineFormRow}>
