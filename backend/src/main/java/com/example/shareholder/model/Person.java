@@ -23,6 +23,24 @@ public class Person {
 
   @Column(name = "puhelin")
   private String phone;
+
+  @Column(name = "osoite")
+  private String address;
+
+  @Column(name = "postinumero")
+  private String postalCode;
+
+  @Column(name = "kotikunta")
+  private String city;
+
+  @Column(name = "hetu")
+  private String ssn;
+
+  @Column(name = "osakkeiden_maara")
+  private Integer numberOfShares;
+
+  @Column(name = "omistusosuus")
+  private double ownershipPercentage;
   
   public Person() {
   }
@@ -73,5 +91,53 @@ public class Person {
 
   public void setPhone(String phone) {
     this.phone = phone;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getPostalCode() {
+    return postalCode;
+  }
+
+  public void setPostalCode(String postalCode) {
+    this.postalCode = postalCode;
+  }
+
+  public String getCity() {
+    return city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public String getSsn() {
+    return ssn;
+  }
+
+  public void setSsn(String ssn) {
+    this.ssn = ssn;
+  }
+
+  public int getNumberOfShares() {
+    return numberOfShares;
+  }
+
+  public void setNumberOfShares(int numberOfShares) {
+    this.numberOfShares = numberOfShares;
+  }
+
+  public double getOwnershipPercentage() {
+    return ownershipPercentage;
+  }
+
+  public void setOwnershipPercentage(double ownershipPercentage) {
+    this.ownershipPercentage = ownershipPercentage;
   }
 }
