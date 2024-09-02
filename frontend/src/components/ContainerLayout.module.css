@@ -1,0 +1,196 @@
+.generalItemContainer {
+  font-family: var(--font-family);
+  color: var(--heading-and-text-color);
+  background-color: var(--background-color);
+  line-height: 2.8rem;
+  margin-block-start: 2rem;
+  padding: 3rem 3rem;
+  border: 0.5px solid var(--border-color);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  gap: 2rem;
+}
+
+.detailsItem {
+  flex-basis: 100%;
+}
+
+.detailsItem p {
+  font-size: 1.4rem;
+}
+
+.nextRow {
+  display: block;
+}
+
+.smallerBoxContainerFlex,
+.shareNumberBoxContainerFlex {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.shareNumberBoxContainerFlex {
+  flex-basis: 100%;
+}
+
+.generalSmallerBox {
+  padding: 2rem;
+  border: 0.5px solid var(--primary-color);
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.generalSmallerBox:hover {
+  box-shadow: 0 4px 4px 0 rgba(124, 124, 124, 0.5);
+}
+
+.generalSmallerBox p {
+  font-size: 1.4rem;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.styledButton {
+  width: fit-content;
+  height: fit-content;
+  margin-block-end: 1rem;
+  padding: 1.5rem 3rem;
+  font-family: var(--font-family);
+  font-weight: 200;
+  /* max-width: calc(100% - 30px); */
+  color: var(--link-text-color);
+  background-color: white;
+  position: relative;
+  border: 0.5px solid var(--primary-color);
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.styledButton:hover {
+  background-color: rgb(255, 252, 226);
+  box-shadow: 0 4px 4px 0 rgba(124, 124, 124, 0.5);
+  transition: all 0.3s ease;
+}
+
+/* .styledButton::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 10px;
+  left: 10px;
+  border-radius: inherit;
+  background: repeating-linear-gradient(
+    45deg,
+    #d4c481,
+    #d4c481 2px,
+    transparent 2px,
+    transparent 6px
+  );
+  transition: all 0.3s ease;
+}
+
+.styledButton:hover::before {
+  top: 20px;
+  left: 20px;
+} */
+
+@media screen and (min-width: 768px) {
+  .generalItemContainer {
+    display: grid;
+    grid-template-columns: 0.6fr 1fr;
+    grid-template-rows: repeat(9, auto);
+    grid-template-areas:
+      "detail1 box1"
+      "detail2 box2"
+      "detail3 box2"
+      "detail4 box2"
+      "detail5 box2"
+      "detail6 box2"
+      "detail7 box2"
+      "detail8 box2"
+      "button .";
+    row-gap: 1rem;
+  }
+
+  /* Vasemman sarakkeen elementit */
+  .detailsItem:nth-child(1) {
+    grid-area: detail1;
+  }
+
+  .detailsItem:nth-child(2) {
+    grid-area: detail2;
+  }
+
+  .detailsItem:nth-child(3) {
+    grid-area: detail3;
+  }
+
+  .detailsItem:nth-child(4) {
+    grid-area: detail4;
+  }
+
+  .detailsItem:nth-child(5) {
+    grid-area: detail5;
+  }
+
+  .detailsItem:nth-child(6) {
+    grid-area: detail6;
+  }
+
+  .detailsItem:nth-child(7) {
+    grid-area: detail7;
+  }
+
+  .detailsItem:nth-child(8) {
+    grid-area: detail8;
+  }
+
+  .styledButton {
+    grid-area: button;
+  }
+
+  /* Oikean sarakkeen elementit */
+  .smallerBoxContainerFlex {
+    grid-area: box1; /* Asetetaan ensimmäisille riveille */
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .shareNumberBoxContainerFlex {
+    grid-area: box2; /* Asetetaan toisille riveille */
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .shareNumberBoxContainerFlex .nextRow {
+    display: inline;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .shareNumberBoxContainerFlex {
+    flex-basis: 0;
+    justify-content: flex-start;
+  }
+
+  .smallerBoxContainerFlex {
+    justify-content: flex-start;
+  }
+
+  .fullWidth {
+    width: 70%;
+  }
+}

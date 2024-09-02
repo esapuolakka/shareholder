@@ -9,7 +9,9 @@ import Osakenumerot, {
   loader as osakenumerotLoader,
 } from "./routes/osakenumerot";
 import Merkintahistoria from "./routes/merkintahistoria";
-import Osakkaidentiedot from "./routes/osakkaidentiedot";
+import Osakkaidentiedot, {
+  loader as osakkaidentiedotLoader,
+} from "./routes/osakkaidentiedot";
 import LisaaUusi from "./routes/lisaa-uusi";
 import "./reset.css";
 import "./index.css";
@@ -38,6 +40,7 @@ const router = createBrowserRouter([
       {
         path: "osakkaidentiedot",
         element: <Osakkaidentiedot />,
+        loader: osakkaidentiedotLoader,
       },
       {
         path: "lisaa-uusi",
