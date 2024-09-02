@@ -9,8 +9,6 @@ export async function loader() {
     method: "get",
     url: "http://localhost:8080/api/shareholders",
   });
-
-  console.log(response.data);
   return response.data;
 }
 
