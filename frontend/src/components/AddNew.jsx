@@ -2,7 +2,13 @@ import React from "react";
 import styles from "./Addnew.module.css";
 
 const SelectPerson = ({ persons }) => (
-  <select>
+  <select
+    style={{
+      fontFamily: "var(--font-family)",
+      fontSize: "1.2rem",
+      fontWeight: "300",
+    }}
+  >
     <option value="">Valitse henkilö</option>
     {persons.map((person) => {
       const { id, firstname, lastname } = person;
@@ -20,14 +26,14 @@ const AddNew = ({ persons }) => {
     <>
       <section className={styles.AddNew}>
         <div className={styles.addBox}>
-          <p>Lisää uusi osakemyynti</p>
+          <h2>Osakemyynti</h2>
           <form className={styles.generalItemContainer}>
             <div className={styles.formRow}>
-              <label> Luovuttajan/Myyjä</label>
+              <label> Luovuttaja/ Myyjä</label>
               <SelectPerson persons={persons} />
             </div>
             <div className={styles.formRow}>
-              <label>Saajan/Ostaja</label>
+              <label>Saaja/ Ostaja</label>
               <SelectPerson persons={persons} />
             </div>
             <div className={styles.inlineFormRow}>
@@ -36,7 +42,7 @@ const AddNew = ({ persons }) => {
                 <input />
               </div>
               <div>
-                <label>Maksupäivä?</label>
+                <label>Maksupäivä</label>
                 <input />
               </div>
             </div>
@@ -72,7 +78,7 @@ const AddNew = ({ persons }) => {
           </form>
         </div>
         <div className={styles.addBox}>
-          <p>Lisää uusi osakkeenomistaja</p>
+          <h2>Osakkeenomistaja</h2>
           <form className={styles.generalItemContainer}>
             <div className={styles.formRow}>
               <label>Osakkaan numero</label>

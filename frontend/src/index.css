@@ -34,7 +34,9 @@ h1 {
 }
 
 h2 {
-  font-size: 2.2rem;
+  font-size: 2rem;
+  font-weight: 200;
+  color: var(--heading-and-text-color);
 }
 
 p,
