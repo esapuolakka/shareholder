@@ -1,0 +1,124 @@
+.AddNew {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1rem;
+
+  @media (max-width: 900px) {
+    display: block;
+  }
+}
+
+h2 {
+  padding-inline-start: 1rem !important;
+}
+
+.generalItemContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: flex-start;
+  font-family: var(--font-family);
+  color: var(--heading-and-text-color);
+  background-color: var(--background-color);
+  line-height: 2.8rem;
+  margin-block-start: 2rem;
+  padding: 3rem 3rem;
+  border: 0.5px solid var(--border-color);
+  border-radius: 5px;
+  align-content: flex-start;
+  gap: 2rem;
+  height: 750px;
+
+  .formRow {
+    position: relative;
+    width: 100%;
+
+    &:last-child {
+      margin-top: auto;
+    }
+  }
+
+  .inlineFormRow {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 3rem;
+
+    > div {
+      flex: 1;
+    }
+  }
+
+  label {
+    width: 100%;
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 200;
+  }
+
+  input {
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    border: 0.5px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+
+    &:focus {
+      border: 0.5px solid #ed692f;
+    }
+  }
+  select {
+    width: 100%;
+    padding: 1rem;
+    border: 0.5px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-family: var(--font-family);
+    font-size: 1.2rem;
+    font-weight: 300;
+    &:focus {
+      border: 0.5px solid #ed692f;
+    }
+  }
+}
+
+.styledButton {
+  width: fit-content;
+  margin-block-end: 1rem;
+  padding: 1.5rem 3rem;
+  font-family: var(--font-family);
+  font-weight: 200;
+  /* max-width: calc(100% - 30px); */
+  color: var(--link-text-color);
+  background-color: white;
+  position: relative;
+  border: 0.5px solid var(--primary-color);
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 10;
+  align-self: flex-end;
+
+  &:hover {
+    background-color: rgb(255, 252, 226);
+    box-shadow: 0 4px 4px 0 rgba(124, 124, 124, 0.5);
+    transition: all 0.3s ease;
+  }
+}
+
+.addBox {
+  margin-block-end: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  > p {
+    margin-top: 3rem;
+  }
+}
+
+.textField {
+  font-size: 1.6rem;
+  font-weight: 200;
+}

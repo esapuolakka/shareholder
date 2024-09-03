@@ -47,7 +47,7 @@
   z-index: 30;
 }
 
-.MuiTablePagination-toolbar,
+/* .MuiTablePagination-toolbar,
 .MuiTablePagination-selectLabel,
 .MuiTablePagination-input,
 .MuiTablePagination-displayedRows,
@@ -62,4 +62,4 @@
 .MuiTablePagination-root {
   display: flex;
   justify-content: center;
-}
+} */
