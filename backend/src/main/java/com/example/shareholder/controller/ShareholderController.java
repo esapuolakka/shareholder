@@ -15,6 +15,7 @@ import java.util.List;
 import com.example.shareholder.model.Person;
 import com.example.shareholder.model.Shareholder;
 import com.example.shareholder.service.ShareholderService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -25,6 +26,12 @@ public class ShareholderController {
 
   public ShareholderController(ShareholderService shareholderService) {
     this.shareholderService = shareholderService;
+  }
+
+  @GetMapping("/shareholders/search")
+  public ResponseEntity<List<Shareholder>> searchShareholders(@RequestParam(required = false) String search) {
+    List<Shareholder> shareholders = shareholderService.searchShareholders(search);
+    return ResponseEntity.ok().body(shareholders);
   }
 
   @GetMapping("/home")
