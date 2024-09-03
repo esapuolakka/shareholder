@@ -22,7 +22,8 @@ const columns = [
     align: "center",
   },
   { id: "sellerName", label: "Luovuttaja/myyjä", minWidth: 110 },
-  { id: "buyerName", label: "Saaja/ostajaärä", minWidth: 110 },
+  { id: "buyerName", label: "Saaja/ostaja", minWidth: 110 },
+
   {
     id: "transferTax",
     label: "Varainsiirtovero",
