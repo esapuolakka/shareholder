@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import OwnerDetails from "../components/OwnerDetails";
+import styles from "../components/OwnerDetails.module.css";
 
 export async function loader() {
   const personsResponse = await axios.get("http://localhost:8080/api/persons");
@@ -56,18 +57,7 @@ const Osakkaidentiedot = () => {
   return (
     <>
       <h1>Osakkaiden tiedot</h1>
-      <select
-        onChange={handleSelectChange}
-        style={{
-          padding: "1rem",
-          fontFamily: "var(--font-family)",
-          fontSize: "1.2rem",
-          fontWeight: "300",
-          border: "1px solid var(--border-color)",
-          borderRadius: "5px",
-          width: "25rem",
-        }}
-      >
+      <select onChange={handleSelectChange} className={styles.select}>
         <option value="">Valitse omistaja</option>
         {owners.map((owner) => (
           <option key={owner.id} value={owner.id}>
