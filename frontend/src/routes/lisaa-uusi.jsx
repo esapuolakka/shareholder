@@ -7,17 +7,17 @@ export async function loader() {
   // Fix it later with .env file + config
   const response = await axios({
     method: "get",
-    url: "http://localhost:8080/api/shareholders",
+    url: "http://localhost:8080/api/persons",
   });
   return response.data;
 }
 
 const LisaaUusi = () => {
-  const shareholders = useLoaderData();
+  const persons = useLoaderData();
   return (
     <>
       <h1>Lisää uusi</h1>
-      <AddNew shareholders={shareholders} />
+      <AddNew persons={persons} />
     </>
   );
 };
