@@ -38,21 +38,12 @@ const columns = [
 ];
 
 export async function loader() {
-  //I'll use same axios get method
+  //same axios get method
   const personsResponse = await axios.get("http://localhost:8080/api/persons");
-  const shareholdersResponse = await axios.get(
-    "http://localhost:8080/api/shareholders"
-  );
 
   const personsData = personsResponse.data;
 
-  const shareholdersData = shareholdersResponse.data;
-
-  // Combine data
-  const combinedData = personsData.map((person) => {
-    const shareholder = shareholdersData.find(
-      (s) => s.buyer.id === person.id || s.seller.id === person.id
-    );
+  const rowData = personsData.map((person) => {
     return {
       name: `${person.firstname} ${person.lastname}`,
       ssn: person.ssn || "N/A",
@@ -60,19 +51,13 @@ export async function loader() {
       address: `${person.address} ${person.postalCode}` || "N/A",
       email: person.email || "N/A",
       phone: person.phone || "N/A",
-      numberOfShares:
-        shareholder && shareholder.numberOfShares !== null
-          ? shareholder.numberOfShares
-          : 0,
-      ownershipPercentage:
-        shareholder && shareholder.ownershipPercentage !== null
-          ? shareholder.ownershipPercentage
-          : 0.0,
+      numberOfShares: person.numberOfShares || 0,
+      ownershipPercentage: person.ownershipPercentage || 0.0,
     };
   });
 
-  console.log(combinedData);
-  return combinedData;
+  console.log(rowData);
+  return rowData;
 }
 
 const Osakasluettelo = () => {
@@ -87,19 +72,3 @@ const Osakasluettelo = () => {
 };
 
 export default Osakasluettelo;
-
-// export async function loader() {
-//   const rows = [
-//     {
-//       nimi: "Narges Ghanbari",
-//       maara: 25,
-//       omistus: "A oy",
-//       hetu: "Y-2225069-2",
-//       kotikunta: "Helsinki",
-//       osoite: "Haltilanniitty 1",
-//       sahkoposti: "ngh@gmail.com",
-//       puhelinnumero: "+123456789",
-//     },
-//   ];
-//   return rows;
-// }
