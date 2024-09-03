@@ -10,6 +10,8 @@ import com.example.shareholder.model.Person;
 import com.example.shareholder.model.Shareholder;
 import com.example.shareholder.repository.PersonRepository;
 import com.example.shareholder.repository.ShareholderRepository;
+import com.example.shareholder.repository.ShareholderRepository;
+import com.example.shareholder.model.Shareholder;
 
 @Service
 public class ShareholderService {
@@ -119,4 +121,13 @@ public class ShareholderService {
 
     return personRepository.save(existingPerson);
   }
+
+  public List<Shareholder> searchShareholders(String search) {
+    if (search == null || search.isEmpty()) {
+      return getShareholders(); // Palautetaan kaikki osakkaat, jos hakusana on tyhjää
+    }
+    return shareholderRepository.findBySellerFirstnameContainingIgnoreCaseOrSellerLastnameContainingIgnoreCase(search,
+        search);
+  }
+
 }
