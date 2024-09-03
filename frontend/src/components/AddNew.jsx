@@ -2,13 +2,7 @@ import React from "react";
 import styles from "./Addnew.module.css";
 
 const SelectPerson = ({ persons }) => (
-  <select
-    style={{
-      fontFamily: "var(--font-family)",
-      fontSize: "1.2rem",
-      fontWeight: "300",
-    }}
-  >
+  <select>
     <option value="">Valitse henkilö</option>
     {persons.map((person) => {
       const { id, firstname, lastname } = person;
