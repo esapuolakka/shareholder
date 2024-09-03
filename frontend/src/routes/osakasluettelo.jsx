@@ -56,13 +56,11 @@ export async function loader() {
     };
   });
 
-  console.log(rowData);
   return rowData;
 }
 
 const Osakasluettelo = () => {
   const rows = useLoaderData();
-  console.log("Rows in component:", rows);
   return (
     <>
       <h1>Osakasluettelo</h1>
