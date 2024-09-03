@@ -1,32 +1,45 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import axios from "axios";
 import OwnerDetails from "../components/OwnerDetails";
 
 export async function loader() {
-  const owners = [
-    {
-      id: 1,
-      firstname: "Saima",
-      lastname: "Saippua",
-      email: "ss@gmail.com",
-      phone: "+123456789",
-      numberOfShares: 25,
-      ownershipPercentage: "50%",
+  const personsResponse = await axios.get("http://localhost:8080/api/persons");
+  const shareholdersResponse = await axios.get(
+    "http://localhost:8080/api/shareholders"
+  );
+
+  const personsData = personsResponse.data;
+  const shareholdersData = shareholdersResponse.data;
+
+  // Yhdistetään henkilöt ja osakastiedot
+  const owners = personsData.map((person) => {
+    const shareholder = shareholdersData.find(
+      (s) => s.buyer.id === person.id || s.seller.id === person.id
+    );
+    return {
+      id: person.id,
+      firstname: person.firstname,
+      lastname: person.lastname,
+      email: person.email,
+      phone: person.phone,
+      numberOfShares: shareholder ? shareholder.numberOfShares : 0,
+      ownershipPercentage: person.ownershipPercentage || 0,
       shareNumbers: [
-        { beginning: 1, ending: 4 },
-        { beginning: 203, ending: 300 },
-        { beginning: 870, ending: 2000 },
-        { beginning: 9000, ending: 12000 },
+        { beginning: 1, ending: 800 },
+        { beginning: 801, ending: 3000 },
+        { beginning: 3001, ending: 100000 },
       ],
-      collectionDate: "01-01-2023",
-      term: "05-05-2023",
-      transferTaxPaid: true,
-      personalIdentityCode: "Y-2225069-2",
-      city: "Helsinki",
-      address: "Jeejee 1, Helsinki",
-      accountNumber: "FI123456789",
-    },
-  ];
+      collectionDate: shareholder ? shareholder.collectionDate : "N/A",
+      term: shareholder ? shareholder.term : "N/A",
+      transferTaxPaid: shareholder ? shareholder.transferTaxPaid : false,
+      personalIdentityCode: person.ssn || "N/A",
+      city: person.city || "N/A",
+      address: `${person.address}, ${person.postalCode}` || "N/A",
+      accountNumber: person.accountNumber || "N/A",
+    };
+  });
+
   return { owners };
 }
 

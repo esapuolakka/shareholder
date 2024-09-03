@@ -59,6 +59,25 @@
   width: 100%;
 }
 
+/* .styledButton::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 10px;
+  left: 10px;
+  border-radius: inherit;
+  background: repeating-linear-gradient(
+    45deg,
+    #d4c481,
+    #d4c481 2px,
+    transparent 2px,
+    transparent 6px
+  );
+  transition: all 0.3s ease;
+} */
+
 .styledButton {
   width: fit-content;
   height: fit-content;
@@ -82,26 +101,7 @@
   transition: all 0.3s ease;
 }
 
-/* .styledButton::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  top: 10px;
-  left: 10px;
-  border-radius: inherit;
-  background: repeating-linear-gradient(
-    45deg,
-    #d4c481,
-    #d4c481 2px,
-    transparent 2px,
-    transparent 6px
-  );
-  transition: all 0.3s ease;
-}
-
-.styledButton:hover::before {
+/* .styledButton:hover::before {
   top: 20px;
   left: 20px;
 } */
@@ -124,7 +124,6 @@
     row-gap: 1rem;
   }
 
-  /* Vasemman sarakkeen elementit */
   .detailsItem:nth-child(1) {
     grid-area: detail1;
   }
@@ -161,15 +160,14 @@
     grid-area: button;
   }
 
-  /* Oikean sarakkeen elementit */
   .smallerBoxContainerFlex {
-    grid-area: box1; /* Asetetaan ensimmäisille riveille */
+    grid-area: box1;
     justify-content: center;
     align-items: flex-start;
   }
 
   .shareNumberBoxContainerFlex {
-    grid-area: box2; /* Asetetaan toisille riveille */
+    grid-area: box2;
     justify-content: center;
     align-items: flex-start;
     gap: 1rem;
