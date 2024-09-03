@@ -3,8 +3,12 @@ import Table from "../components/Table";
 import axios from "axios";
 
 const columns = [
-  { id: "sellerName", label: "Luovuttaja/myyjä", minWidth: 110 },
-  { id: "buyerName", label: "MäSaaja/ostajaärä", minWidth: 110 },
+  {
+    id: "id",
+    label: "Nro",
+    minWidth: 100,
+    align: "center",
+  },
   {
     id: "collectionDate",
     label: "Saantopäivä",
@@ -17,6 +21,8 @@ const columns = [
     minWidth: 100,
     align: "center",
   },
+  { id: "sellerName", label: "Luovuttaja/myyjä", minWidth: 110 },
+  { id: "buyerName", label: "MäSaaja/ostajaärä", minWidth: 110 },
   {
     id: "transferTax",
     label: "Varainsiirtovero",
@@ -59,10 +65,11 @@ export async function loader() {
 
   const rowData = shareholdersData.map((shareholder) => {
     return {
-      sellerName: `${shareholder.seller.firstname} ${shareholder.seller.lastname}`,
-      buyerName: `${shareholder.buyer.firstname} ${shareholder.buyer.lastname}`,
+      id: `${shareholder.id}`,
       collectionDate: `${shareholder.collectionDate}`,
       term: `${shareholder.term}`,
+      sellerName: `${shareholder.seller.firstname} ${shareholder.seller.lastname}`,
+      buyerName: `${shareholder.buyer.firstname} ${shareholder.buyer.lastname}`,
       transferTax: `${shareholder.transferTaxPaid}`,
       numbers: `${shareholder.numberOfShares}`,
       pricePerShare: `${shareholder.pricePerShare}`,
