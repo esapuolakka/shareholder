@@ -1,7 +1,21 @@
 import React from "react";
 import styles from "./Addnew.module.css";
 
-const AddNew = ({ shareholders }) => {
+const SelectPerson = ({ persons }) => (
+  <select>
+    <option value="">Valitse henkilö</option>
+    {persons.map((person) => {
+      const { id, firstname, lastname } = person;
+      return (
+        <option key={id} value={id}>
+          {firstname} {lastname}
+        </option>
+      );
+    })}
+  </select>
+);
+
+const AddNew = ({ persons }) => {
   return (
     <>
       <section className={styles.AddNew}>
@@ -10,31 +24,11 @@ const AddNew = ({ shareholders }) => {
           <form className={styles.generalItemContainer}>
             <div className={styles.formRow}>
               <label> Luovuttajan/Myyjä</label>
-              <select>
-                <option value="">Valitse henkilö</option>
-                {shareholders.map((shareholder) => {
-                  const { id, firstname, lastname } = shareholder.buyer;
-                  return (
-                    <option key={id} value={id}>
-                      {firstname} {lastname}
-                    </option>
-                  );
-                })}
-              </select>
+              <SelectPerson persons={persons} />
             </div>
             <div className={styles.formRow}>
               <label>Saajan/Ostaja</label>
-              <select>
-                <option value="">Valitse henkilö</option>
-                {shareholders.map((shareholder) => {
-                  const { id, firstname, lastname } = shareholder.seller;
-                  return (
-                    <option key={id} value={id}>
-                      {firstname} {lastname}
-                    </option>
-                  );
-                })}
-              </select>
+              <SelectPerson persons={persons} />
             </div>
             <div className={styles.inlineFormRow}>
               <div>
