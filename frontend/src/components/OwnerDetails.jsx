@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./ContainerLayout.module.css";
+import styles from "./OwnerDetails.module.css";
 
 const OwnerDetails = ({ owner }) => {
   return (
@@ -97,8 +97,9 @@ const OwnerDetails = ({ owner }) => {
           <span className={styles.nextRow}> {owner.accountNumber}</span>
         </p>
       </div>
-
-      <button className={styles.styledButton}>Muokkaa tietoja</button>
+      <div>
+        <button className={styles.styledButton}>Muokkaa tietoja</button>
+      </div>
     </div>
   );
 };
