@@ -8,7 +8,9 @@ import Osakasluettelo, {
 import Osakenumerot, {
   loader as osakenumerotLoader,
 } from "./routes/osakenumerot";
-import Merkintahistoria from "./routes/merkintahistoria";
+import Merkintahistoria, {
+  loader as merkintahistoriaLoader,
+} from "./routes/merkintahistoria";
 import Osakkaidentiedot, {
   loader as osakkaidentiedotLoader,
 } from "./routes/osakkaidentiedot";
@@ -36,6 +38,7 @@ const router = createBrowserRouter([
       {
         path: "merkintahistoria",
         element: <Merkintahistoria />,
+        loader: merkintahistoriaLoader,
       },
       {
         path: "osakkaidentiedot",

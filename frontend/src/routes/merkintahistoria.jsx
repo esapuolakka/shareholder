@@ -1,7 +1,85 @@
+import { useLoaderData } from "react-router-dom";
+import Table from "../components/Table";
+import axios from "axios";
+
+const columns = [
+  { id: "sellerName", label: "Luovuttaja/myyjä", minWidth: 110 },
+  { id: "buyerName", label: "MäSaaja/ostajaärä", minWidth: 110 },
+  {
+    id: "collectionDate",
+    label: "Saantopäivä",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "term",
+    label: "Maksupäivä",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "transferTax",
+    label: "Varainsiirtovero",
+    minWidth: 70,
+    align: "center",
+  },
+  {
+    id: "numbers",
+    label: "Kpl",
+    minWidth: 70,
+    align: "center",
+  },
+  {
+    id: "pricePerShare",
+    label: "Hinta per osake",
+    minWidth: 70,
+    align: "center",
+  },
+  {
+    id: "eur",
+    label: "EUR",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "noteworthy",
+    label: "Huomioitavaa",
+    minWidth: 200,
+    align: "center",
+  },
+];
+
+export async function loader() {
+  //same axios get method
+  const shareholdersResponse = await axios.get(
+    "http://localhost:8080/api/shareholders"
+  );
+
+  const shareholdersData = shareholdersResponse.data;
+
+  const rowData = shareholdersData.map((shareholder) => {
+    return {
+      sellerName: `${shareholder.seller.firstname} ${shareholder.seller.lastname}`,
+      buyerName: `${shareholder.buyer.firstname} ${shareholder.buyer.lastname}`,
+      collectionDate: `${shareholder.collectionDate}`,
+      term: `${shareholder.term}`,
+      transferTax: `${shareholder.transferTaxPaid}`,
+      numbers: `${shareholder.numberOfShares}`,
+      pricePerShare: `${shareholder.pricePerShare}`,
+      eur: `${shareholder.totalAmount}`,
+      noteworthy: `${shareholder.notes}`,
+    };
+  });
+
+  return rowData;
+}
 const Merkintahistoria = () => {
+  const rows = useLoaderData();
+
   return (
     <>
       <h1>Merkintähistoria</h1>
+      <Table columns={columns} rows={rows} />
     </>
   );
 };
