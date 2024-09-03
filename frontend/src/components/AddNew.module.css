@@ -8,6 +8,10 @@
   }
 }
 
+h2 {
+  padding-inline-start: 1rem !important;
+}
+
 .generalItemContainer {
   display: flex;
   flex-direction: column;
@@ -70,7 +74,9 @@
     border: 0.5px solid #ccc;
     border-radius: 5px;
     outline: none;
-
+    font-family: var(--font-family);
+    font-size: 1.2rem;
+    font-weight: 300;
     &:focus {
       border: 0.5px solid #ed692f;
     }
@@ -101,6 +107,7 @@
 }
 
 .addBox {
+  margin-block-end: 2rem;
   flex: 1;
   display: flex;
   flex-direction: column;
