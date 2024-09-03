@@ -27,10 +27,10 @@ export default function StickyHeadTable({ columns, rows }) {
         <Table stickyHeader aria-label="sticky table">
           <TableHead className="TableHead">
             <TableRow className="TableRow">
-              {columns.map((column) => (
+              {columns.map((column, columnIndex) => (
                 <TableCell
                   className="TableCell"
-                  key={column.id}
+                  key={`header-cell-${column.id ?? columnIndex}`}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
@@ -42,21 +42,23 @@ export default function StickyHeadTable({ columns, rows }) {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, rowIndex) => {
+                const rowId = row.id ?? rowIndex;
                 return (
                   <TableRow
                     className="TableRow"
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={row.code}
+                    key={`row-${rowId}`}
                   >
-                    {columns.map((column) => {
+                    {columns.map((column, columnIndex) => {
                       const value = row[column.id];
+                      const cellId = `${rowId}-${column.id ?? columnIndex}`;
                       return (
                         <TableCell
                           className="TableCell"
-                          key={column.id}
+                          key={`cell-${cellId}`}
                           align={column.align}
                         >
                           {column.format && typeof value === "number"
