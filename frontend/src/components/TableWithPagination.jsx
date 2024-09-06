@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import "./table.css";
+import styles from "./Table.module.css";
 
 export default function StickyHeadTable({ columns, rows }) {
   const [page, setPage] = React.useState(0);
@@ -23,15 +23,15 @@ export default function StickyHeadTable({ columns, rows }) {
 
   return (
     <>
-      <TableContainer sx={{ maxHeight: 520 }}>
+      <TableContainer sx={{ maxHeight: 530 }}>
         <Table stickyHeader aria-label="sticky table">
-          <TableHead className="TableHead">
-            <TableRow className="TableRow">
+          <TableHead className={styles.TableHead}>
+            <TableRow className={styles.TableRow}>
               {columns.map((column, columnIndex) => (
                 <TableCell
-                  className="TableCell"
+                  className={styles.TableCell}
                   key={`header-cell-${column.id ?? columnIndex}`}
-                  align={column.align}
+                  align="left"
                   style={{ minWidth: column.minWidth }}
                 >
                   {column.label}
@@ -46,7 +46,7 @@ export default function StickyHeadTable({ columns, rows }) {
                 const rowId = row.id ?? rowIndex;
                 return (
                   <TableRow
-                    className="TableRow"
+                    className={styles.TableRow}
                     hover
                     role="checkbox"
                     tabIndex={-1}
@@ -57,9 +57,9 @@ export default function StickyHeadTable({ columns, rows }) {
                       const cellId = `${rowId}-${column.id ?? columnIndex}`;
                       return (
                         <TableCell
-                          className="TableCell"
+                          className={styles.TableCell}
                           key={`cell-${cellId}`}
-                          align={column.align}
+                          align="left"
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)
@@ -81,6 +81,15 @@ export default function StickyHeadTable({ columns, rows }) {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        sx={{
+          "& .MuiTablePagination-toolbar, & .MuiTablePagination-selectLabel, & .MuiTablePagination-input, & .MuiTablePagination-displayedRows, & .MuiTablePagination-menuItem, & .MuiTablePagination-actions":
+            {
+              fontSize: "1.2rem",
+              fontFamily: "var(--font-family)",
+              fontWeight: 300,
+              color: "var(--heading-and-text-color)",
+            },
+        }}
       />
     </>
   );

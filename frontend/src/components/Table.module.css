@@ -46,20 +46,3 @@
 .TableHead .TableRow .TableCell:first-child {
   z-index: 30;
 }
-
-/* .MuiTablePagination-toolbar,
-.MuiTablePagination-selectLabel,
-.MuiTablePagination-input,
-.MuiTablePagination-displayedRows,
-.MuiTablePagination-menuItem,
-.MuiTablePagination-actions {
-  font-size: 1.2rem !important;
-  font-family: var(--font-family);
-  font-weight: 200;
-  color: var(--heading-and-text-color);
-}
-
-.MuiTablePagination-root {
-  display: flex;
-  justify-content: center;
-} */
