@@ -17,6 +17,7 @@ import Osakkaidentiedot, {
 import LisaaUusi, { loader as LisaaUusiLoader } from "./routes/lisaa-uusi";
 import "./reset.css";
 import "./index.css";
+import Dashboard from "./routes/dashboard";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: rootLoader,
     children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
       {
         path: "osakasluettelo",
         element: <Osakasluettelo />,
