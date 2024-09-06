@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom";
-import Table from "../components/Table";
+import TableWithPagination from "../components/TableWithPagination";
 import axios from "axios";
 
 const columns = [
@@ -87,7 +87,7 @@ const Merkintahistoria = () => {
   return (
     <>
       <h1>Merkintähistoria</h1>
-      <Table columns={columns} rows={rows} />
+      <TableWithPagination columns={columns} rows={rows} />
     </>
   );
 };
