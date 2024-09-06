@@ -6,15 +6,22 @@ const options = {
     type: "column",
   },
   title: {
-    text: "My chart",
+    text: "OSAKEKANNAN KEHITYS (Share count over time)",
+    align: screenLeft,
   },
   series: [
     {
-      data: [1, 2, 3],
+      name: "Osaketta yhteensä",
+      data: [4200000, 347000, 4010000, 760000, 2260000, 1120000, 4500000],
+      color: "#fefce2",
+      borderColor: "#ed692f",
     },
   ],
   xAxis: {
-    tickInterval: 1,
+    categories: [2018, 2019, 2020, 2021, 2022, 2023, 2024],
+  },
+  yAxix: {
+    min: 0,
   },
 };
 
