@@ -1,0 +1,51 @@
+.Charts {
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "details lineChart lineChart"
+    "barChart barChart pieChart";
+
+  font-family: var(--font-family);
+  color: var(--heading-and-text-color);
+  background-color: var(--background-color);
+  line-height: 4rem;
+
+  .details {
+    grid-area: details;
+    background-color: white;
+    border: 0.5px solid black;
+    padding: 2rem;
+    text-align: left;
+
+    p {
+      margin-bottom: 3rem;
+    }
+    h2 {
+      padding: 0;
+      padding-inline-start: 0;
+      margin: 0;
+    }
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 200;
+    }
+  }
+
+  .lineChart {
+    grid-area: lineChart;
+    background-color: white;
+    border: 0.5px solid black;
+  }
+  .barChart {
+    grid-area: barChart;
+    background-color: white;
+    border: 0.5px solid black;
+  }
+  .pieChart {
+    grid-area: pieChart;
+    background-color: white;
+    border: 0.5px solid black;
+  }
+}
