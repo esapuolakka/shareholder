@@ -3,8 +3,9 @@ import Table from "../components/Table";
 import axios from "axios";
 
 const columns = [
+  { id: "personId", label: "Nro", minWidth: 110 },
   { id: "name", label: "Nimi", minWidth: 110 },
-  { id: "numberOfShares", label: "Määrä", minWidth: 50, align: "center" },
+  { id: "numberOfShares", label: "Määrä", minWidth: 50 },
   {
     id: "ownershipPercentage",
     label: "Omistus%",
@@ -45,7 +46,8 @@ export async function loader() {
 
   const rowData = personsData.map((person) => {
     return {
-      name: `${person.firstname} ${person.lastname}`,
+      personId: `${person.id}` || "N/A",
+      name: `${person.firstname} ${person.lastname}` || "N/A",
       ssn: person.ssn || "N/A",
       city: person.city || "N/A",
       address: `${person.address} ${person.postalCode}` || "N/A",
