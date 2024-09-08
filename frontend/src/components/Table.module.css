@@ -47,19 +47,38 @@
   z-index: 30;
 }
 
-/* .MuiTablePagination-toolbar,
-.MuiTablePagination-selectLabel,
-.MuiTablePagination-input,
-.MuiTablePagination-displayedRows,
-.MuiTablePagination-menuItem,
-.MuiTablePagination-actions {
-  font-size: 1.2rem !important;
+.CheckboxContainer {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-family);
+  font-size: 1.2rem;
   font-weight: 200;
-  color: var(--heading-and-text-color);
+  margin-block-end: 1rem;
 }
 
-.MuiTablePagination-root {
-  display: flex;
-  justify-content: center;
-} */
+.CheckboxContainer {
+   // any possible CheckboxContainer CSS...
+   input[type="checkbox"] {
+      // inner tags (classnames) CSS
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--heading-and-text-color);
+  border-radius: 1px;
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.CheckboxContainer input[type="checkbox"]:checked::before {
+  content: "✔";
+  color: var(--heading-and-text-color);
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  left: 2px;
+}
+
+.CheckboxContainer input[type="checkbox"]:hover {
+  background-color: var(--background-color);
+}

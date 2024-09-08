@@ -4,19 +4,19 @@ import Table from "../components/Table";
 const columns = [
   {
     id: "omistajanNimi",
-    label: "Omistajan Nimi",
+    label: "Nimi",
     minWidth: 100,
     align: "center",
   },
   {
     id: "osakenumerotAlkaen",
-    label: "Osakenumerot Alkaen",
+    label: "Osakenumerot alkaen",
     minWidth: 50,
     align: "center",
   },
   {
     id: "osakenumerotLoppuen",
-    label: "Osakenumerot Loppuen",
+    label: "Osakenumerot loppuen",
     minWidth: 50,
     align: "center",
   },

@@ -1,65 +1,80 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import "./table.css";
+import styles from "./Table.module.css";
 
 export default function StickyHeadTable({ columns, rows }) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [visibleColumns, setVisibleColumns] = useState(
+    columns.map((column) => column.id)
+  );
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+  const handleColumnToggle = (columnId) => {
+    setVisibleColumns((prevVisibleColumns) =>
+      prevVisibleColumns.includes(columnId)
+        ? prevVisibleColumns.filter((id) => id !== columnId)
+        : [...prevVisibleColumns, columnId]
+    );
   };
 
   return (
     <>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      {/* Checkboxes for columns */}
+      <div>
+        {columns.map((column) => (
+          <label key={column.id} className={styles.CheckboxContainer}>
+            <input
+              type="checkbox"
+              checked={visibleColumns.includes(column.id)}
+              onChange={() => handleColumnToggle(column.id)}
+            />
+            {column.label}
+          </label>
+        ))}
+      </div>
+
+      <TableContainer sx={{ maxHeight: 560 }}>
         <Table stickyHeader aria-label="sticky table">
-          <TableHead className="TableHead">
-            <TableRow className="TableRow">
-              {columns.map((column, columnIndex) => (
-                <TableCell
-                  className="TableCell"
-                  key={`header-cell-${column.id ?? columnIndex}`}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
+          <TableHead className={styles.TableHead}>
+            <TableRow className={styles.TableRow}>
+              {columns
+                .filter((column) => visibleColumns.includes(column.id)) // Suodata näkyvät sarakkeet
+                .map((column, columnIndex) => (
+                  <TableCell
+                    className={styles.TableCell}
+                    key={`header-cell-${column.id ?? columnIndex}`}
+                    align="left"
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, rowIndex) => {
-                const rowId = row.id ?? rowIndex;
-                return (
-                  <TableRow
-                    className="TableRow"
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={`row-${rowId}`}
-                  >
-                    {columns.map((column, columnIndex) => {
+            {rows.map((row, rowIndex) => {
+              const rowId = row.id ?? rowIndex;
+              return (
+                <TableRow
+                  className={styles.TableRow}
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={`row-${rowId}`}
+                >
+                  {columns
+                    .filter((column) => visibleColumns.includes(column.id)) // Suodata näkyvät sarakkeet
+                    .map((column, columnIndex) => {
                       const value = row[column.id];
                       const cellId = `${rowId}-${column.id ?? columnIndex}`;
                       return (
                         <TableCell
-                          className="TableCell"
+                          className={styles.TableCell}
                           key={`cell-${cellId}`}
-                          align={column.align}
+                          align="left"
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)
@@ -67,21 +82,12 @@ export default function StickyHeadTable({ columns, rows }) {
                         </TableCell>
                       );
                     })}
-                  </TableRow>
-                );
-              })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
     </>
   );
 }
