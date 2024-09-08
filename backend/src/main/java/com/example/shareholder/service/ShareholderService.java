@@ -57,6 +57,14 @@ public class ShareholderService {
     return shareholderRepository.save(shareholder);
   }
 
+  // Devemopment only
+  public List<Shareholder> addManyShareholders(List<Shareholder> shareholders) {
+    for (Shareholder shareholder : shareholders) {
+      addShareholder(shareholder);
+    }
+    return shareholders;
+  }
+
   public void deleteShareholder(Long id) {
     shareholderRepository.deleteById(id);
   }

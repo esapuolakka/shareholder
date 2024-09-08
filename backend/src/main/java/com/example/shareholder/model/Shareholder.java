@@ -37,7 +37,7 @@ public class Shareholder {
   @Column(name = "varainsiirtovero_maksettu")
   private boolean transferTaxPaid;
 
-  @Column(name = "osakkeiden_lukumaara")
+  @Column(name = "osakkeiden_lukumaara", nullable = false)
   private int numberOfShares;
 
   @Column(name = "osakkeen_hinta")
