@@ -2,46 +2,29 @@ import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
 
 const columns = [
+  { id: "personId", label: "Nro", minWidth: 50 },
+  { id: "name", label: "Nimi", minWidth: 110 },
   {
-    id: "omistajanNimi",
-    label: "Nimi",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "osakenumerotAlkaen",
+    id: "sharenumbersBeginning",
     label: "Osakenumerot alkaen",
     minWidth: 50,
-    align: "center",
   },
   {
-    id: "osakenumerotLoppuen",
+    id: "sharenumbersEnding",
     label: "Osakenumerot loppuen",
     minWidth: 50,
-    align: "center",
   },
-  {
-    id: "kappaleMaara",
-    label: "Kappalemäärä",
-    minWidth: 70,
-    align: "center",
-  },
-  {
-    id: "tarkistuslaskenta",
-    label: "Tarkistuslaskenta",
-    minWidth: 70,
-    align: "center",
-  },
+  { id: "numberOfShares", label: "Osakemäärä", minWidth: 50 },
 ];
 
 export async function loader() {
   const rows = [
     {
-      osakenumerotAlkaen: 1,
-      osakenumerotLoppuen: 100,
-      kappaleMaara: "",
-      omistajanNimi: "Saima",
-      tarkistuslaskenta: "",
+      personId: 1,
+      name: "Saima",
+      sharenumbersBeginning: 1,
+      sharenumbersEnding: 100,
+      numberOfShares: "",
     },
   ];
   return rows;

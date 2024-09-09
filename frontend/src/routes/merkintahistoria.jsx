@@ -6,7 +6,7 @@ const columns = [
   {
     id: "id",
     label: "Nro",
-    minWidth: 100,
+    minWidth: 50,
   },
   {
     id: "collectionDate",
@@ -28,7 +28,7 @@ const columns = [
   },
   {
     id: "numbers",
-    label: "Kpl",
+    label: "Osakemäärä",
     minWidth: 70,
   },
   {

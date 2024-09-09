@@ -3,9 +3,9 @@ import Table from "../components/Table";
 import axios from "axios";
 
 const columns = [
-  { id: "personId", label: "Nro", minWidth: 110 },
+  { id: "personId", label: "Nro", minWidth: 50 },
   { id: "name", label: "Nimi", minWidth: 110 },
-  { id: "numberOfShares", label: "Määrä", minWidth: 50 },
+  { id: "numberOfShares", label: "Osakemäärä", minWidth: 50 },
   {
     id: "ownershipPercentage",
     label: "Omistus%",
@@ -13,7 +13,7 @@ const columns = [
   },
   {
     id: "ssn",
-    label: "Hetu",
+    label: "Hetu/Y-tunnus",
     minWidth: 100,
   },
   {
@@ -28,7 +28,7 @@ const columns = [
   },
   {
     id: "email",
-    label: "Sähkoposti",
+    label: "Sähköposti",
     minWidth: 70,
   },
   {

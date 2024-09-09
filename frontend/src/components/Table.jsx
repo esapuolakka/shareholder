@@ -22,7 +22,6 @@ export default function StickyHeadTable({ columns, rows }) {
 
   return (
     <>
-      {/* Checkboxes for columns */}
       <div>
         {columns.map((column) => (
           <label key={column.id} className={styles.CheckboxContainer}>
@@ -41,12 +40,12 @@ export default function StickyHeadTable({ columns, rows }) {
           <TableHead className={styles.TableHead}>
             <TableRow className={styles.TableRow}>
               {columns
-                .filter((column) => visibleColumns.includes(column.id)) // Suodata näkyvät sarakkeet
+                .filter((column) => visibleColumns.includes(column.id))
                 .map((column, columnIndex) => (
                   <TableCell
                     className={styles.TableCell}
                     key={`header-cell-${column.id ?? columnIndex}`}
-                    align="left"
+                    align={columnIndex === 0 ? "center" : "left"}
                     style={{ minWidth: column.minWidth }}
                   >
                     {column.label}
@@ -66,7 +65,7 @@ export default function StickyHeadTable({ columns, rows }) {
                   key={`row-${rowId}`}
                 >
                   {columns
-                    .filter((column) => visibleColumns.includes(column.id)) // Suodata näkyvät sarakkeet
+                    .filter((column) => visibleColumns.includes(column.id))
                     .map((column, columnIndex) => {
                       const value = row[column.id];
                       const cellId = `${rowId}-${column.id ?? columnIndex}`;
@@ -74,7 +73,7 @@ export default function StickyHeadTable({ columns, rows }) {
                         <TableCell
                           className={styles.TableCell}
                           key={`cell-${cellId}`}
-                          align="left"
+                          align={columnIndex === 0 ? "center" : "left"}
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)
