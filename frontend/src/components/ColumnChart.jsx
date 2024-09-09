@@ -28,12 +28,12 @@ const options = {
 const ColumnChart = () => {
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div style={{ width: "70%" }}>
+      <div style={{ width: "100%" }}>
         <HighchartsReact highcharts={Highcharts} options={options} />
       </div>
       <div
         style={{
-          width: "35%",
+          width: "15%",
           paddingLeft: "20px",
           display: "flex",
           flexDirection: "column",
