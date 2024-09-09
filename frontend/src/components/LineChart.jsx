@@ -29,8 +29,31 @@ const options = {
 
 const LineChart = () => {
   return (
-    <div>
-      <HighchartsReact highcharts={Highcharts} options={options} />
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div style={{ width: "80%" }}>
+        <HighchartsReact highcharts={Highcharts} options={options} />
+      </div>
+      <div
+        style={{
+          width: "15%",
+          paddingLeft: "20px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          fontWeight: 200,
+        }}
+      >
+        <div>
+          <strong style={{ fontWeight: 600 }}>5.9.2024</strong>
+          <br />
+          <span>Päivämäärä</span>
+        </div>
+        <div style={{ marginTop: "10px" }}>
+          <span>EUR</span> <strong style={{ fontWeight: 600 }}>0.135</strong>
+          <br />
+          <span>Osakkeen hinta</span>
+        </div>
+      </div>
     </div>
   );
 };

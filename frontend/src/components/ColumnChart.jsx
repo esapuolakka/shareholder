@@ -1,4 +1,4 @@
-import Highcharts, { chart } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 const options = {
@@ -20,15 +20,38 @@ const options = {
   xAxis: {
     categories: [2018, 2019, 2020, 2021, 2022, 2023, 2024],
   },
-  yAxix: {
+  yAxis: {
     min: 0,
   },
 };
 
 const ColumnChart = () => {
   return (
-    <div>
-      <HighchartsReact highcharts={Highcharts} options={options} />
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div style={{ width: "70%" }}>
+        <HighchartsReact highcharts={Highcharts} options={options} />
+      </div>
+      <div
+        style={{
+          width: "25%",
+          paddingLeft: "20px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          fontWeight: 200,
+        }}
+      >
+        <div>
+          <strong style={{ fontWeight: 600 }}>5.9.2024</strong>
+          <br />
+          <span>Päivämäärä</span>
+        </div>
+        <div style={{ marginTop: "10px" }}>
+          <strong style={{ fontWeight: 600 }}>4070921</strong>
+          <br />
+          <span>Osaketta yhteensä</span>
+        </div>
+      </div>
     </div>
   );
 };
