@@ -36,7 +36,7 @@ export default function HeaderNavBar() {
     <AppBar className="navbar is-fixed-top">
       <Toolbar className="navbar">
         <Box className="navbar-brand">
-          <Link to="/osakasluettelo">
+          <Link to="/">
             <img
               src="/phz.png"
               alt="PHZ Full Stack Logo"
