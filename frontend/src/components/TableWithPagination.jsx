@@ -31,7 +31,7 @@ export default function StickyHeadTable({ columns, rows }) {
                 <TableCell
                   className={styles.TableCell}
                   key={`header-cell-${column.id ?? columnIndex}`}
-                  align="left"
+                  align={columnIndex === 0 ? "center" : "left"}
                   style={{ minWidth: column.minWidth }}
                 >
                   {column.label}
@@ -59,7 +59,7 @@ export default function StickyHeadTable({ columns, rows }) {
                         <TableCell
                           className={styles.TableCell}
                           key={`cell-${cellId}`}
-                          align="left"
+                          align={columnIndex === 0 ? "center" : "left"}
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)
