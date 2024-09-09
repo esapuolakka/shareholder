@@ -1,16 +1,56 @@
-import React, { useState } from "react";
+import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TableSortLabel from "@mui/material/TableSortLabel";
 import styles from "./Table.module.css";
 
 export default function StickyHeadTable({ columns, rows }) {
-  const [visibleColumns, setVisibleColumns] = useState(
+  const [visibleColumns, setVisibleColumns] = React.useState(
     columns.map((column) => column.id)
   );
+  // sorting 3 stages: no sort, desc, asc
+  const [sortDirection, setSortDirection] = React.useState(null);
+  const [sortedColumn, setSortedColumn] = React.useState(null);
+  const [sortedRows, setSortedRows] = React.useState(rows);
+
+  const handleSort = (columnId) => {
+    let newSortDirection = null;
+
+    if (sortedColumn === columnId) {
+      if (sortDirection === null) {
+        newSortDirection = "desc";
+      } else if (sortDirection === "desc") {
+        newSortDirection = "asc";
+      } else if (sortDirection === "asc") {
+        newSortDirection = null;
+      }
+    } else {
+      newSortDirection = "desc";
+    }
+
+    setSortDirection(newSortDirection);
+    setSortedColumn(columnId);
+
+    if (newSortDirection === null) {
+      setSortedRows(rows);
+      return;
+    }
+
+    const newSortedRows = [...rows].sort((a, b) => {
+      if (columnId === "ownershipPercentage") {
+        return newSortDirection === "asc"
+          ? a.ownershipPercentage - b.ownershipPercentage
+          : b.ownershipPercentage - a.ownershipPercentage;
+      }
+      return 0;
+    });
+
+    setSortedRows(newSortedRows);
+  };
 
   const handleColumnToggle = (columnId) => {
     setVisibleColumns((prevVisibleColumns) =>
@@ -22,7 +62,6 @@ export default function StickyHeadTable({ columns, rows }) {
 
   return (
     <>
-      {/* Checkboxes for columns */}
       <div>
         {columns.map((column) => (
           <label key={column.id} className={styles.CheckboxContainer}>
@@ -41,21 +80,47 @@ export default function StickyHeadTable({ columns, rows }) {
           <TableHead className={styles.TableHead}>
             <TableRow className={styles.TableRow}>
               {columns
-                .filter((column) => visibleColumns.includes(column.id)) // Suodata näkyvät sarakkeet
+                .filter((column) => visibleColumns.includes(column.id))
                 .map((column, columnIndex) => (
                   <TableCell
                     className={styles.TableCell}
                     key={`header-cell-${column.id ?? columnIndex}`}
-                    align="left"
+                    align={columnIndex === 0 ? "center" : "left"}
                     style={{ minWidth: column.minWidth }}
                   >
-                    {column.label}
+                    {column.id === "ownershipPercentage" ? (
+                      <TableSortLabel
+                        active={
+                          sortedColumn === column.id && sortDirection !== null
+                        }
+                        direction={sortDirection || "asc"}
+                        onClick={() => handleSort(column.id)}
+                        sx={{
+                          "& .MuiTableSortLabel-icon": {
+                            opacity:
+                              sortedColumn === column.id &&
+                              sortDirection !== null
+                                ? 1
+                                : 0.5,
+                            color:
+                              sortedColumn === column.id &&
+                              sortDirection !== null
+                                ? "inherit"
+                                : "gray",
+                          },
+                        }}
+                      >
+                        {column.label}
+                      </TableSortLabel>
+                    ) : (
+                      column.label
+                    )}
                   </TableCell>
                 ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, rowIndex) => {
+            {sortedRows.map((row, rowIndex) => {
               const rowId = row.id ?? rowIndex;
               return (
                 <TableRow
@@ -66,7 +131,7 @@ export default function StickyHeadTable({ columns, rows }) {
                   key={`row-${rowId}`}
                 >
                   {columns
-                    .filter((column) => visibleColumns.includes(column.id)) // Suodata näkyvät sarakkeet
+                    .filter((column) => visibleColumns.includes(column.id))
                     .map((column, columnIndex) => {
                       const value = row[column.id];
                       const cellId = `${rowId}-${column.id ?? columnIndex}`;
@@ -74,7 +139,7 @@ export default function StickyHeadTable({ columns, rows }) {
                         <TableCell
                           className={styles.TableCell}
                           key={`cell-${cellId}`}
-                          align="left"
+                          align={columnIndex === 0 ? "center" : "left"}
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)

@@ -59,7 +59,7 @@
     appearance: none;
     width: 16px;
     height: 16px;
-    border: 1px solid var(--heading-and-text-color);
+    border: 0.5px solid var(--heading-and-text-color);
     border-radius: 1px;
     margin-inline: 3px;
     margin-inline-start: 1.5rem;
