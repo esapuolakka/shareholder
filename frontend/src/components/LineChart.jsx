@@ -6,8 +6,15 @@ const options = {
     type: "line",
   },
   title: {
-    text: "ARVONKEHITYS (valuation history)",
-    align: screenLeft,
+    text: "ARVONKEHITYS",
+    align: "center",
+    style: {
+      fontWeight: "300",
+      fontSize: "14px",
+    },
+  },
+  credits: {
+    enabled: false,
   },
   series: [
     {
@@ -16,8 +23,8 @@ const options = {
       name: "Osakkeen hinta",
       marker: {
         radius: 6,
-        lineColor: "#666666",
-        fillColor: "rgb(204 204 204 / 50%)",
+        lineColor: "var(--primary-color)",
+        fillColor: "#FEFCE1",
         lineWidth: 1,
       },
     },
@@ -29,32 +36,29 @@ const options = {
 
 const LineChart = () => {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div style={{ width: "100%" }}>
+    <div>
+      <div style={{ width: "100%", paddingBlockStart: "1.5rem" }}>
         <HighchartsReact highcharts={Highcharts} options={options} />
       </div>
       <div
         style={{
-          width: "15%",
-          paddingLeft: "20px",
+          width: "100%",
           display: "flex",
-          flexDirection: "column",
           justifyContent: "center",
-          fontWeight: 300,
-          fontSize: "12px",
+          fontWeight: 200,
+          fontSize: "14px",
           fontStyle: "italic",
-          lineHeight: "24px",
+          gap: "2rem",
+          marginBlockEnd: "1.5rem",
         }}
       >
         <div>
-          <strong style={{ fontWeight: 600 }}>5.9.2024</strong>
-          <br />
-          <span>Päivämäärä</span>
+          <span>Päivämäärä: </span>
+          <strong style={{ fontWeight: 400 }}>5.9.2024</strong>
         </div>
         <div>
-          <span>EUR</span> <strong style={{ fontWeight: 600 }}>0.135</strong>
-          <br />
-          <span>Osakkeen hinta</span>
+          <span>Osakkeen hinta: </span>
+          <strong style={{ fontWeight: 400 }}> EUR 0.135</strong>
         </div>
       </div>
     </div>

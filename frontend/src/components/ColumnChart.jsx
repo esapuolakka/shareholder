@@ -6,12 +6,19 @@ const options = {
     type: "column",
   },
   title: {
-    text: "OSAKEKANNAN KEHITYS (Share count over time)",
-    align: screenLeft,
+    text: "OSAKEKANNAN KEHITYS",
+    align: "center",
+    style: {
+      fontWeight: "300",
+      fontSize: "14px",
+    },
+  },
+  credits: {
+    enabled: false,
   },
   series: [
     {
-      name: "Osaketta yhteensä",
+      name: "Osakkeita yhteensä",
       data: [4200000, 347000, 4010000, 760000, 2260000, 1120000, 4500000],
       color: "#fefce2",
       borderColor: "#ed692f",
@@ -27,32 +34,29 @@ const options = {
 
 const ColumnChart = () => {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div style={{ width: "100%" }}>
+    <div>
+      <div style={{ width: "100%", paddingBlockStart: "1.5rem" }}>
         <HighchartsReact highcharts={Highcharts} options={options} />
       </div>
       <div
         style={{
-          width: "15%",
-          paddingLeft: "20px",
+          width: "100%",
           display: "flex",
-          flexDirection: "column",
           justifyContent: "center",
-          fontWeight: 300,
-          fontSize: "12px",
+          fontWeight: 200,
+          fontSize: "14px",
           fontStyle: "italic",
-          lineHeight: "24px",
+          gap: "2rem",
+          marginBlockEnd: "1.5rem",
         }}
       >
         <div>
-          <strong style={{ fontWeight: 600 }}>5.9.2024</strong>
-          <br />
-          <span>Päivämäärä</span>
+          <span>Päivämäärä: </span>
+          <strong style={{ fontWeight: 400 }}>5.9.2024</strong>
         </div>
         <div>
-          <strong style={{ fontWeight: 600 }}>4070921</strong>
-          <br />
-          <span>Osaketta yhteensä</span>
+          <span>Osakkeita yhteensä: </span>
+          <strong style={{ fontWeight: 400 }}>4070921</strong>
         </div>
       </div>
     </div>
