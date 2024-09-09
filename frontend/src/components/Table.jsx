@@ -12,7 +12,7 @@ export default function StickyHeadTable({ columns, rows }) {
   const [visibleColumns, setVisibleColumns] = React.useState(
     columns.map((column) => column.id)
   );
-  // sorting 3 stages: no sort, asc, desc
+  // sorting 3 stages: no sort, desc, asc
   const [sortDirection, setSortDirection] = React.useState(null);
   const [sortedColumn, setSortedColumn] = React.useState(null);
   const [sortedRows, setSortedRows] = React.useState(rows);
@@ -21,15 +21,15 @@ export default function StickyHeadTable({ columns, rows }) {
     let newSortDirection = null;
 
     if (sortedColumn === columnId) {
-      if (sortDirection === "asc") {
+      if (sortDirection === null) {
         newSortDirection = "desc";
       } else if (sortDirection === "desc") {
-        newSortDirection = null;
-      } else {
         newSortDirection = "asc";
+      } else if (sortDirection === "asc") {
+        newSortDirection = null;
       }
     } else {
-      newSortDirection = "asc";
+      newSortDirection = "desc";
     }
 
     setSortDirection(newSortDirection);
@@ -90,7 +90,9 @@ export default function StickyHeadTable({ columns, rows }) {
                   >
                     {column.id === "ownershipPercentage" ? (
                       <TableSortLabel
-                        active={sortedColumn === column.id}
+                        active={
+                          sortedColumn === column.id && sortDirection !== null
+                        }
                         direction={sortDirection || "asc"}
                         onClick={() => handleSort(column.id)}
                         sx={{
