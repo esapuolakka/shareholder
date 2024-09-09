@@ -33,12 +33,15 @@ const ColumnChart = () => {
       </div>
       <div
         style={{
-          width: "25%",
+          width: "35%",
           paddingLeft: "20px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          fontWeight: 200,
+          fontWeight: 300,
+          fontSize: "12px",
+          fontStyle: "italic",
+          lineHeight: "24px",
         }}
       >
         <div>
@@ -46,7 +49,7 @@ const ColumnChart = () => {
           <br />
           <span>Päivämäärä</span>
         </div>
-        <div style={{ marginTop: "10px" }}>
+        <div>
           <strong style={{ fontWeight: 600 }}>4070921</strong>
           <br />
           <span>Osaketta yhteensä</span>
