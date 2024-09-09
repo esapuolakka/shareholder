@@ -33,13 +33,13 @@ const columns = [
   },
   {
     id: "pricePerShare",
-    label: "Hinta per osake",
+    label: "EUR/osake",
     minWidth: 70,
   },
   {
     id: "eur",
     label: "EUR",
-    minWidth: 100,
+    minWidth: 70,
   },
   {
     id: "noteworthy",
