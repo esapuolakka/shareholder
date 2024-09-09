@@ -3,17 +3,38 @@ import styles from "./Charts.module.css";
 import ColumnChart from "./ColumnChart";
 import PieChart from "./PieChart";
 
+import BusinessIcon from "@mui/icons-material/Business";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import LanguageIcon from "@mui/icons-material/Language";
+
 const Charts = () => {
   return (
     <div className={styles.Charts}>
       <div className={styles.details}>
-        <p>
-          <h2>YRITYS</h2>
-        </p>
-        <h3>PHZ Full Stack Oy</h3>
-        <h3>Y-2765147-9</h3>
-        <h3>Helsinki, Finland</h3>
-        <h3>https://phz.fi/</h3>
+        <h2>YRITYS</h2>
+
+        <div className={styles.detailsRow}>
+          <BusinessIcon />
+          <h3>PHZ Full Stack Oy</h3>
+        </div>
+
+        <div className={styles.detailsRow}>
+          <AssignmentIndIcon />
+          <h3>Y-2765147-9</h3>
+        </div>
+
+        <div className={styles.detailsRow}>
+          <LocationOnIcon />
+          <h3>Helsinki, Finland</h3>
+        </div>
+
+        <div className={styles.detailsRow}>
+          <LanguageIcon />
+          <h3>
+            <a href="https://phz.fi/">phz.fi</a>
+          </h3>
+        </div>
       </div>
       <div className={styles.lineChart}>
         <LineChart />
