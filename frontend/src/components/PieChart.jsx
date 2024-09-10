@@ -6,8 +6,15 @@ const options = {
     type: "pie",
   },
   title: {
-    text: "PÄÄOMARAKENNE (cap table)",
-    align: screenLeft,
+    text: "PÄÄOMARAKENNE",
+    align: "center",
+    style: {
+      fontWeight: "300",
+      fontSize: "14px",
+    },
+  },
+  credits: {
+    enabled: false,
   },
   colors: ["#F7E897", "#FFB44F", "#F9C89B", "#FAFC8F", "#ED692F"],
   series: [
@@ -34,32 +41,32 @@ const options = {
 
 const PieChart = () => {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div style={{ width: "70%" }}>
+    <div>
+      <div style={{ width: "100%", paddingBlockStart: "1.5rem" }}>
         <HighchartsReact highcharts={Highcharts} options={options} />
       </div>
       <div
         style={{
-          width: "35%",
-          paddingLeft: "20px",
+          width: "100%",
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
-          fontWeight: 300,
-          fontSize: "12px",
+          fontWeight: 200,
+          fontSize: "14px",
           fontStyle: "italic",
-          lineHeight: "24px",
+          flexWrap: "wrap",
+          lineHeight: "2rem",
+          marginBlockEnd: "1.5rem",
         }}
       >
         <div>
-          <span>EUR</span>{" "}
-          <strong style={{ fontWeight: 600 }}>340,925,86</strong>
-          <br />
-          <span>Yhteensä sijoitettu</span>
+          <span>Yhteensä sijoitettu: </span>
+          <strong style={{ fontWeight: 400 }}>EUR 340,925,86</strong>
         </div>
-        <div>
-          <strong style={{ fontWeight: 600 }}>48 </strong>{" "}
-          <span>Laimentamaton omistustaulukko</span> <br />
+        <div style={{ textAlign: "center" }}>
+          <span>Laimentamaton omistustaulukko: </span> <br />
+          <strong style={{ fontWeight: 400 }}>48 osakkeenomistajaa</strong>
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ html {
 
 body {
   max-width: 100%;
-  padding: var(--navbar-height) 3rem 1rem 3rem;
+  padding: var(--navbar-height) 1rem 2rem 1rem;
   font-family: var(--font-family);
   font-size: 1.6rem;
   background-color: var(--body-background-color);
