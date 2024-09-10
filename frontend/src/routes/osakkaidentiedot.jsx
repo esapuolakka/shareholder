@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import OwnerDetails from "../components/OwnerDetails";
+import PropagateLoader from "react-spinners/PropagateLoader";
 import styles from "../components/OwnerDetails.module.css";
 
 export async function loader() {
@@ -13,7 +14,7 @@ export async function loader() {
   const personsData = personsResponse.data;
   const shareholdersData = shareholdersResponse.data;
 
-  // Yhdistetään henkilöt ja osakastiedot
+  // unite person ja shareholder into owner object
   const owners = personsData.map((person) => {
     const shareholder = shareholdersData.find(
       (s) => s.buyer.id === person.id || s.seller.id === person.id
@@ -22,8 +23,6 @@ export async function loader() {
       id: person.id,
       firstname: person.firstname,
       lastname: person.lastname,
-      email: person.email,
-      phone: person.phone,
       numberOfShares: shareholder ? shareholder.numberOfShares : 0,
       ownershipPercentage: person.ownershipPercentage || 0,
       shareNumbers: [
@@ -31,13 +30,16 @@ export async function loader() {
         { beginning: 801, ending: 3000 },
         { beginning: 3001, ending: 100000 },
       ],
-      collectionDate: shareholder ? shareholder.collectionDate : "N/A",
-      term: shareholder ? shareholder.term : "N/A",
-      transferTaxPaid: shareholder ? shareholder.transferTaxPaid : false,
-      personalIdentityCode: person.ssn || "N/A",
-      city: person.city || "N/A",
-      address: `${person.address}, ${person.postalCode}` || "N/A",
-      accountNumber: person.accountNumber || "N/A",
+      collectionDate: shareholder?.collectionDate ?? "N/A",
+      term: shareholder?.term ?? "N/A",
+      transferTaxPaid: shareholder?.transferTaxPaid ?? false,
+      ssn: person.ssn ?? "N/A", //no method in backend for this
+      city: person.city ?? "N/A", //no method in backend for this
+      address: person.address ?? "N/A", //no method in backend for this
+      postalCode: person.postalCode ?? "N/A", //no method in backend for this
+      email: person.email ?? "N/A",
+      phone: person.phone ?? "N/A",
+      accountNumber: person.accountNumber ?? "N/A", //no method in backend for this
     };
   });
 
@@ -46,6 +48,14 @@ export async function loader() {
 
 const Osakkaidentiedot = () => {
   const { owners } = useLoaderData();
+
+  if (!owners || owners.length === 0) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+      </div>
+    );
+  }
 
   return (
     <>

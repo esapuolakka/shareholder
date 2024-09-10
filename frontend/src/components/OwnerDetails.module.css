@@ -152,6 +152,12 @@ select {
   left: 20px;
 } */
 
+.loaderimg {
+  margin: 2rem;
+  display: flex !important;
+  justify-content: center !important;
+}
+
 @media screen and (min-width: 768px) {
   .generalItemContainer {
     display: grid;
@@ -160,12 +166,12 @@ select {
     grid-template-areas:
       "detail1 box1"
       "detail2 box2"
-      "detail3 box2"
-      "detail4 box2"
       "detail5 box2"
       "detail6 box2"
       "detail7 box2"
       "detail8 box2"
+      "detail3 box2"
+      "detail4 box2"
       "button .";
     row-gap: 1rem;
   }

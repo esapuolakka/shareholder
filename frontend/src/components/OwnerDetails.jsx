@@ -17,29 +17,14 @@ const SelectPerson = ({ owners, onChange }) => (
 );
 
 const OwnerDetails = ({ owners }) => {
-  const [isEditing, setIsEditing] = useState(false); // Muokkaustilan hallinta
-  const [selectedOwner, setSelectedOwner] = useState(null); // Valittu henkilö
-  const [editedOwner, setEditedOwner] = useState(null); // Muokkaustila
-
-  // const refreshOwners = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:8080/api/persons");
-  //     setOwners(response.data); // Päivitetään omistajat
-  //     if (selectedOwner) {
-  //       const updatedOwner = response.data.find(
-  //         (o) => o.id === selectedOwner.id
-  //       );
-  //       setSelectedOwner(updatedOwner); // Päivitä valittu henkilö
-  //     }
-  //   } catch (error) {
-  //     console.error("Tietojen hakeminen epäonnistui", error);
-  //   }
-  // };
+  const [isEditing, setIsEditing] = useState(false); // Editspace control
+  const [selectedOwner, setSelectedOwner] = useState(null);
+  const [editedOwner, setEditedOwner] = useState(null); // Edit space
 
   const handlePersonChange = (personId) => {
     const owner = owners.find((o) => o.id === parseInt(personId));
     setSelectedOwner(owner);
-    setEditedOwner(owner); // Alustetaan muokkaustila valitulla henkilöllä
+    setEditedOwner(owner);
   };
 
   const handleInputChange = (e) => {
@@ -57,8 +42,8 @@ const OwnerDetails = ({ owners }) => {
           `http://localhost:8080/api/persons/${editedOwner.id}`,
           editedOwner
         );
-        setSelectedOwner(editedOwner); // Päivitä valittu omistaja
-        setIsEditing(false); // Poistu muokkaustilasta
+        setSelectedOwner(editedOwner); // set edited owner
+        setIsEditing(false); // exit edit space
       } catch (error) {
         console.error("Tietojen päivittäminen epäonnistui", error);
       }
@@ -68,16 +53,14 @@ const OwnerDetails = ({ owners }) => {
   };
 
   const handleCancel = () => {
-    setEditedOwner(selectedOwner); // Palauta alkuperäiset tiedot
-    setIsEditing(false); // Poistu muokkaustilasta
+    setEditedOwner(selectedOwner);
+    setIsEditing(false);
   };
 
   return (
     <>
-      {/* Pudotusvalikko henkilön valitsemiseen */}
       <SelectPerson owners={owners} onChange={handlePersonChange} />
 
-      {/* Näytetään valitun henkilön tiedot, jos henkilö on valittu */}
       {selectedOwner && (
         <div className={styles.generalItemContainer}>
           <div className={styles.detailsItem}>
@@ -157,23 +140,46 @@ const OwnerDetails = ({ owners }) => {
             ))}
           </div>
 
-          {/* Näytetään yhteystiedot myös, kun ei olla muokkaustilassa */}
           <div className={styles.detailsItem}>
             <label>Henkilötunnus/Y-tunnus:</label>
             {isEditing ? (
               <input
                 type="text"
-                name="personalIdentityCode"
-                value={editedOwner.personalIdentityCode}
+                name="ssn"
+                value={editedOwner.ssn}
                 onChange={handleInputChange}
               />
             ) : (
-              <span className={styles.nextRow}>
-                {selectedOwner.personalIdentityCode}
-              </span>
+              <span className={styles.nextRow}>{selectedOwner.ssn}</span>
             )}
           </div>
 
+          <div className={styles.detailsItem}>
+            <label>Yhteystiedot:</label>
+            {isEditing ? (
+              <>
+                <input
+                  type="text"
+                  name="address"
+                  value={editedOwner.address}
+                  onChange={handleInputChange}
+                />
+                <input
+                  type="text"
+                  name="postalCode"
+                  value={editedOwner.postalCode}
+                  onChange={handleInputChange}
+                />
+              </>
+            ) : (
+              <>
+                <span className={styles.nextRow}>{selectedOwner.address}</span>
+                <span className={styles.nextRow}>
+                  {selectedOwner.postalCode}
+                </span>
+              </>
+            )}
+          </div>
           <div className={styles.detailsItem}>
             <label>Kotipaikka:</label>
             {isEditing ? (
@@ -185,20 +191,6 @@ const OwnerDetails = ({ owners }) => {
               />
             ) : (
               <span className={styles.nextRow}>{selectedOwner.city}</span>
-            )}
-          </div>
-
-          <div className={styles.detailsItem}>
-            <label>Yhteystiedot:</label>
-            {isEditing ? (
-              <input
-                type="text"
-                name="address"
-                value={editedOwner.address}
-                onChange={handleInputChange}
-              />
-            ) : (
-              <span className={styles.nextRow}>{selectedOwner.address}</span>
             )}
           </div>
 
@@ -276,3 +268,18 @@ const OwnerDetails = ({ owners }) => {
 };
 
 export default OwnerDetails;
+
+// const refreshOwners = async () => {
+//   try {
+//     const response = await axios.get("http://localhost:8080/api/persons");
+//     setOwners(response.data); // Päivitetään omistajat
+//     if (selectedOwner) {
+//       const updatedOwner = response.data.find(
+//         (o) => o.id === selectedOwner.id
+//       );
+//       setSelectedOwner(updatedOwner); // Päivitä valittu henkilö
+//     }
+//   } catch (error) {
+//     console.error("Tietojen hakeminen epäonnistui", error);
+//   }
+// };
