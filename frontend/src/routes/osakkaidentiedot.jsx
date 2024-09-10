@@ -46,27 +46,11 @@ export async function loader() {
 
 const Osakkaidentiedot = () => {
   const { owners } = useLoaderData();
-  const [selectedOwner, setSelectedOwner] = useState(null);
-
-  const handleSelectChange = (event) => {
-    const ownerId = parseInt(event.target.value);
-    const owner = owners.find((o) => o.id === ownerId);
-    setSelectedOwner(owner);
-  };
 
   return (
     <>
       <h1>Osakkaiden tiedot</h1>
-      <select onChange={handleSelectChange} className={styles.select}>
-        <option value="">Valitse omistaja</option>
-        {owners.map((owner) => (
-          <option key={owner.id} value={owner.id}>
-            {owner.firstname} {owner.lastname}
-          </option>
-        ))}
-      </select>
-
-      {selectedOwner && <OwnerDetails owner={selectedOwner} />}
+      <OwnerDetails owners={owners} />
     </>
   );
 };
