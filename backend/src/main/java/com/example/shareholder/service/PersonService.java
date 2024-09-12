@@ -24,15 +24,23 @@ public class PersonService {
     }
 
     public Person addPerson(Person person) {
-        // Validointi ja tallennus logiikka
-        // ...
+        if (person.getFirstname() == null || person.getLastname() == null || person.getEmail() == null
+                || person.getPhone() == null) {
+            throw new IllegalArgumentException("Kentät ovat pakollisia");
+        }
         return personRepository.save(person);
     }
 
     public Person updatePerson(Long id, Person person) {
-        // Päivitys logiikka
-        // ...
-        return personRepository.save(person);
+        Person existingPerson = personRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Henkilöä ei löytynyt id:llä " + id));
+
+        existingPerson.setFirstname(person.getFirstname());
+        existingPerson.setLastname(person.getLastname());
+        existingPerson.setEmail(person.getEmail());
+        existingPerson.setPhone(person.getPhone());
+
+        return personRepository.save(existingPerson);
     }
 
     public void deletePerson(Long id) {
