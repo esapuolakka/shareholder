@@ -8,10 +8,8 @@ import java.util.List;
 
 import com.example.shareholder.model.Person;
 import com.example.shareholder.model.Shareholder;
+import com.example.shareholder.repository.ShareholderRepository;
 import com.example.shareholder.repository.PersonRepository;
-import com.example.shareholder.repository.ShareholderRepository;
-import com.example.shareholder.repository.ShareholderRepository;
-import com.example.shareholder.model.Shareholder;
 
 @Service
 public class ShareholderService {
@@ -81,45 +79,11 @@ public class ShareholderService {
     return shareholderRepository.save(existingShareholder);
   }
 
-  public List<Person> getPersons() {
-    return personRepository.findAll();
-  }
-
-  public Person getPersonById(Long id) {
-    return personRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("Henkilöä ei löytynyt id:llä " + id));
-  }
-
-  public Person addPerson(Person person) {
-    if (person.getFirstname() == null || person.getLastname() == null || person.getEmail() == null
-        || person.getPhone() == null) {
-      throw new IllegalArgumentException("Kentät ovat pakollisia");
-    }
-    return personRepository.save(person);
-  }
-
-  public void deletePerson(Long id) {
-    personRepository.deleteById(id);
-  }
-
-  public Person updatePerson(Long id, Person person) {
-    Person existingPerson = personRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("Henkilöä ei löytynyt id:llä " + id));
-
-    existingPerson.setFirstname(person.getFirstname());
-    existingPerson.setLastname(person.getLastname());
-    existingPerson.setEmail(person.getEmail());
-    existingPerson.setPhone(person.getPhone());
-
-    return personRepository.save(existingPerson);
-  }
-
   public List<Shareholder> searchShareholders(String search) {
     if (search == null || search.isEmpty()) {
-      return getShareholders(); // Palautetaan kaikki osakkaat, jos hakusana on tyhjää
+      return getShareholders(); // Return all shareholders if search is empty
     }
     return shareholderRepository.findBySellerFirstnameContainingIgnoreCaseOrSellerLastnameContainingIgnoreCase(search,
         search);
   }
-
 }
