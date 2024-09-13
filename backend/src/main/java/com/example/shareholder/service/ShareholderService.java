@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.example.shareholder.model.Person;
 import com.example.shareholder.model.Shareholder;
 import com.example.shareholder.repository.ShareholderRepository;
 import com.example.shareholder.repository.PersonRepository;
@@ -19,6 +18,9 @@ public class ShareholderService {
 
   @Autowired
   private PersonRepository personRepository;
+
+  @Autowired
+  private ShareTransactionService shareTransactionService;
 
   public List<Shareholder> getShareholders() {
     return shareholderRepository.findAll();
@@ -54,7 +56,10 @@ public class ShareholderService {
     BigDecimal numberOfShares = BigDecimal.valueOf(shareholder.getNumberOfShares());
     shareholder.setTotalAmount(numberOfShares.multiply(shareholder.getPricePerShare()));
 
-    return shareholderRepository.save(shareholder);
+    Shareholder newShareholder = shareholderRepository.save(shareholder);
+    // Update total share count
+    shareTransactionService.updateTotalShareCount();
+    return newShareholder;
   }
 
   public void deleteShareholder(Long id) {
@@ -76,7 +81,11 @@ public class ShareholderService {
     BigDecimal numberOfShares = BigDecimal.valueOf(existingShareholder.getNumberOfShares());
     existingShareholder.setTotalAmount(numberOfShares.multiply(existingShareholder.getPricePerShare()));
 
-    return shareholderRepository.save(existingShareholder);
+    Shareholder updatedShareholder = shareholderRepository.save(existingShareholder);
+
+    // Update total share count
+    shareTransactionService.updateTotalShareCount();
+    return updatedShareholder;
   }
 
   public List<Shareholder> searchShareholders(String search) {
