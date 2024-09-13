@@ -2,6 +2,8 @@ package com.example.shareholder.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,6 +12,7 @@ import jakarta.persistence.Table;
 public class SharePrice {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(name = "hinta")
@@ -18,8 +21,7 @@ public class SharePrice {
   public SharePrice() {
   }
 
-  public SharePrice(Long id, double price) {
-    this.id = id;
+  public SharePrice(double price) {
     this.price = price;
   }
 
