@@ -52,9 +52,8 @@ public class Shareholder {
   public Shareholder() {
   }
 
-  public Shareholder(Long id, LocalDate collectionDate, LocalDate term, Person seller, Person buyer,
+  public Shareholder(LocalDate collectionDate, LocalDate term, Person seller, Person buyer,
       boolean transferTaxPaid, int numberOfShares, BigDecimal pricePerShare, BigDecimal totalAmount, String notes) {
-    this.id = id;
     this.collectionDate = collectionDate;
     this.term = term;
     this.seller = seller;
@@ -68,10 +67,6 @@ public class Shareholder {
 
   public Long getId() {
     return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public LocalDate getCollectionDate() {

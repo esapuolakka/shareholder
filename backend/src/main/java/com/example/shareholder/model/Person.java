@@ -45,20 +45,21 @@ public class Person {
   public Person() {
   }
 
-  public Person(Long id, String firstname, String lastname, String email, String phone) {
-    this.id = id;
+  public Person(String firstname, String lastname, String email, String phone, String address, String postalCode, String city, String ssn, int numberOfShares, double ownershipPercentage) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
     this.phone = phone;
+    this.address = address;
+    this.postalCode = postalCode;
+    this.city = city;
+    this.ssn = ssn;
+    this.numberOfShares = numberOfShares;
+    this.ownershipPercentage = ownershipPercentage;
   }
 
   public Long getId() {
     return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getFirstname() {
