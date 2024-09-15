@@ -41,18 +41,10 @@ public class Person {
   @Column(name = "omistusosuus")
   private double ownershipPercentage;
 
-  @Column(name = "bank_account")
-  private String bankAccount; // Uusi kenttä
+  @Column(name = "pankkitili")
+  private String bankAccount;
 
   public Person() {
-  }
-
-  public String getBankAccount() {
-    return bankAccount;
-  }
-
-  public void setBankAccount(String bankAccount) {
-    this.bankAccount = bankAccount;
   }
 
   public Person(Long id, String firstname, String lastname, String email, String phone,
@@ -71,10 +63,6 @@ public class Person {
 
   public Long getId() {
     return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getFirstname() {
@@ -155,5 +143,13 @@ public class Person {
 
   public void setOwnershipPercentage(double ownershipPercentage) {
     this.ownershipPercentage = ownershipPercentage;
+  }
+
+  public String getBankAccount() {
+    return bankAccount;
+  }
+
+  public void setBankAccount(String bankAccount) {
+    this.bankAccount = bankAccount;
   }
 }
