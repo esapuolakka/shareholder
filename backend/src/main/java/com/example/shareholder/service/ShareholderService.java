@@ -72,6 +72,8 @@ public class ShareholderService {
 
   public void deleteShareholder(Long id) {
     shareholderRepository.deleteById(id);
+    // Update total share count
+    shareTransactionService.updateTotalShareCount();
   }
 
   public Shareholder updateShareholder(Long id, Shareholder shareholder) {

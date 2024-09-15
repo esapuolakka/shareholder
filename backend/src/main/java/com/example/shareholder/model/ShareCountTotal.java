@@ -29,10 +29,6 @@ public class ShareCountTotal {
     return id;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public Integer getTotalShares() {
     return totalShares;
   }
