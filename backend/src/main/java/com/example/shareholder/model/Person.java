@@ -2,7 +2,6 @@ package com.example.shareholder.model;
 
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "henkilo")
 public class Person {
@@ -41,16 +40,33 @@ public class Person {
 
   @Column(name = "omistusosuus")
   private double ownershipPercentage;
-  
+
+  @Column(name = "bank_account")
+  private String bankAccount; // Uusi kenttä
+
   public Person() {
   }
 
-  public Person(Long id, String firstname, String lastname, String email, String phone) {
+  public String getBankAccount() {
+    return bankAccount;
+  }
+
+  public void setBankAccount(String bankAccount) {
+    this.bankAccount = bankAccount;
+  }
+
+  public Person(Long id, String firstname, String lastname, String email, String phone,
+      String address, String postalCode, String city, String ssn, String bankAccount) {
     this.id = id;
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
     this.phone = phone;
+    this.address = address;
+    this.postalCode = postalCode;
+    this.city = city;
+    this.ssn = ssn;
+    this.bankAccount = bankAccount;
   }
 
   public Long getId() {
