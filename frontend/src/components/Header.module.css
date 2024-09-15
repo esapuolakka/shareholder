@@ -1,0 +1,89 @@
+.navbar {
+  .isFixedTop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+  }
+}
+
+.navbar {
+  background-color: var(--background-color);
+  color: var(--link-text-color);
+  height: var(--navbar-height);
+  position: relative;
+  z-index: 30;
+  justify-content: space-between;
+  box-shadow: none !important;
+  border-block-end: 0.5px solid var(--border-color) !important;
+  flex-wrap: wrap;
+}
+
+.navbarBrand {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  height: var(--navbar-height);
+}
+
+.navbarLogo {
+  height: 70%;
+  margin-block-start: 15%;
+  margin-block-end: 15%;
+}
+
+.navbarBurger {
+  cursor: pointer;
+  display: block;
+  width: var(--navbar-height);
+  height: var(--navbar-height);
+  border-radius: 0;
+  &:hover {
+    background-color: var(--background-color) !important;
+    color: var(--link-text-color-hover);
+    border-radius: 0;
+    border-block-end: 1px solid var(--border-color);
+  }
+}
+.navbarItemMobile {
+  font-size: 1.2rem !important;
+  font-weight: 300 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  height: var(--navbar-height);
+  border-block-end: 1px solid var(--border-color) !important;
+  border-inline-start: 1px solid var(--border-color) !important;
+  border-inline-end: 1px solid var(--border-color) !important;
+  &:hover {
+    background-color: var(--background-color) !important;
+  }
+}
+
+.navbarItem {
+  color: var(--link-text-color);
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-block-start: -3px;
+  padding: 0 var(--padding-medium);
+  display: flex;
+  align-items: center;
+  height: var(--navbar-height);
+  text-decoration: none;
+  &:hover {
+    color: var(--link-text-color-hover);
+    background-color: var(--background-color);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .navbarMenu {
+    justify-content: flex-end;
+  }
+
+  .navbarBurger {
+    display: none;
+  }
+}

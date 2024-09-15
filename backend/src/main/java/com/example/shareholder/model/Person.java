@@ -47,9 +47,7 @@ public class Person {
   public Person() {
   }
 
-  public Person(Long id, String firstname, String lastname, String email, String phone,
-      String address, String postalCode, String city, String ssn, String bankAccount) {
-    this.id = id;
+  public Person(String firstname, String lastname, String email, String phone, String address, String postalCode, String city, String ssn, int numberOfShares, double ownershipPercentage) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
@@ -59,6 +57,8 @@ public class Person {
     this.city = city;
     this.ssn = ssn;
     this.bankAccount = bankAccount;
+    this.numberOfShares = numberOfShares;
+    this.ownershipPercentage = ownershipPercentage;
   }
 
   public Long getId() {

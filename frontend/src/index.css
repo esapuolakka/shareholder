@@ -1,15 +1,15 @@
 :root {
   --primary-color: #ed692f;
-  --background-color: #fff;
+  --background-color: #ffff;
   --body-background-color: #fafafa;
-  --heading-and-text-color: #363636;
-  --link-text-color: #ed692f;
-  --border-color: #9ca2aa;
+  --heading-and-text-color: #454545;
+  --link-text-color: #454545;
+  --link-text-color-hover: #ed692f;
+  --border-color: #323232;
   --hover-color: #4a4a4a;
-  --hover-background-color: #f2f2f2;
-  --font-family: "system-ui", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-  --navbar-height: 6rem;
+  --background-color-hover: #3f2611b5;
+  --font-family: "Montserrat", sans-serif;
+  --navbar-height: 9rem;
   --padding-small: 0.5rem;
   --padding-medium: 0.75rem;
 }
@@ -20,17 +20,18 @@ html {
 
 body {
   max-width: 100%;
-  padding: var(--navbar-height) 3rem 1rem 3rem;
+  padding: var(--navbar-height) 1.6rem 2rem 1.6rem;
   font-family: var(--font-family);
   font-size: 1.6rem;
   background-color: var(--body-background-color);
 }
 
 h1 {
-  font-size: 2.8rem;
-  font-weight: 200;
+  font-size: 2.4rem;
+  font-weight: 700;
   padding: 2rem 0;
   color: var(--heading-and-text-color);
+  text-transform: uppercase;
 }
 
 h2 {
@@ -43,6 +44,11 @@ p,
 a {
   font-size: 1.6rem;
   font-weight: 200;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-text-color-hover);
 }
 
 @media screen and (min-width: 1024px) {

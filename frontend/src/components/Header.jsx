@@ -7,10 +7,10 @@ import {
   MenuItem,
   Box,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu"; // Burger icon, switched to svg
+import MenuIcon from "@mui/icons-material/Menu"; // Burger icon
 import CloseIcon from "@mui/icons-material/Close"; // X icon
 import { Link } from "react-router-dom";
-import "./header.css";
+import styles from "./Header.module.css";
 
 const pages = [
   { label: "Osakasluettelo", path: "/osakasluettelo" },
@@ -33,43 +33,39 @@ export default function HeaderNavBar() {
   };
 
   return (
-    <AppBar className="navbar is-fixed-top">
-      <Toolbar className="navbar">
-        <Box className="navbar-brand">
-          <Link to="/osakasluettelo">
+    <AppBar className={`${styles.navbar} ${styles.isFixedTop}`}>
+      <Toolbar className={styles.navbar}>
+        <Box className={styles.navbarBrand}>
+          <Link to="/">
             <img
-              src="/phz.png"
-              alt="PHZ Full Stack Logo"
-              className="navbar__logo"
+              src="/sharevault.png"
+              alt="Logo"
+              className={styles.navbarLogo}
             />
           </Link>
         </Box>
-        {/* desktop */}
+        {/* Desktop menu */}
         <Box
           sx={{ display: { xs: "none", md: "flex" } }}
-          className="navbar-menu"
+          className={styles.navbarMenu}
         >
           {pages.map((page) => (
-            <Link key={page.label} to={page.path} className="navbar-item">
+            <Link key={page.label} to={page.path} className={styles.navbarItem}>
               {page.label}
             </Link>
           ))}
         </Box>
 
-        {/* mobile view */}
+        {/* Mobile menu */}
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <IconButton
             edge="end"
             color="inherit"
             aria-label="menu"
             onClick={isMenuOpen ? handleMenuClose : handleMenuOpen}
-            className="navbar-burger"
+            className={styles.navbarBurger}
           >
-            {isMenuOpen ? (
-              <CloseIcon /> // Display "X" icon
-            ) : (
-              <MenuIcon /> // Display burger icon
-            )}
+            {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
         </Box>
         <Menu
@@ -79,17 +75,16 @@ export default function HeaderNavBar() {
           sx={{
             "& .MuiPaper-root": {
               boxShadow: "none",
-              width: "100vw",
-              //marginTop: "0px",
+              width: "100%",
               borderRadius: "1px",
             },
             "& .MuiList-root": {
               paddingTop: "0px",
               paddingBottom: "0px",
-              width: "100vw",
+              width: "100%",
             },
           }}
-          className="navbar-mobile-menu"
+          className={styles.navbarMobileMenu}
         >
           {pages.map((page) => (
             <MenuItem
@@ -97,7 +92,7 @@ export default function HeaderNavBar() {
               onClick={handleMenuClose}
               component={Link}
               to={page.path}
-              className="navbar-item"
+              className={styles.navbarItemMobile}
             >
               {page.label}
             </MenuItem>

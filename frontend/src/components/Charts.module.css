@@ -1,0 +1,101 @@
+.Charts {
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "details lineChart lineChart"
+    "barChart barChart pieChart";
+
+  font-family: var(--font-family);
+  color: var(--heading-and-text-color);
+  line-height: 4rem;
+
+  .details {
+    grid-area: details;
+    background-color: var(--background-color);
+    border: 0.5px solid var(--border-color);
+    padding: 2rem;
+    text-align: left;
+
+    .detailsRow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: nowrap;
+    }
+
+    h2 {
+      padding: 0;
+      padding-inline-start: 0;
+      margin: 0;
+      margin-block-end: 2.5rem;
+      text-align: left;
+    }
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 200;
+    }
+  }
+
+  .lineChart,
+  .barChart,
+  .pieChart {
+    background-color: var(--background-color);
+    border: 0.5px solid var(--border-color);
+  }
+
+  .lineChart {
+    grid-area: lineChart;
+  }
+
+  .barChart {
+    grid-area: barChart;
+  }
+
+  .pieChart {
+    grid-area: pieChart;
+  }
+
+  .details:hover,
+  .lineChart:hover,
+  .barChart:hover,
+  .pieChart:hover {
+    box-shadow: 0 4px 4px 0 rgba(124, 124, 124, 0.5);
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .Charts {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "details"
+      "lineChart"
+      "barChart"
+      "pieChart";
+
+    .details,
+    .lineChart,
+    .barChart,
+    .pieChart {
+      max-width: 100%;
+      margin-block-end: 1rem;
+    }
+    .details {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+
+      h2 {
+        display: none;
+      }
+
+      .detailsRow {
+        margin-block-end: 0;
+      }
+    }
+  }
+}
