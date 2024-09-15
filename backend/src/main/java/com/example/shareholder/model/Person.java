@@ -43,7 +43,11 @@ public class Person {
 
   @Column(name = "pankkitili")
   private String bankAccount;
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> bfbc5ea984552646db46976bcba7d7c7d1e7209e
   public Person() {
   }
 
@@ -56,6 +60,7 @@ public class Person {
     this.postalCode = postalCode;
     this.city = city;
     this.ssn = ssn;
+    this.bankAccount = bankAccount;
     this.numberOfShares = numberOfShares;
     this.ownershipPercentage = ownershipPercentage;
     this.bankAccount = bankAccount;
