@@ -1,6 +1,8 @@
 import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
 import axios from "axios";
+import Toolbar from "@mui/material/Toolbar";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 const columns = [
   { id: "personId", label: "Nro", minWidth: 50 },
@@ -65,7 +67,14 @@ const Osakasluettelo = () => {
   const rows = useLoaderData();
   return (
     <>
-      <h1>Osakasluettelo</h1>
+      <Toolbar style={{ padding: 0, display: "flex" }}>
+        <h1>Osakasluettelo</h1>
+        <p style={{ flex: 1 }}></p>
+        <a href="http://localhost:8080/api/report/persons">
+          <CloudDownloadIcon fontSize="large" />
+        </a>
+      </Toolbar>
+
       <Table columns={columns} rows={rows} />
     </>
   );
