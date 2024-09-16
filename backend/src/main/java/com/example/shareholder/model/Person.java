@@ -2,7 +2,6 @@ package com.example.shareholder.model;
 
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "henkilo")
 public class Person {
@@ -41,7 +40,10 @@ public class Person {
 
   @Column(name = "omistusosuus")
   private double ownershipPercentage;
-  
+
+  @Column(name = "pankkitili")
+  private String bankAccount;
+
   public Person() {
   }
 
@@ -71,6 +73,14 @@ public class Person {
 
   public String getLastname() {
     return lastname;
+  }
+
+  public String getBankAccount() {
+    return bankAccount;
+  }
+
+  public void setBankAccount(String bankAccount) {
+    this.bankAccount = bankAccount;
   }
 
   public void setLastname(String lastname) {

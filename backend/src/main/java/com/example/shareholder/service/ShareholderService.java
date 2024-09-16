@@ -116,6 +116,10 @@ public class ShareholderService {
     existingPerson.setLastname(person.getLastname());
     existingPerson.setEmail(person.getEmail());
     existingPerson.setPhone(person.getPhone());
+    existingPerson.setAddress(person.getAddress());
+    existingPerson.setPostalCode(person.getPostalCode());
+    existingPerson.setCity(person.getCity());
+    existingPerson.setBankAccount(person.getBankAccount());
 
     return personRepository.save(existingPerson);
   }
