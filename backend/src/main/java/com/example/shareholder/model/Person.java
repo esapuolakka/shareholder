@@ -43,11 +43,7 @@ public class Person {
 
   @Column(name = "pankkitili")
   private String bankAccount;
-<<<<<<< HEAD
   
-=======
-
->>>>>>> bfbc5ea984552646db46976bcba7d7c7d1e7209e
   public Person() {
   }
 
