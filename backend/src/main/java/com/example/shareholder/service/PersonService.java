@@ -44,7 +44,7 @@ public class PersonService {
 
     public Person updatePerson(Long id, Person person) {
         Person existingPerson = personRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Henkilöä ei löytynyt id:llä " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Henkilöä ei löytynyt " + id));
 
         existingPerson.setFirstname(person.getFirstname());
         existingPerson.setLastname(person.getLastname());
