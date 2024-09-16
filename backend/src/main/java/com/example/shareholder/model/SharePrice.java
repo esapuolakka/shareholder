@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "osakkeen_hinta")
@@ -18,24 +19,24 @@ public class SharePrice {
   private Long id;
 
   @Column(name = "hinta")
-  private double price = 0.0;
+  private BigDecimal price = BigDecimal.ZERO;
 
   @Column(name = "paivamaara")
   private LocalDate date = LocalDate.now();
 
   @Column(name = "muutos_edelliseen")
-  private double difference = 0.0;
+  private BigDecimal difference = BigDecimal.ZERO;
 
   public SharePrice() {
   }
 
-  public SharePrice(double price) {
+  public SharePrice(BigDecimal price) {
     this.price = price;
     this.date = LocalDate.now();
-    this.difference = 0.0;
+    this.difference = BigDecimal.ZERO;
   }
 
-  public SharePrice(double price, LocalDate date, double difference) {
+  public SharePrice(BigDecimal price, LocalDate date, BigDecimal difference) {
     this.price = price;
     this.date = date;
     this.difference = difference;
@@ -49,11 +50,11 @@ public class SharePrice {
     this.id = id;
   }
 
-  public double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
-  public void setPrice(double price) {
+  public void setPrice(BigDecimal price) {
     this.price = price;
   }
 
@@ -65,11 +66,11 @@ public class SharePrice {
     this.date = date;
   }
 
-  public double getDifference() {
+  public BigDecimal getDifference() {
     return difference;
   }
 
-  public void setDifference(double difference) {
+  public void setDifference(BigDecimal difference) {
     this.difference = difference;
   }
 }

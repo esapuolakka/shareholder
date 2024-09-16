@@ -17,26 +17,26 @@ public class SharePriceDifferenceCalculator {
   @Autowired
   private SharePriceRepository sharePriceRepository;
 
-  public double calculateDifference(SharePrice newSharePrice) {
+  public BigDecimal calculateDifference(SharePrice newSharePrice) {
     List<SharePrice> sharePrices = sharePriceRepository.findAll();
     List<SharePrice> sortedSharePrices = sharePrices.stream()
         .sorted(Comparator.comparing(SharePrice::getDate).reversed())
         .collect(Collectors.toList());
 
     if (sortedSharePrices.size() < 1) {
-      return 0.0;
+      return BigDecimal.ZERO;
     }
 
-    BigDecimal previousPrice = BigDecimal.valueOf(sortedSharePrices.get(0).getPrice());
+    BigDecimal previousPrice = BigDecimal.valueOf(sortedSharePrices.get(0).getPrice().longValue());
 
     if (sortedSharePrices.size() > 1) {
-      previousPrice = BigDecimal.valueOf(sortedSharePrices.get(1).getPrice());
+      previousPrice = BigDecimal.valueOf(sortedSharePrices.get(1).getPrice().longValue());
     }
 
-    BigDecimal newPrice = BigDecimal.valueOf(newSharePrice.getPrice());
+    BigDecimal newPrice = BigDecimal.valueOf(newSharePrice.getPrice().longValue());
     BigDecimal difference = newPrice.subtract(previousPrice);
     BigDecimal roundedDifference = difference.setScale(2, RoundingMode.HALF_UP);
 
-    return roundedDifference.doubleValue();
-}
+    return roundedDifference;
+  }
 }

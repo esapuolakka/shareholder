@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
+import com.example.shareholder.model.SharePrice;
 import com.example.shareholder.model.Shareholder;
 import com.example.shareholder.repository.ShareholderRepository;
 import com.example.shareholder.repository.PersonRepository;
+import com.example.shareholder.repository.SharePriceRepository;
 
 @Service
 public class ShareholderService {
@@ -21,6 +24,9 @@ public class ShareholderService {
 
   @Autowired
   private ShareTransactionService shareTransactionService;
+
+  @Autowired
+  private SharePriceRepository sharePriceRepository;
 
   public List<Shareholder> getShareholders() {
     return shareholderRepository.findAll();
@@ -50,6 +56,16 @@ public class ShareholderService {
     }
     if (shareholder.getBuyer().getId() == shareholder.getSeller().getId()) {
       throw new IllegalArgumentException("Myyjä ja ostaja eivät voi olla sama henkilö");
+    }
+
+    // Set price per share
+    Optional<SharePrice> optionalSharePrice = sharePriceRepository.findFirstByOrderByIdDesc();
+    if (optionalSharePrice.isPresent()) {
+      // Get the price from the SharePrice object
+      BigDecimal latestPrice = optionalSharePrice.get().getPrice();
+      shareholder.setPricePerShare(latestPrice);
+    } else {
+      shareholder.setPricePerShare(BigDecimal.ZERO);
     }
 
     // Calculate total amount
