@@ -1,5 +1,6 @@
 package com.example.shareholder.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class SharePriceService {
   }
 
   public SharePrice addSharePrice(SharePrice sharePrice) {
-    double difference = sharePriceDifferenceCalculator.calculateDifference(sharePrice);
+    BigDecimal difference = sharePriceDifferenceCalculator.calculateDifference(sharePrice);
     sharePrice.setDifference(difference);
     return sharePriceRepository.save(sharePrice);
   }
@@ -39,7 +40,7 @@ public class SharePriceService {
     existingSharePrice.setPrice(newSharePrice.getPrice());
 
     // Calculate difference
-    double difference = sharePriceDifferenceCalculator.calculateDifference(newSharePrice);
+    BigDecimal difference = sharePriceDifferenceCalculator.calculateDifference(newSharePrice);
     existingSharePrice.setDifference(difference);
 
     // Update date
