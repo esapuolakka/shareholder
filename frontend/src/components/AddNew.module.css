@@ -1,7 +1,7 @@
 .AddNew {
   display: flex;
   justify-content: space-evenly;
-  gap: 1rem;
+  gap: 2rem;
 
   @media (max-width: 900px) {
     display: block;
@@ -27,7 +27,7 @@
   border-radius: 5px;
   align-content: flex-start;
   gap: 2rem;
-  height: 750px;
+  height: fit-content;
 
   .formRow {
     position: relative;
@@ -59,15 +59,19 @@
   input {
     width: 100%;
     padding: 1rem;
+    font-weight: 200;
+    font-family: var(--font-family);
+    font-size: 1.4rem;
     box-sizing: border-box;
     border: 0.5px solid #ccc;
     border-radius: 5px;
     outline: none;
-
+    margin-block-start: 0.5rem;
     &:focus {
       border: 0.5px solid #ed692f;
     }
   }
+
   select {
     width: 100%;
     padding: 1rem;
@@ -77,6 +81,22 @@
     font-family: var(--font-family);
     font-size: 1.2rem;
     font-weight: 300;
+    &:focus {
+      border: 0.5px solid #ed692f;
+    }
+  }
+  textarea {
+    width: 100%;
+    padding: 1rem;
+    font-weight: 200;
+    font-family: var(--font-family);
+    font-size: 1.4rem;
+    box-sizing: border-box;
+    border: 0.5px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    margin-block-start: 0.5rem;
+    resize: vertical;
     &:focus {
       border: 0.5px solid #ed692f;
     }
@@ -116,9 +136,4 @@
   > p {
     margin-top: 3rem;
   }
-}
-
-.textField {
-  font-size: 1.6rem;
-  font-weight: 200;
 }
