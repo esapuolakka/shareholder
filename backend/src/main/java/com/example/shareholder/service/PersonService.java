@@ -32,7 +32,7 @@ public class PersonService {
     public Person addPerson(Person person) {
         if (person.getFirstname() == null || person.getLastname() == null || person.getEmail() == null
                 || person.getPhone() == null || person.getNumberOfShares() == 0 || person.getAddress() == null
-                || person.getPostalCode() == null || person.getCity() == null) {
+                || person.getPostalCode() == null || person.getCity() == null || person.getBankAccount() == null) {
             throw new IllegalArgumentException("Kentät ovat pakollisia");
         }
         // Calculate ownership percentage
@@ -54,6 +54,7 @@ public class PersonService {
         existingPerson.setPostalCode(person.getPostalCode());
         existingPerson.setCity(person.getCity());
         existingPerson.setNumberOfShares(person.getNumberOfShares());
+        existingPerson.setBankAccount(person.getBankAccount());
 
         // Calculate ownership percentage
         double ownerPercentage = ownerPercentageCalculator.calculateOwnerPercentage(existingPerson.getNumberOfShares());
