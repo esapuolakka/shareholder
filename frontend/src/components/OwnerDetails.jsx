@@ -71,16 +71,18 @@ const OwnerDetails = ({ owners }) => {
           {isEditing ? (
             <>
               <div className={styles.detailsItem}>
-                <label>Nimi/Yrityksen nimi:</label>
+                <label>Nimi/ Yrityksen nimi:</label>
                 <input
                   type="text"
                   name="firstname"
+                  placeholder="Etunimi/ Yrityksen nimi"
                   value={editedOwner.firstname}
                   onChange={handleInputChange}
                 />
                 <input
                   type="text"
                   name="lastname"
+                  placeholder="Sukunimi"
                   value={editedOwner.lastname}
                   onChange={handleInputChange}
                 />
@@ -89,7 +91,7 @@ const OwnerDetails = ({ owners }) => {
           ) : (
             <>
               <div className={styles.detailsItem}>
-                <label>Etunimi Sukunimi/Yrityksen nimi:</label>
+                <label>Etunimi Sukunimi/ Yrityksen nimi:</label>
                 <span className={styles.nextRow}>
                   {selectedOwner.firstname} {selectedOwner.lastname}
                 </span>
@@ -141,7 +143,7 @@ const OwnerDetails = ({ owners }) => {
           </div>
 
           <div className={styles.detailsItem}>
-            <label>Henkilötunnus/Y-tunnus:</label>
+            <label>Henkilötunnus/ Y-tunnus:</label>
             {isEditing ? (
               <input
                 type="text"
@@ -161,12 +163,14 @@ const OwnerDetails = ({ owners }) => {
                 <input
                   type="text"
                   name="address"
+                  placeholder="Osoite"
                   value={editedOwner.address}
                   onChange={handleInputChange}
                 />
                 <input
                   type="text"
                   name="postalCode"
+                  placeholder="Postinumero"
                   value={editedOwner.postalCode}
                   onChange={handleInputChange}
                 />
@@ -186,6 +190,7 @@ const OwnerDetails = ({ owners }) => {
               <input
                 type="text"
                 name="city"
+                placeholder="Kaupunki"
                 value={editedOwner.city}
                 onChange={handleInputChange}
               />
