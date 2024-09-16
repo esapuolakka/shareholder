@@ -92,6 +92,7 @@ public class ExportToExcelService {
         XSSFFont font = workbook.createFont();
         font.setFontHeight(14);
         style.setFont(font);
+        style.setAlignment(HorizontalAlignment.LEFT);
         return style;
     }
   
@@ -110,7 +111,13 @@ public class ExportToExcelService {
             createCell(row, columnCount++, person.getId(), style);
             createCell(row, columnCount++, person.getFirstname(), style);
             createCell(row, columnCount++, person.getLastname(), style);
+            createCell(row, columnCount++, person.getNumberOfShares(), style);
+            createCell(row, columnCount++, person.getOwnershipPercentage(), style);
+            createCell(row, columnCount++, person.getSsn(), style);
+            createCell(row, columnCount++, person.getCity(), style);
+            createCell(row, columnCount++, person.getAddress(), style);
             createCell(row, columnCount++, person.getEmail(), style);
+            createCell(row, columnCount++, person.getPhone(), style);
         }
     }
 
@@ -124,7 +131,7 @@ public class ExportToExcelService {
 
 
         // write sheet, title & header
-        String[] headers = new String[]{"ID", "Firstname", "Lastname", "Email"};
+        String[] headers = new String[]{"ID", "Firstname", "Lastname", "NumberOfShare", "OwnershipPercentage", "Ssn", "City", "Address", "Email", "Phone"};
         writeTableHeaderExcel("Sheet User", "Person Report", headers);
 
         // write content row
