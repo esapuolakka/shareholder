@@ -1,5 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
+import axios from "axios";
 
 const columns = [
   { id: "personId", label: "Nro", minWidth: 50 },
@@ -14,20 +15,28 @@ const columns = [
     label: "Osakenumerot loppuen",
     minWidth: 50,
   },
-  { id: "numberOfShares", label: "Osakemäärä", minWidth: 50 },
+  { id: "numberOfRowsShares", label: "Osakemäärä", minWidth: 50 },
 ];
 
 export async function loader() {
-  const rows = [
-    {
-      personId: 1,
-      name: "Saima",
-      sharenumbersBeginning: 1,
-      sharenumbersEnding: 100,
-      numberOfShares: "",
-    },
-  ];
-  return rows;
+  const personsResponse = await axios.get("http://localhost:8080/api/persons");
+
+  const personsData = personsResponse.data;
+
+  const rowData = personsData.map((person) => {
+    const sharenumbersBeginning = 0;
+    const sharenumbersEnding = 0;
+
+    return {
+      personId: `${person.id}` || "N/A",
+      name: `${person.firstname} ${person.lastname}` || "N/A",
+      sharenumbersBeginning,
+      sharenumbersEnding,
+      numberOfRowsShares: sharenumbersEnding - sharenumbersBeginning + 1,
+    };
+  });
+
+  return rowData;
 }
 
 const Osakenumerot = () => {
