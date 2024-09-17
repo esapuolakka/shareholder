@@ -13,6 +13,7 @@ import com.example.shareholder.model.Person;
 
 import java.util.List;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,115 +25,130 @@ import java.util.Date;
 public class ExportToExcelService {
 
   public XSSFWorkbook workbook;
-    public XSSFSheet sheet;
+  public XSSFSheet sheet;
 
-    public void newReportExcel() {
-        workbook = new XSSFWorkbook();
+  public void newReportExcel() {
+    workbook = new XSSFWorkbook();
+  }
+
+  // It should be sent from frontend to match table filters 
+  private String[] fields = new String[]{"id", "firstname", "lastname", "numberOfShares", "ownershipPercentage", "ssn", "city", "address", "email", "phone"};
+
+  public HttpServletResponse initResponseForExportExcel(HttpServletResponse response, String fileName) {
+    response.setContentType("application/octet-stream");
+
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String currentDateTime = dateFormatter.format(new Date());
+
+    String headerKey = "Content-Disposition";
+    String headerValue = "attachment; filename=" + fileName + "_" + currentDateTime + ".xlsx";
+    response.setHeader(headerKey, headerValue);
+    return response;
+  }
+
+  public void writeTableHeaderExcel(String sheetName, String titleName, String[] fields) {
+    // sheet
+    sheet = workbook.createSheet(sheetName);
+    org.apache.poi.ss.usermodel.Row row = sheet.createRow(0);
+    CellStyle style = workbook.createCellStyle();
+    XSSFFont font = workbook.createFont();
+    font.setBold(true);
+    font.setFontHeight(20);
+    style.setFont(font);
+    style.setAlignment(HorizontalAlignment.CENTER);
+
+    // title
+    createCell(row, 0, titleName, style);
+    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, fields.length - 1));
+    font.setFontHeightInPoints((short) 10);
+
+    // header
+    row = sheet.createRow(1);
+    font.setBold(true);
+    font.setFontHeight(16);
+    style.setFont(font);
+    for (int i = 0; i < fields.length; i++) {
+        createCell(row, i, fields[i], style);
     }
+  }
 
-    public HttpServletResponse initResponseForExportExcel(HttpServletResponse response, String fileName) {
-        response.setContentType("application/octet-stream");
+  public void createCell(org.apache.poi.ss.usermodel.Row row, int columnCount, Object value, CellStyle style) {
+      sheet.autoSizeColumn(columnCount);
+      org.apache.poi.ss.usermodel.Cell cell = row.createCell(columnCount);
+      if (value instanceof Integer) {
+          cell.setCellValue((Integer) value);
+      } else if (value instanceof Double) {
+          cell.setCellValue((Double) value);
+      } else if (value instanceof Boolean) {
+          cell.setCellValue((Boolean) value);
+      } else if (value instanceof Long) {
+          cell.setCellValue((Long) value);
+      } else {
+          cell.setCellValue((String) value);
+      }
+      cell.setCellStyle(style);
+  }
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
+  public CellStyle getFontContentExcel() {
+      CellStyle style = workbook.createCellStyle();
+      XSSFFont font = workbook.createFont();
+      font.setFontHeight(14);
+      style.setFont(font);
+      style.setAlignment(HorizontalAlignment.LEFT);
+      return style;
+  }
 
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=" + fileName + "_" + currentDateTime + ".xlsx";
-        response.setHeader(headerKey, headerValue);
-        return response;
-    }
+public void writeTableData(List<Person> persons, String[] fields) {
 
-    public void writeTableHeaderExcel(String sheetName, String titleName, String[] headers) {
+      // font style content
+      CellStyle style = getFontContentExcel();
 
-        // sheet
-        sheet = workbook.createSheet(sheetName);
-        org.apache.poi.ss.usermodel.Row row = sheet.createRow(0);
-        CellStyle style = workbook.createCellStyle();
-        XSSFFont font = workbook.createFont();
-        font.setBold(true);
-        font.setFontHeight(20);
-        style.setFont(font);
-        style.setAlignment(HorizontalAlignment.CENTER);
+      // starting write on row
+      int startRow = 2;
 
+      // write content
+      for (Person person : persons) {
+        Row row = sheet.createRow(startRow++);
+        int columnCount = 0;
+        for (String fieldName : this.fields) {
+          try {
+            Field field = Person.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            try {
+                // Get the value of the field for the 'person' object
+                Object value = field.get(person);
 
-        // title
-        createCell(row, 0, titleName, style);
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, headers.length - 1));
-        font.setFontHeightInPoints((short) 10);
+                // Put the value on the cell
+                createCell(row, columnCount++, value, style);
 
-        // header
-        row = sheet.createRow(1);
-        font.setBold(true);
-        font.setFontHeight(16);
-        style.setFont(font);
-        for (int i = 0; i < headers.length; i++) {
-            createCell(row, i, headers[i], style);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+          } catch (NoSuchFieldException e) {
+            e.printStackTrace();
         }
-    }
 
-    public void createCell(org.apache.poi.ss.usermodel.Row row, int columnCount, Object value, CellStyle style) {
-        sheet.autoSizeColumn(columnCount);
-        org.apache.poi.ss.usermodel.Cell cell = row.createCell(columnCount);
-        if (value instanceof Integer) {
-            cell.setCellValue((Integer) value);
-        } else if (value instanceof Double) {
-            cell.setCellValue((Double) value);
-        } else if (value instanceof Boolean) {
-            cell.setCellValue((Boolean) value);
-        } else if (value instanceof Long) {
-            cell.setCellValue((Long) value);
-        } else {
-            cell.setCellValue((String) value);
         }
-        cell.setCellStyle(style);
-    }
+          
+      }
+  }
 
-    public CellStyle getFontContentExcel() {
-        CellStyle style = workbook.createCellStyle();
-        XSSFFont font = workbook.createFont();
-        font.setFontHeight(14);
-        style.setFont(font);
-        return style;
-    }
-  
-  public void writeTableData(List<Person> persons) {
+  public void exportToExcel(HttpServletResponse response, List<Person> data) throws IOException {
+    newReportExcel();
 
-        // font style content
-        CellStyle style = getFontContentExcel();
+    // response  writer to excel
+    response = initResponseForExportExcel(response, "Osakasluettelo");
+    ServletOutputStream outputStream = response.getOutputStream();
 
-        // starting write on row
-        int startRow = 2;
+    // write sheet, title & header
+    writeTableHeaderExcel("Osakasluettelon", "Osakasluettelon Raportti", this.fields);
 
-        // write content
-        for (Person person : persons) {
-            Row row = sheet.createRow(startRow++);
-            int columnCount = 0;
-            createCell(row, columnCount++, person.getId(), style);
-            createCell(row, columnCount++, person.getFirstname(), style);
-            createCell(row, columnCount++, person.getLastname(), style);
-            createCell(row, columnCount++, person.getEmail(), style);
-        }
-    }
+    // write content row
+    writeTableData(data, this.fields);
 
-
-    public void exportToExcel(HttpServletResponse response, List<Person> data) throws IOException {
-        newReportExcel();
-
-        // response  writer to excel
-        response = initResponseForExportExcel(response, "PersonReport");
-        ServletOutputStream outputStream = response.getOutputStream();
-
-
-        // write sheet, title & header
-        String[] headers = new String[]{"ID", "Firstname", "Lastname", "Email"};
-        writeTableHeaderExcel("Sheet User", "Person Report", headers);
-
-        // write content row
-        writeTableData(data);
-
-        workbook.write(outputStream);
-        workbook.close();
-        outputStream.close();
-    }
+    workbook.write(outputStream);
+    workbook.close();
+    outputStream.close();
+  }
 
 }
