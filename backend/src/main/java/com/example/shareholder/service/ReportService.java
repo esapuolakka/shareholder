@@ -7,26 +7,17 @@ import java.util.List;
 
 import java.io.IOException;
 
-import com.example.shareholder.model.Person;
-import com.example.shareholder.repository.PersonRepository;
-
 import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class ReportService {
 
     @Autowired
-    private PersonRepository personRepository;
-
-    @Autowired
     private ExportToExcelService exportToExcelService;
 
-    public void exportToExcel(HttpServletResponse response) throws IOException {
-        // get all user
-        List<Person> data = personRepository.findAll();
-
+    public <T> void exportToExcel(HttpServletResponse response, List<T> data, String[] fields, String title) throws IOException {
         // export to pdf
-        exportToExcelService.exportToExcel(response, data);
+        exportToExcelService.exportToExcel(response, data, fields, title);
 
     }
 }
