@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Addnew.module.css";
 
 const SelectPerson = ({ persons }) => (
@@ -16,6 +16,31 @@ const SelectPerson = ({ persons }) => (
 );
 
 const AddNew = ({ persons }) => {
+  const [sharesStart, setSharesStart] = useState("");
+  const [sharesEnd, setSharesEnd] = useState("");
+  const [pricePerShare, setPricePerShare] = useState("");
+  const [shareCount, setShareCount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  // share count
+  useEffect(() => {
+    if (sharesStart && sharesEnd) {
+      const count = Math.max(0, sharesEnd - sharesStart + 1);
+      setShareCount(count);
+    } else {
+      setShareCount(0);
+    }
+  }, [sharesStart, sharesEnd]);
+  // total
+  useEffect(() => {
+    if (pricePerShare && shareCount) {
+      const total = pricePerShare * shareCount;
+      setTotalPrice(total);
+    } else {
+      setTotalPrice(0);
+    }
+  }, [pricePerShare, shareCount]);
+
   return (
     <>
       <section className={styles.AddNew}>
@@ -33,34 +58,47 @@ const AddNew = ({ persons }) => {
             <div className={styles.inlineFormRow}>
               <div>
                 <label>Saantopäivä:</label>
-                <input />
+                <input type="date" />
               </div>
               <div>
                 <label>Maksupäivä:</label>
-                <input />
+                <input type="date" />
               </div>
             </div>
             <div className={styles.inlineFormRow}>
               <div>
                 <label>Osakenumerot alkaen:</label>
-                <input />
+                <input
+                  type="number"
+                  value={sharesStart}
+                  onChange={(e) => setSharesStart(Number(e.target.value))}
+                />
               </div>
               <div>
                 <label>Osakenumerot loppuen:</label>
-                <input />
+                <input
+                  type="number"
+                  value={sharesEnd}
+                  onChange={(e) => setSharesEnd(Number(e.target.value))}
+                />
               </div>
             </div>
             <div className={styles.formRow}>
               <label>Osakkeiden määrä:</label>
-              <input />
+              <input type="number" value={shareCount} readOnly />
             </div>
             <div className={styles.formRow}>
               <label>Hinta per osake:</label>
-              <input />
+              <input
+                type="number"
+                step="0.01"
+                value={pricePerShare}
+                onChange={(e) => setPricePerShare(Number(e.target.value))}
+              />
             </div>
             <div className={styles.formRow}>
               <label>EUR:</label>
-              <input />
+              <input type="number" value={totalPrice} readOnly />
             </div>
             <div className={styles.formRow}>
               <label>Huomioitavaa:</label>
@@ -76,7 +114,11 @@ const AddNew = ({ persons }) => {
           <form className={styles.generalItemContainer}>
             <div className={styles.formRow}>
               <label>Osakkaan numero:</label>
-              <input placeholder="** next free id number shown here **" />
+              <input
+                type="number"
+                placeholder="** next free id number shown here **"
+                readOnly
+              />
             </div>
             <div className={styles.formRow}>
               <label>Osakkaan nimi/ Yrityksen nimi:</label>
