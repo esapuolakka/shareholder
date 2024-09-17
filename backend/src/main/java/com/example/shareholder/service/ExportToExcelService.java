@@ -46,7 +46,7 @@ public class ExportToExcelService {
     return response;
   }
 
-  public void writeTableHeaderExcel(String sheetName, String titleName, String[] headers) {
+  public void writeTableHeaderExcel(String sheetName, String titleName, String[] fields) {
     // sheet
     sheet = workbook.createSheet(sheetName);
     org.apache.poi.ss.usermodel.Row row = sheet.createRow(0);
@@ -59,7 +59,7 @@ public class ExportToExcelService {
 
     // title
     createCell(row, 0, titleName, style);
-    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, headers.length - 1));
+    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, fields.length - 1));
     font.setFontHeightInPoints((short) 10);
 
     // header
@@ -67,8 +67,8 @@ public class ExportToExcelService {
     font.setBold(true);
     font.setFontHeight(16);
     style.setFont(font);
-    for (int i = 0; i < headers.length; i++) {
-        createCell(row, i, headers[i], style);
+    for (int i = 0; i < fields.length; i++) {
+        createCell(row, i, fields[i], style);
     }
   }
 
@@ -98,7 +98,7 @@ public class ExportToExcelService {
       return style;
   }
 
-public void writeTableData(List<Person> persons) {
+public void writeTableData(List<Person> persons, String[] fields) {
 
       // font style content
       CellStyle style = getFontContentExcel();
@@ -144,7 +144,7 @@ public void writeTableData(List<Person> persons) {
     writeTableHeaderExcel("Osakasluettelon", "Osakasluettelon Raportti", this.fields);
 
     // write content row
-    writeTableData(data);
+    writeTableData(data, this.fields);
 
     workbook.write(outputStream);
     workbook.close();
