@@ -9,8 +9,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import com.example.shareholder.model.Person;
-
 import java.util.List;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -30,9 +28,6 @@ public class ExportToExcelService {
   public void newReportExcel() {
     workbook = new XSSFWorkbook();
   }
-
-  // It should be sent from frontend to match table filters 
-  private String[] fields = new String[]{"id", "firstname", "lastname", "numberOfShares", "ownershipPercentage", "ssn", "city", "address", "email", "phone"};
 
   public HttpServletResponse initResponseForExportExcel(HttpServletResponse response, String fileName) {
     response.setContentType("application/octet-stream");
@@ -98,7 +93,7 @@ public class ExportToExcelService {
       return style;
   }
 
-public void writeTableData(List<Person> persons, String[] fields) {
+public <T> void writeTableData(List<T> records, String[] fields) {
 
       // font style content
       CellStyle style = getFontContentExcel();
@@ -107,16 +102,16 @@ public void writeTableData(List<Person> persons, String[] fields) {
       int startRow = 2;
 
       // write content
-      for (Person person : persons) {
+      for (T record : records) {
         Row row = sheet.createRow(startRow++);
         int columnCount = 0;
-        for (String fieldName : this.fields) {
+        for (String fieldName : fields) {
           try {
-            Field field = Person.class.getDeclaredField(fieldName);
+            Field field = record.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
             try {
                 // Get the value of the field for the 'person' object
-                Object value = field.get(person);
+                Object value = field.get(record);
 
                 // Put the value on the cell
                 createCell(row, columnCount++, value, style);
@@ -133,18 +128,17 @@ public void writeTableData(List<Person> persons, String[] fields) {
       }
   }
 
-  public void exportToExcel(HttpServletResponse response, List<Person> data) throws IOException {
+  public <T> void exportToExcel(HttpServletResponse response, List<T> data, String[] fields, String title) throws IOException {
     newReportExcel();
-
     // response  writer to excel
-    response = initResponseForExportExcel(response, "Osakasluettelo");
+    response = initResponseForExportExcel(response, title);
     ServletOutputStream outputStream = response.getOutputStream();
 
     // write sheet, title & header
-    writeTableHeaderExcel("Osakasluettelon", "Osakasluettelon Raportti", this.fields);
+    writeTableHeaderExcel(title + "Sheet", title, fields);
 
     // write content row
-    writeTableData(data, this.fields);
+    writeTableData(data, fields);
 
     workbook.write(outputStream);
     workbook.close();
