@@ -9,8 +9,9 @@ const options = {
     text: "ARVONKEHITYS",
     align: "center",
     style: {
-      fontWeight: "300",
+      fontWeight: "700",
       fontSize: "14px",
+      fontFamily: "var(--font-family)",
     },
   },
   credits: {
