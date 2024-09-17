@@ -22,6 +22,7 @@ const options = {
       data: [4200, 347, 4010, 760, 2260, 1120, 4500],
       color: "#ed692f",
       name: "Osakkeen hinta",
+      lineWidth: 1,
       marker: {
         radius: 6,
         lineColor: "var(--primary-color)",

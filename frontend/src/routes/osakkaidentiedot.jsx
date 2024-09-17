@@ -26,9 +26,9 @@ export async function loader() {
       numberOfShares: shareholder ? shareholder.numberOfShares : 0,
       ownershipPercentage: person.ownershipPercentage || 0,
       shareNumbers: [
-        { beginning: 1, ending: 800 },
-        { beginning: 801, ending: 3000 },
-        { beginning: 3001, ending: 100000 },
+        { beginning: 1, ending: 1 },
+        { beginning: 2, ending: 2 },
+        { beginning: 3, ending: 3 },
       ],
       collectionDate: shareholder?.collectionDate ?? "N/A",
       term: shareholder?.term ?? "N/A",

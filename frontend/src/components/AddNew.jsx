@@ -102,7 +102,7 @@ const AddNew = ({ persons }) => {
             </div>
             <div className={styles.formRow}>
               <label>Huomioitavaa:</label>
-              <textarea className={styles.formRow} rows="7" />
+              <textarea className={styles.formRow} rows="4" />
             </div>
             <div className={styles.formRow}>
               <button className={styles.styledButton}>Lisää</button>
@@ -112,14 +112,14 @@ const AddNew = ({ persons }) => {
         <div className={styles.addBox}>
           <h2>Osakkeenomistaja</h2>
           <form className={styles.generalItemContainer}>
-            <div className={styles.formRow}>
+            {/* <div className={styles.formRow}>
               <label>Osakkaan numero:</label>
               <input
                 type="number"
                 placeholder="** next free id number shown here **"
                 readOnly
               />
-            </div>
+            </div> */}
             <div className={styles.formRow}>
               <label>Osakkaan nimi/ Yrityksen nimi:</label>
               <input placeholder="Etunimi/ Yrityksen nimi" />
