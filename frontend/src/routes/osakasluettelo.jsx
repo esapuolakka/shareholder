@@ -71,7 +71,15 @@ const Osakasluettelo = () => {
         <h1>Osakasluettelo</h1>
         <p style={{ flex: 1 }}></p>
         <a href="http://localhost:8080/api/report/persons">
-          <CloudDownloadIcon fontSize="large" />
+          <CloudDownloadIcon
+            fontSize="large"
+            sx={{
+              color: "var(--heading-and-text-color)",
+              "&:hover": {
+                color: "var(--link-text-color-hover)",
+              },
+            }}
+          />
         </a>
       </Toolbar>
 
