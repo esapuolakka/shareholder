@@ -112,7 +112,14 @@ const Merkintahistoria = () => {
 
   return (
     <>
-      <h1>Merkintähistoria</h1>
+      <Toolbar style={{ padding: 0, display: "flex" }}>
+        <h1>Merkintähistoria</h1>
+        <p style={{ flex: 1 }}></p>
+        <a href="http://localhost:8080/api/report/shareholders">
+          <CloudDownloadIcon fontSize="large" />
+        </a>
+      </Toolbar>
+
       <TableWithPagination columns={columns} rows={rows} />
     </>
   );

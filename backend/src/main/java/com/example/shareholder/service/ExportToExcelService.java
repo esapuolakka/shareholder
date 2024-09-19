@@ -79,7 +79,7 @@ public class ExportToExcelService {
       } else if (value instanceof Long) {
           cell.setCellValue((Long) value);
       } else {
-          cell.setCellValue((String) value);
+          cell.setCellValue((String) value.toString());
       }
       cell.setCellStyle(style);
   }
