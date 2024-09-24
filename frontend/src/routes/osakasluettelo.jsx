@@ -1,11 +1,13 @@
 import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
 import axios from "axios";
+import Toolbar from "@mui/material/Toolbar";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 const columns = [
-  { id: "personId", label: "Nro", minWidth: 110 },
+  { id: "personId", label: "Nro", minWidth: 50 },
   { id: "name", label: "Nimi", minWidth: 110 },
-  { id: "numberOfShares", label: "Määrä", minWidth: 50 },
+  { id: "numberOfShares", label: "Osakemäärä", minWidth: 50 },
   {
     id: "ownershipPercentage",
     label: "Omistus%",
@@ -13,7 +15,7 @@ const columns = [
   },
   {
     id: "ssn",
-    label: "Hetu",
+    label: "Hetu/Y-tunnus",
     minWidth: 100,
   },
   {
@@ -28,7 +30,7 @@ const columns = [
   },
   {
     id: "email",
-    label: "Sähkoposti",
+    label: "Sähköposti",
     minWidth: 70,
   },
   {
@@ -65,7 +67,22 @@ const Osakasluettelo = () => {
   const rows = useLoaderData();
   return (
     <>
-      <h1>Osakasluettelo</h1>
+      <Toolbar style={{ padding: 0, display: "flex" }}>
+        <h1>Osakasluettelo</h1>
+        <p style={{ flex: 1 }}></p>
+        <a href="http://localhost:8080/api/report/persons">
+          <CloudDownloadIcon
+            fontSize="large"
+            sx={{
+              color: "var(--heading-and-text-color)",
+              "&:hover": {
+                color: "var(--link-text-color-hover)",
+              },
+            }}
+          />
+        </a>
+      </Toolbar>
+
       <Table columns={columns} rows={rows} />
     </>
   );

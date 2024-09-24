@@ -17,14 +17,35 @@
 
 .detailsItem {
   flex-basis: 100%;
-}
+  display: flex;
+  flex-direction: column;
 
-.detailsItem p {
-  font-size: 1.4rem;
+  label {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 200;
+  }
+
+  input {
+    padding: 1rem;
+    font-weight: 200;
+    font-family: var(--font-family);
+    font-size: 1.4rem;
+    box-sizing: border-box;
+    border: 0.5px solid #ccc;
+    border-radius: 5px;
+    margin-block-end: 0.5rem;
+    outline: none;
+    &:focus {
+      border: 0.5px solid var(--hover-color);
+    }
+  }
 }
 
 .nextRow {
   display: block;
+  font-weight: 200;
+  font-size: 1.4rem;
 }
 
 .smallerBoxContainerFlex,
@@ -45,6 +66,17 @@
   border: 0.5px solid var(--primary-color);
   border-radius: 5px;
   background-color: #fff;
+
+  label {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 200;
+  }
+
+  span {
+    font-weight: 200;
+    font-size: 1.4rem;
+  }
 }
 
 .generalSmallerBox:hover {
@@ -60,15 +92,16 @@
 }
 
 select {
+  width: 27rem;
   padding: 1rem;
+  border: 0.5px solid #ccc;
+  border-radius: 5px;
+  outline: none;
   font-family: var(--font-family);
   font-size: 1.2rem;
   font-weight: 300;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-  width: 25rem;
   &:focus {
-    border: 0.5px solid #ed692f;
+    border: 0.5px solid var(--hover-color);
   }
 }
 
@@ -106,10 +139,11 @@ select {
   border-radius: 5px;
   cursor: pointer;
   z-index: 10;
+  margin-inline-end: 1rem;
 }
 
 .styledButton:hover {
-  background-color: rgb(255, 252, 226);
+  background-color: rgb(255, 254, 243);
   box-shadow: 0 4px 4px 0 rgba(124, 124, 124, 0.5);
   transition: all 0.3s ease;
 }
@@ -119,6 +153,12 @@ select {
   left: 20px;
 } */
 
+.loaderimg {
+  margin: 2rem;
+  display: flex !important;
+  justify-content: center !important;
+}
+
 @media screen and (min-width: 768px) {
   .generalItemContainer {
     display: grid;
@@ -127,12 +167,12 @@ select {
     grid-template-areas:
       "detail1 box1"
       "detail2 box2"
-      "detail3 box2"
-      "detail4 box2"
       "detail5 box2"
       "detail6 box2"
       "detail7 box2"
       "detail8 box2"
+      "detail3 box2"
+      "detail4 box2"
       "button .";
     row-gap: 1rem;
   }

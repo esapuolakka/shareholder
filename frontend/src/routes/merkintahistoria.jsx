@@ -6,7 +6,7 @@ const columns = [
   {
     id: "id",
     label: "Nro",
-    minWidth: 100,
+    minWidth: 50,
   },
   {
     id: "collectionDate",
@@ -28,18 +28,18 @@ const columns = [
   },
   {
     id: "numbers",
-    label: "Kpl",
+    label: "Osakemäärä",
     minWidth: 70,
   },
   {
     id: "pricePerShare",
-    label: "Hinta per osake",
+    label: "EUR/osake",
     minWidth: 70,
   },
   {
     id: "eur",
     label: "EUR",
-    minWidth: 100,
+    minWidth: 70,
   },
   {
     id: "noteworthy",

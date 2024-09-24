@@ -1,50 +1,42 @@
 import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
+import axios from "axios";
 
 const columns = [
+  { id: "personId", label: "Nro", minWidth: 50 },
+  { id: "name", label: "Nimi", minWidth: 110 },
   {
-    id: "omistajanNimi",
-    label: "Nimi",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "osakenumerotAlkaen",
+    id: "sharenumbersBeginning",
     label: "Osakenumerot alkaen",
     minWidth: 50,
-    align: "center",
   },
   {
-    id: "osakenumerotLoppuen",
+    id: "sharenumbersEnding",
     label: "Osakenumerot loppuen",
     minWidth: 50,
-    align: "center",
   },
-  {
-    id: "kappaleMaara",
-    label: "Kappalemäärä",
-    minWidth: 70,
-    align: "center",
-  },
-  {
-    id: "tarkistuslaskenta",
-    label: "Tarkistuslaskenta",
-    minWidth: 70,
-    align: "center",
-  },
+  { id: "numberOfRowsShares", label: "Osakemäärä", minWidth: 50 },
 ];
 
 export async function loader() {
-  const rows = [
-    {
-      osakenumerotAlkaen: 1,
-      osakenumerotLoppuen: 100,
-      kappaleMaara: "",
-      omistajanNimi: "Saima",
-      tarkistuslaskenta: "",
-    },
-  ];
-  return rows;
+  const personsResponse = await axios.get("http://localhost:8080/api/persons");
+
+  const personsData = personsResponse.data;
+
+  const rowData = personsData.map((person) => {
+    const sharenumbersBeginning = 0;
+    const sharenumbersEnding = 0;
+
+    return {
+      personId: `${person.id}` || "N/A",
+      name: `${person.firstname} ${person.lastname}` || "N/A",
+      sharenumbersBeginning,
+      sharenumbersEnding,
+      numberOfRowsShares: sharenumbersEnding - sharenumbersBeginning + 1,
+    };
+  });
+
+  return rowData;
 }
 
 const Osakenumerot = () => {
