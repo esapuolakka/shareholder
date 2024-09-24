@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import styles from "./OwnerDetails.module.css";
+import api from "../api";
 
 const SelectPerson = ({ owners, onChange }) => (
   <select onChange={(e) => onChange(e.target.value)}>
@@ -38,10 +38,7 @@ const OwnerDetails = ({ owners }) => {
   const handleSave = async () => {
     if (JSON.stringify(editedOwner) !== JSON.stringify(selectedOwner)) {
       try {
-        await axios.put(
-          `http://localhost:8080/api/persons/${editedOwner.id}`,
-          editedOwner
-        );
+        await api.put(`/persons/${editedOwner.id}`, editedOwner);
         setSelectedOwner(editedOwner); // set edited owner
         setIsEditing(false); // exit edit space
       } catch (error) {
@@ -273,18 +270,3 @@ const OwnerDetails = ({ owners }) => {
 };
 
 export default OwnerDetails;
-
-// const refreshOwners = async () => {
-//   try {
-//     const response = await axios.get("http://localhost:8080/api/persons");
-//     setOwners(response.data); // Päivitetään omistajat
-//     if (selectedOwner) {
-//       const updatedOwner = response.data.find(
-//         (o) => o.id === selectedOwner.id
-//       );
-//       setSelectedOwner(updatedOwner); // Päivitä valittu henkilö
-//     }
-//   } catch (error) {
-//     console.error("Tietojen hakeminen epäonnistui", error);
-//   }
-// };

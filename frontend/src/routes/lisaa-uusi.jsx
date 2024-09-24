@@ -1,14 +1,9 @@
-import axios from "axios";
 import { useLoaderData } from "react-router-dom";
 import AddNew from "../components/AddNew";
+import api from "../api";
 
 export async function loader() {
-  // TODO: Hardcoded API
-  // Fix it later with .env file + config
-  const response = await axios({
-    method: "get",
-    url: "http://localhost:8080/api/persons",
-  });
+  const response = await api.get("/persons");
   return response.data;
 }
 

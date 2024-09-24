@@ -1,18 +1,12 @@
-import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import axios from "axios";
 import OwnerDetails from "../components/OwnerDetails";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import styles from "../components/OwnerDetails.module.css";
+import api from "../api";
 
 export async function loader() {
-  const personsResponse = await axios.get("http://localhost:8080/api/persons");
-  const shareholdersResponse = await axios.get(
-    "http://localhost:8080/api/shareholders"
-  );
-
-  const personsData = personsResponse.data;
-  const shareholdersData = shareholdersResponse.data;
+  const { data: personsData } = await api.get("/persons");
+  const { data: shareholdersData } = await api.get("/shareholders");
 
   // unite person ja shareholder into owner object
   const owners = personsData.map((person) => {
