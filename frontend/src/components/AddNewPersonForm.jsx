@@ -26,10 +26,8 @@ const AddNewPersonForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Lähetetään henkilön tiedot: ", person);
     try {
-      const response = await axios.post("/persons/add", person);
-      console.log("Osakkeenomistaja lisätty:", response.data);
+      const response = await api.post("/persons/add", person);
       alert("Uusi osakkeenomistaja on lisätty onnistuneesti tietokantaan.");
       // Reset form
       setPerson({
