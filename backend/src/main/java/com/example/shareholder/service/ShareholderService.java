@@ -6,10 +6,14 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Optional;
 
+import com.example.shareholder.model.SharePrice;
 import com.example.shareholder.model.SharePrice;
 import com.example.shareholder.model.Shareholder;
 import com.example.shareholder.repository.ShareholderRepository;
+import com.example.shareholder.repository.PersonRepository;
+import com.example.shareholder.repository.SharePriceRepository;
 import com.example.shareholder.repository.PersonRepository;
 import com.example.shareholder.repository.SharePriceRepository;
 
@@ -21,6 +25,12 @@ public class ShareholderService {
 
   @Autowired
   private PersonRepository personRepository;
+
+  @Autowired
+  private ShareTransactionService shareTransactionService;
+
+  @Autowired
+  private SharePriceRepository sharePriceRepository;
 
   @Autowired
   private ShareTransactionService shareTransactionService;
@@ -45,6 +55,7 @@ public class ShareholderService {
       throw new IllegalArgumentException("Myyjää ei löydy annetulla ID:llä: " + shareholder.getSeller().getId());
     }
     if (shareholder.getCollectionDate() == null || shareholder.getTerm() == null || shareholder.getNumberOfShares() == 0) {
+    if (shareholder.getCollectionDate() == null || shareholder.getTerm() == null || shareholder.getNumberOfShares() == 0) {
       throw new IllegalArgumentException("Kentät ovat pakollisia");
     }
     if (shareholder.getNumberOfShares() < 0) {
@@ -52,6 +63,15 @@ public class ShareholderService {
     }
     if (shareholder.getBuyer().getId() == shareholder.getSeller().getId()) {
       throw new IllegalArgumentException("Myyjä ja ostaja eivät voi olla sama henkilö");
+    }
+
+    // Set price per share
+    Optional<SharePrice> optionalSharePrice = sharePriceRepository.findFirstByOrderByIdDesc();
+    if (optionalSharePrice.isPresent()) {
+      BigDecimal latestPrice = optionalSharePrice.get().getPrice();
+      shareholder.setPricePerShare(latestPrice);
+    } else {
+      shareholder.setPricePerShare(BigDecimal.ZERO);
     }
 
     // Set price per share
@@ -77,6 +97,8 @@ public class ShareholderService {
     shareholderRepository.deleteById(id);
     // Update total share count
     shareTransactionService.updateTotalShareCount();
+    // Update total share count
+    shareTransactionService.updateTotalShareCount();
   }
 
   public Shareholder updateShareholder(Long id, Shareholder shareholder) {
@@ -99,9 +121,23 @@ public class ShareholderService {
       existingShareholder.setPricePerShare(BigDecimal.ZERO);
     }
 
+    // Set price per share
+    Optional<SharePrice> optionalSharePrice = sharePriceRepository.findFirstByOrderByIdDesc();
+    if (optionalSharePrice.isPresent()) {
+      BigDecimal latestPrice = optionalSharePrice.get().getPrice();
+      existingShareholder.setPricePerShare(latestPrice);
+    } else {
+      existingShareholder.setPricePerShare(BigDecimal.ZERO);
+    }
+
     BigDecimal numberOfShares = BigDecimal.valueOf(existingShareholder.getNumberOfShares());
     existingShareholder.setTotalAmount(numberOfShares.multiply(existingShareholder.getPricePerShare()));
 
+    Shareholder updatedShareholder = shareholderRepository.save(existingShareholder);
+
+    // Update total share count
+    shareTransactionService.updateTotalShareCount();
+    return updatedShareholder;
     Shareholder updatedShareholder = shareholderRepository.save(existingShareholder);
 
     // Update total share count
