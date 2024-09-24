@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
-import axios from "axios";
+import api from "../api";
 
 const columns = [
   { id: "personId", label: "Nro", minWidth: 50 },
@@ -19,9 +19,7 @@ const columns = [
 ];
 
 export async function loader() {
-  const personsResponse = await axios.get("http://localhost:8080/api/persons");
-
-  const personsData = personsResponse.data;
+  const { data: personsData } = await api.get("/persons");
 
   const rowData = personsData.map((person) => {
     const sharenumbersBeginning = 0;

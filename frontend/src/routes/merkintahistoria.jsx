@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import TableWithPagination from "../components/TableWithPagination";
-import axios from "axios";
+import api from "../api";
 
 const columns = [
   {
@@ -49,12 +49,7 @@ const columns = [
 ];
 
 export async function loader() {
-  //same axios get method
-  const shareholdersResponse = await axios.get(
-    "http://localhost:8080/api/shareholders"
-  );
-
-  const shareholdersData = shareholdersResponse.data;
+  const { data: shareholdersData } = await api.get("/shareholders");
 
   const rowData = shareholdersData.map((shareholder) => {
     return {

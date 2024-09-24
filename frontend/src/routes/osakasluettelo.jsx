@@ -1,8 +1,8 @@
 import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
-import axios from "axios";
 import Toolbar from "@mui/material/Toolbar";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import api from "../api";
 
 const columns = [
   { id: "personId", label: "Nro", minWidth: 50 },
@@ -42,7 +42,7 @@ const columns = [
 
 export async function loader() {
   //same axios get method
-  const personsResponse = await axios.get("http://localhost:8080/api/persons");
+  const personsResponse = await api.get("/persons");
 
   const personsData = personsResponse.data;
 
@@ -70,7 +70,7 @@ const Osakasluettelo = () => {
       <Toolbar style={{ padding: 0, display: "flex" }}>
         <h1>Osakasluettelo</h1>
         <p style={{ flex: 1 }}></p>
-        <a href="http://localhost:8080/api/report/persons">
+        <a href={`${import.meta.env.VITE_BASE_URL}/report/persons`}>
           <CloudDownloadIcon
             fontSize="large"
             sx={{
