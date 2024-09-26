@@ -229,13 +229,13 @@ const OwnerDetails = ({ owners }) => {
             {isEditing ? (
               <input
                 type="text"
-                name="accountNumber"
-                value={editedOwner.accountNumber}
+                name="bankAccount"
+                value={editedOwner.bankAccount}
                 onChange={handleInputChange}
               />
             ) : (
               <span className={styles.nextRow}>
-                {selectedOwner.accountNumber}
+                {selectedOwner.bankAccount}
               </span>
             )}
           </div>
