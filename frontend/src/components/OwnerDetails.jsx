@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./OwnerDetails.module.css";
 import api from "../api";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const SelectPerson = ({ owners, onChange }) =>
   owners && owners.length > 0 ? (
@@ -25,6 +31,9 @@ const OwnerDetails = ({ owners }) => {
   const [selectedOwner, setSelectedOwner] = useState(null);
   const [editedOwner, setEditedOwner] = useState(null);
   const navigate = useNavigate(); // useNavigate hook for navigation
+  const [open, setOpen] = useState(false); // Snackbarin tila
+  const [message, setMessage] = useState(""); // Viestin tila
+  const [severity, setSeverity] = useState("success"); // Ilmoituksen tyyppi
 
   const handlePersonChange = (personId) => {
     const owner = owners.find((o) => o.id === parseInt(personId, 10)); //Radix 10
@@ -50,7 +59,9 @@ const OwnerDetails = ({ owners }) => {
     e.preventDefault();
 
     if (JSON.stringify(editedOwner) === JSON.stringify(selectedOwner)) {
-      alert("Ei muutoksia tallennettavaksi");
+      setMessage("Ei muutoksia tallennettavaksi");
+      setSeverity("warning");
+      setOpen(true);
       setIsEditing(false);
       return;
     }
@@ -58,11 +69,15 @@ const OwnerDetails = ({ owners }) => {
     try {
       await api.put(`/persons/${editedOwner.id}`, editedOwner);
       setSelectedOwner(editedOwner);
-      alert("Henkiötietojen päivittäminen onnistui");
+      setMessage("Henkilötietojen päivitys onnistui");
+      setSeverity("success");
+      setOpen(true);
       setIsEditing(false);
     } catch (error) {
       console.error("Tietojen päivittäminen epäonnistui", error);
-      alert("Tietojen päivittäminen epäonnistui");
+      setMessage("Tietojen päivittäminen epäonnistui");
+      setSeverity("error");
+      setOpen(true);
     }
   };
 
@@ -71,8 +86,17 @@ const OwnerDetails = ({ owners }) => {
     setIsEditing(false);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={severity}>
+          {message}
+        </Alert>
+      </Snackbar>
       <SelectPerson owners={owners} onChange={handlePersonChange} />
 
       {selectedOwner && (
