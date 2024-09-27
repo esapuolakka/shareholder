@@ -6,7 +6,22 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  return (
+    <MuiAlert
+      elevation={0}
+      ref={ref}
+      variant="standard"
+      sx={{
+        marginRight: "1.5rem",
+        marginTop: "var(--navbar-height)",
+        backgroundColor: "white",
+        border: " 0.5px solid var(--border-color)",
+        color: "var(--heading-and-text-color)",
+        fontSize: "12px",
+      }}
+      {...props}
+    />
+  );
 });
 
 const SelectPerson = ({ owners, onChange }) =>
@@ -31,9 +46,9 @@ const OwnerDetails = ({ owners }) => {
   const [selectedOwner, setSelectedOwner] = useState(null);
   const [editedOwner, setEditedOwner] = useState(null);
   const navigate = useNavigate(); // useNavigate hook for navigation
-  const [open, setOpen] = useState(false); // Snackbarin tila
-  const [message, setMessage] = useState(""); // Viestin tila
-  const [severity, setSeverity] = useState("success"); // Ilmoituksen tyyppi
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
 
   const handlePersonChange = (personId) => {
     const owner = owners.find((o) => o.id === parseInt(personId, 10)); //Radix 10
@@ -92,7 +107,12 @@ const OwnerDetails = ({ owners }) => {
 
   return (
     <>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar
+        open={open}
+        // autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
         <Alert onClose={handleClose} severity={severity}>
           {message}
         </Alert>
@@ -223,7 +243,7 @@ const OwnerDetails = ({ owners }) => {
               <div
                 className={`${styles.generalSmallerBox} ${styles.fullWidth}`}
               >
-                <p>Ei osakenumeroita</p>
+                <p>Osakkeita ei omistuksessa tällä hetkellä</p>
               </div>
             )}
           </div>
