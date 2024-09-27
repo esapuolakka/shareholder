@@ -51,6 +51,12 @@ const router = createBrowserRouter([
         loader: osakkaidentiedotLoader,
       },
       {
+        // route with person.id
+        path: "osakkaidentiedot/:id",
+        element: <Osakkaidentiedot />,
+        loader: osakkaidentiedotLoader,
+      },
+      {
         path: "lisaa-uusi",
         element: <LisaaUusi />,
         loader: LisaaUusiLoader,

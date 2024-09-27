@@ -15,25 +15,26 @@ export async function loader() {
     );
     return {
       id: person.id,
-      firstname: person.firstname,
-      lastname: person.lastname,
+      firstname: person.firstname ?? "Ei tiedossa",
+      lastname: person.lastname ?? "Ei tiedossa",
       numberOfShares: shareholder ? shareholder.numberOfShares : 0,
       ownershipPercentage: person.ownershipPercentage || 0,
-      shareNumbers: [
-        { beginning: 1, ending: 1 },
-        { beginning: 2, ending: 2 },
-        { beginning: 3, ending: 3 },
-      ],
-      collectionDate: shareholder?.collectionDate ?? "N/A",
-      term: shareholder?.term ?? "N/A",
+      shareNumbers:
+        [
+          { beginning: 1, ending: 1 },
+          { beginning: 2, ending: 2 },
+          { beginning: 3, ending: 3 },
+        ] ?? "Henkilöllä ei ole osakkeita omistuksessa",
+      collectionDate: shareholder?.collectionDate ?? "Ei tiedossa",
+      term: shareholder?.term ?? "Ei tiedossa",
       transferTaxPaid: shareholder?.transferTaxPaid ?? false,
-      ssn: person.ssn ?? "N/A", //no method in backend for this
-      city: person.city ?? "N/A", //no method in backend for this
-      address: person.address ?? "N/A", //no method in backend for this
-      postalCode: person.postalCode ?? "N/A", //no method in backend for this
-      email: person.email ?? "N/A",
-      phone: person.phone ?? "N/A",
-      bankAccount: person.bankAccount ?? "N/A", //no method in backend for this
+      ssn: person.ssn ?? "Ei tiedossa",
+      city: person.city ?? "Ei tiedossa",
+      address: person.address ?? "Ei tiedossa",
+      postalCode: person.postalCode ?? "Ei tiedosssa",
+      email: person.email ?? "Ei tiedossa",
+      phone: person.phone ?? "Ei tiedossa",
+      bankAccount: person.bankAccount ?? "Ei tiedossa",
     };
   });
 

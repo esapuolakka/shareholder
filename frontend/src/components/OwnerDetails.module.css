@@ -77,6 +77,21 @@
     font-weight: 200;
     font-size: 1.4rem;
   }
+
+  input {
+    padding: 1rem;
+    font-weight: 200;
+    font-family: var(--font-family);
+    font-size: 1.4rem;
+    box-sizing: border-box;
+    border: 0.5px solid #ccc;
+    border-radius: 5px;
+    margin-block-end: 0.5rem;
+    outline: none;
+    &:focus {
+      border: 0.5px solid var(--hover-color);
+    }
+  }
 }
 
 .generalSmallerBox:hover {
