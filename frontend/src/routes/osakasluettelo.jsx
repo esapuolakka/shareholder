@@ -38,6 +38,11 @@ const columns = [
     label: "Puhelinnumero",
     minWidth: 70,
   },
+  {
+    id: "bankAccount",
+    label: "Tilinumero",
+    minWidth: 100,
+  },
 ];
 
 export async function loader() {
@@ -57,6 +62,7 @@ export async function loader() {
       phone: person.phone || "N/A",
       numberOfShares: person.numberOfShares || 0,
       ownershipPercentage: person.ownershipPercentage || 0.0,
+      bankAccount: person.bankAccount || "N/A",
     };
   });
 

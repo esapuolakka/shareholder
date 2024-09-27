@@ -33,7 +33,7 @@ export async function loader() {
       postalCode: person.postalCode ?? "N/A", //no method in backend for this
       email: person.email ?? "N/A",
       phone: person.phone ?? "N/A",
-      accountNumber: person.accountNumber ?? "N/A", //no method in backend for this
+      bankAccount: person.bankAccount ?? "N/A", //no method in backend for this
     };
   });
 
