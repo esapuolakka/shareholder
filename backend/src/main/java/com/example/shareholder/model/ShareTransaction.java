@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "osakas")
-public class Shareholder {
+@Table(name = "transaktio")
+public class ShareTransaction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,10 +49,10 @@ public class Shareholder {
   @Column(name = "huom")
   private String notes;
 
-  public Shareholder() {
+  public ShareTransaction() {
   }
 
-  public Shareholder(LocalDate collectionDate, LocalDate term, Person seller, Person buyer,
+  public ShareTransaction(LocalDate collectionDate, LocalDate term, Person seller, Person buyer,
       boolean transferTaxPaid, int numberOfShares, BigDecimal pricePerShare, BigDecimal totalAmount, String notes) {
     this.collectionDate = collectionDate;
     this.term = term;

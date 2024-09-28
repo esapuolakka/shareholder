@@ -16,7 +16,7 @@ import com.example.shareholder.service.SharePriceService;
 
 @Controller
 @RequestMapping("/api/shareprice")
-public class ShareController {
+public class SharePriceController {
 
   @Autowired
   private SharePriceService sharePriceService;

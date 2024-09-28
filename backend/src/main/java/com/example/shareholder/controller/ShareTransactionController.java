@@ -10,26 +10,26 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
-import com.example.shareholder.model.Shareholder;
-import com.example.shareholder.service.ShareholderService;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.example.shareholder.model.ShareTransaction;
+import com.example.shareholder.service.ShareTransactionService;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/shareholders")
-public class ShareholderController {
+public class ShareTransactionController {
 
-  private ShareholderService shareholderService;
+  private ShareTransactionService shareholderService;
 
-  public ShareholderController(ShareholderService shareholderService) {
+  public ShareTransactionController(ShareTransactionService shareholderService) {
     this.shareholderService = shareholderService;
   }
 
   @GetMapping("/search")
-  public ResponseEntity<List<Shareholder>> searchShareholders(@RequestParam(required = false) String search) {
-    List<Shareholder> shareholders = shareholderService.searchShareholders(search);
+  public ResponseEntity<List<ShareTransaction>> searchShareholders(@RequestParam(required = false) String search) {
+    List<ShareTransaction> shareholders = shareholderService.searchShareholders(search);
     return ResponseEntity.ok().body(shareholders);
   }
 
@@ -39,26 +39,26 @@ public class ShareholderController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Shareholder>> getShareholders() {
-    List<Shareholder> shareholders = shareholderService.getShareholders();
+  public ResponseEntity<List<ShareTransaction>> getShareholders() {
+    List<ShareTransaction> shareholders = shareholderService.getShareholders();
     return ResponseEntity.ok().body(shareholders);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Shareholder> getShareholderById(@PathVariable Long id) {
-    Shareholder shareholder = shareholderService.getShareholderById(id);
+  public ResponseEntity<ShareTransaction> getShareholderById(@PathVariable Long id) {
+    ShareTransaction shareholder = shareholderService.getShareholderById(id);
     return ResponseEntity.ok().body(shareholder);
   }
 
   @PostMapping("/add")
-  public ResponseEntity<Shareholder> addShareholder(@RequestBody Shareholder shareholder) {
-    Shareholder newShareholder = shareholderService.addShareholder(shareholder);
+  public ResponseEntity<ShareTransaction> addShareholder(@RequestBody ShareTransaction shareholder) {
+    ShareTransaction newShareholder = shareholderService.addShareholder(shareholder);
     return ResponseEntity.ok().body(newShareholder);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Shareholder> updateShareholder(@PathVariable Long id, @RequestBody Shareholder shareholder) {
-    Shareholder updatedShareholder = shareholderService.updateShareholder(id, shareholder);
+  public ResponseEntity<ShareTransaction> updateShareholder(@PathVariable Long id, @RequestBody ShareTransaction shareholder) {
+    ShareTransaction updatedShareholder = shareholderService.updateShareholder(id, shareholder);
     return ResponseEntity.ok().body(updatedShareholder);
   }
 

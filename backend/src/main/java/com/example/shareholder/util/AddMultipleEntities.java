@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.shareholder.model.Person;
 import com.example.shareholder.model.SharePrice;
-import com.example.shareholder.model.Shareholder;
+import com.example.shareholder.model.ShareTransaction;
 import com.example.shareholder.service.PersonService;
 import com.example.shareholder.service.SharePriceService;
-import com.example.shareholder.service.ShareholderService;
+import com.example.shareholder.service.ShareTransactionService;
 
 
 // Development use only
@@ -25,7 +25,7 @@ public class AddMultipleEntities {
   private PersonService personService;
 
   @Autowired
-  private ShareholderService shareholderService;
+  private ShareTransactionService shareholderService;
 
   @Autowired
   private SharePriceService sharePriceService;
@@ -38,8 +38,8 @@ public class AddMultipleEntities {
   }
 
   @PostMapping("/shareholders")
-  public void addMultipleShareholders(@RequestBody List<Shareholder> shareholders) {
-    for (Shareholder shareholder : shareholders) {
+  public void addMultipleShareholders(@RequestBody List<ShareTransaction> shareholders) {
+    for (ShareTransaction shareholder : shareholders) {
       shareholderService.addShareholder(shareholder);
     }
   }

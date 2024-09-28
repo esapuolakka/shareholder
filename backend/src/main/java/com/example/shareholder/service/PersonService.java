@@ -17,9 +17,6 @@ public class PersonService {
     @Autowired
     private OwnerPercentageCalculator ownerPercentageCalculator;
 
-    @Autowired
-    private ShareTransactionService shareTransactionService;
-
     public List<Person> getPersons() {
         return personRepository.findAll();
     }
@@ -31,13 +28,13 @@ public class PersonService {
 
     public Person addPerson(Person person) {
         if (person.getFirstname() == null || person.getLastname() == null || person.getEmail() == null
-                || person.getPhone() == null || person.getNumberOfShares() == 0 || person.getAddress() == null
+                || person.getPhone() == null || person.getAddress() == null
                 || person.getPostalCode() == null || person.getCity() == null || person.getBankAccount() == null) {
             throw new IllegalArgumentException("Kentät ovat pakollisia");
         }
         // Calculate ownership percentage
-        double ownerPercentage = ownerPercentageCalculator.calculateOwnerPercentage(person.getNumberOfShares());
-        person.setOwnershipPercentage(ownerPercentage);
+        // double ownerPercentage = ownerPercentageCalculator.calculateOwnerPercentage(person.getNumberOfShares());
+        // person.setOwnershipPercentage(ownerPercentage);
 
         return personRepository.save(person);
     }
@@ -57,8 +54,8 @@ public class PersonService {
         existingPerson.setBankAccount(person.getBankAccount());
 
         // Calculate ownership percentage
-        double ownerPercentage = ownerPercentageCalculator.calculateOwnerPercentage(existingPerson.getNumberOfShares());
-        existingPerson.setOwnershipPercentage(ownerPercentage);
+        // double ownerPercentage = ownerPercentageCalculator.calculateOwnerPercentage(existingPerson.getNumberOfShares());
+        // existingPerson.setOwnershipPercentage(ownerPercentage);
 
         return personRepository.save(existingPerson);
     }
@@ -67,7 +64,5 @@ public class PersonService {
         Person personToDelete = personRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Henkilöä ei löytynyt id:llä " + id));
         personRepository.deleteById(personToDelete.getId());
-        // Update total share count
-        shareTransactionService.updateTotalShareCount();
     }
 }
