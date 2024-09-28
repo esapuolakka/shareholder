@@ -49,6 +49,9 @@ public class ShareTransaction {
   @Column(name = "huom")
   private String notes;
 
+  @Column(name = "status")
+  private String status;
+
   public ShareTransaction() {
   }
 
@@ -63,6 +66,7 @@ public class ShareTransaction {
     this.pricePerShare = pricePerShare;
     this.totalAmount = totalAmount;
     this.notes = notes;
+    this.status = "pending";
   }
 
   public Long getId() {
@@ -139,5 +143,13 @@ public class ShareTransaction {
 
   public void setNotes(String notes) {
     this.notes = notes;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
   }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 import com.example.shareholder.model.SharePrice;
 import com.example.shareholder.model.ShareTransaction;
@@ -17,7 +18,7 @@ import com.example.shareholder.repository.ShareTransactionRepository;
 public class ShareTransactionService {
 
   @Autowired
-  private ShareTransactionRepository shareholderRepository;
+  private ShareTransactionRepository shareTransactionRepository;
 
   @Autowired
   private PersonRepository personRepository;
@@ -25,30 +26,31 @@ public class ShareTransactionService {
   @Autowired
   private SharePriceRepository sharePriceRepository;
 
-
-  public List<ShareTransaction> getShareholders() {
-    return shareholderRepository.findAll();
+  public List<ShareTransaction> getShareTransactions() {
+    String status = "approved";
+    return shareTransactionRepository.findByStatus(status);
   }
 
-  public ShareTransaction getShareholderById(Long id) {
-    return shareholderRepository.findById(id)
+  public ShareTransaction getShareTransactionById(Long id) {
+    return shareTransactionRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("Osakkeenomistajaa ei löytynyt id:llä " + id));
   }
 
-  public ShareTransaction addShareholder(ShareTransaction shareholder) {
-    if (!personRepository.existsById(shareholder.getBuyer().getId())) {
-      throw new IllegalArgumentException("Ostajaa ei löydy annetulla ID:llä: " + shareholder.getBuyer().getId());
+  public ShareTransaction addShareTransaction(ShareTransaction shareTransaction) {
+    if (!personRepository.existsById(shareTransaction.getBuyer().getId())) {
+      throw new IllegalArgumentException("Ostajaa ei löydy annetulla ID:llä: " + shareTransaction.getBuyer().getId());
     }
-    if (!personRepository.existsById(shareholder.getSeller().getId())) {
-      throw new IllegalArgumentException("Myyjää ei löydy annetulla ID:llä: " + shareholder.getSeller().getId());
+    if (!personRepository.existsById(shareTransaction.getSeller().getId())) {
+      throw new IllegalArgumentException("Myyjää ei löydy annetulla ID:llä: " + shareTransaction.getSeller().getId());
     }
-    if (shareholder.getCollectionDate() == null || shareholder.getTerm() == null || shareholder.getNumberOfShares() == 0) {
+    if (shareTransaction.getCollectionDate() == null || shareTransaction.getTerm() == null
+        || shareTransaction.getNumberOfShares() == 0) {
       throw new IllegalArgumentException("Kentät ovat pakollisia");
     }
-    if (shareholder.getNumberOfShares() < 0) {
+    if (shareTransaction.getNumberOfShares() < 0) {
       throw new IllegalArgumentException("Osakkeiden lukumäärä ei voi olla negatiivinen");
     }
-    if (shareholder.getBuyer().getId() == shareholder.getSeller().getId()) {
+    if (shareTransaction.getBuyer().getId() == shareTransaction.getSeller().getId()) {
       throw new IllegalArgumentException("Myyjä ja ostaja eivät voi olla sama henkilö");
     }
 
@@ -56,56 +58,79 @@ public class ShareTransactionService {
     Optional<SharePrice> optionalSharePrice = sharePriceRepository.findFirstByOrderByIdDesc();
     if (optionalSharePrice.isPresent()) {
       BigDecimal latestPrice = optionalSharePrice.get().getPrice();
-      shareholder.setPricePerShare(latestPrice);
+      shareTransaction.setPricePerShare(latestPrice);
     } else {
-      shareholder.setPricePerShare(BigDecimal.ZERO);
+      shareTransaction.setPricePerShare(BigDecimal.ZERO);
+    }
+
+    if (shareTransaction.getStatus() == null || shareTransaction.getStatus().isEmpty()) {
+      shareTransaction.setStatus("pending");
+    }
+
+    if ((!shareTransaction.getStatus().equals("pending") && !shareTransaction.getStatus().equals("approved")
+            && !shareTransaction.getStatus().equals("rejected"))) {
+      throw new IllegalArgumentException("Status on pakollinen, joko 'pending', 'approved' tai 'rejected'");
     }
 
     // Calculate total amount
-    BigDecimal numberOfShares = BigDecimal.valueOf(shareholder.getNumberOfShares());
-    shareholder.setTotalAmount(numberOfShares.multiply(shareholder.getPricePerShare()));
+    BigDecimal numberOfShares = BigDecimal.valueOf(shareTransaction.getNumberOfShares());
+    shareTransaction.setTotalAmount(numberOfShares.multiply(shareTransaction.getPricePerShare()));
 
-    ShareTransaction newShareholder = shareholderRepository.save(shareholder);
-    return newShareholder;
+    ShareTransaction newShareTransaction = shareTransactionRepository.save(shareTransaction);
+    return newShareTransaction;
   }
 
-  public void deleteShareholder(Long id) {
-    shareholderRepository.deleteById(id);
+  public void deleteShareTransaction(Long id) {
+    shareTransactionRepository.deleteById(id);
   }
 
-  public ShareTransaction updateShareholder(Long id, ShareTransaction shareholder) {
-    ShareTransaction existingShareholder = shareholderRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("Osakkeenomistajaa ei löytynyt id:llä " + id));
+  public ShareTransaction updateShareTransaction(Long id, ShareTransaction shareTransaction) {
+    ShareTransaction existingShareTransaction = shareTransactionRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Osaketransaktiota ei löytynyt id:llä " + id));
 
-    existingShareholder.setCollectionDate(shareholder.getCollectionDate());
-    existingShareholder.setTerm(shareholder.getTerm());
-    existingShareholder.setSeller(shareholder.getSeller());
-    existingShareholder.setBuyer(shareholder.getBuyer());
-    existingShareholder.setTransferTaxPaid(shareholder.isTransferTaxPaid());
-    existingShareholder.setNumberOfShares(shareholder.getNumberOfShares());
+    existingShareTransaction.setCollectionDate(shareTransaction.getCollectionDate());
+    existingShareTransaction.setTerm(shareTransaction.getTerm());
+    existingShareTransaction.setSeller(shareTransaction.getSeller());
+    existingShareTransaction.setBuyer(shareTransaction.getBuyer());
+    existingShareTransaction.setTransferTaxPaid(shareTransaction.isTransferTaxPaid());
+    existingShareTransaction.setNumberOfShares(shareTransaction.getNumberOfShares());
 
     // Set price per share
     Optional<SharePrice> optionalSharePrice = sharePriceRepository.findFirstByOrderByIdDesc();
     if (optionalSharePrice.isPresent()) {
       BigDecimal latestPrice = optionalSharePrice.get().getPrice();
-      existingShareholder.setPricePerShare(latestPrice);
+      existingShareTransaction.setPricePerShare(latestPrice);
     } else {
-      existingShareholder.setPricePerShare(BigDecimal.ZERO);
+      existingShareTransaction.setPricePerShare(BigDecimal.ZERO);
     }
 
-    BigDecimal numberOfShares = BigDecimal.valueOf(existingShareholder.getNumberOfShares());
-    existingShareholder.setTotalAmount(numberOfShares.multiply(existingShareholder.getPricePerShare()));
+    if (shareTransaction.getStatus() == null || shareTransaction.getStatus().isEmpty()
+        || (!shareTransaction.getStatus().equals("pending") && !shareTransaction.getStatus().equals("approved")
+            && !shareTransaction.getStatus().equals("rejected"))) {
+      throw new IllegalArgumentException("Status on pakollinen, käytä 'pending', 'approved' tai 'rejected'");
+    }
 
-    ShareTransaction updatedShareholder = shareholderRepository.save(existingShareholder);
+    BigDecimal numberOfShares = BigDecimal.valueOf(existingShareTransaction.getNumberOfShares());
+    existingShareTransaction.setTotalAmount(numberOfShares.multiply(existingShareTransaction.getPricePerShare()));
 
-    return updatedShareholder;
+    ShareTransaction updatedShareTransaction = shareTransactionRepository.save(existingShareTransaction);
+
+    return updatedShareTransaction;
   }
 
-  public List<ShareTransaction> searchShareholders(String search) {
+  public List<ShareTransaction> searchShareTransactions(String search) {
     if (search == null || search.isEmpty()) {
-      return getShareholders(); // Return all shareholders if search is empty
+      return getShareTransactions(); // Return all shareTransactions if search is empty
     }
-    return shareholderRepository.findBySellerFirstnameContainingIgnoreCaseOrSellerLastnameContainingIgnoreCase(search,
+    return shareTransactionRepository.findBySellerFirstnameContainingIgnoreCaseOrSellerLastnameContainingIgnoreCase(
+        search,
         search);
+  }
+
+  public List<ShareTransaction> getTransactionsByStatus(String status) {
+    if (status == null || status.isEmpty()) {
+      return new ArrayList<>();
+    }
+    return shareTransactionRepository.findByStatus(status);
   }
 }

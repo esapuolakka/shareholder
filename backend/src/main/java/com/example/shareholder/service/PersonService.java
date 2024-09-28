@@ -14,9 +14,6 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    @Autowired
-    private OwnerPercentageCalculator ownerPercentageCalculator;
-
     public List<Person> getPersons() {
         return personRepository.findAll();
     }
@@ -32,9 +29,6 @@ public class PersonService {
                 || person.getPostalCode() == null || person.getCity() == null || person.getBankAccount() == null) {
             throw new IllegalArgumentException("Kentät ovat pakollisia");
         }
-        // Calculate ownership percentage
-        // double ownerPercentage = ownerPercentageCalculator.calculateOwnerPercentage(person.getNumberOfShares());
-        // person.setOwnershipPercentage(ownerPercentage);
 
         return personRepository.save(person);
     }
@@ -50,12 +44,9 @@ public class PersonService {
         existingPerson.setAddress(person.getAddress());
         existingPerson.setPostalCode(person.getPostalCode());
         existingPerson.setCity(person.getCity());
+        existingPerson.setSsn(person.getSsn());
         existingPerson.setNumberOfShares(person.getNumberOfShares());
         existingPerson.setBankAccount(person.getBankAccount());
-
-        // Calculate ownership percentage
-        // double ownerPercentage = ownerPercentageCalculator.calculateOwnerPercentage(existingPerson.getNumberOfShares());
-        // existingPerson.setOwnershipPercentage(ownerPercentage);
 
         return personRepository.save(existingPerson);
     }

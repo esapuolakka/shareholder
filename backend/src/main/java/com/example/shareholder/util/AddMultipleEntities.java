@@ -40,7 +40,7 @@ public class AddMultipleEntities {
   @PostMapping("/shareholders")
   public void addMultipleShareholders(@RequestBody List<ShareTransaction> shareholders) {
     for (ShareTransaction shareholder : shareholders) {
-      shareholderService.addShareholder(shareholder);
+      shareholderService.addShareTransaction(shareholder);
     }
   }
 
