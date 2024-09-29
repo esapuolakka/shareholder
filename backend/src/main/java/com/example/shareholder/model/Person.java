@@ -1,6 +1,7 @@
 package com.example.shareholder.model;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "henkilo")
@@ -36,10 +37,7 @@ public class Person {
   private String ssn;
 
   @Column(name = "osakkeiden_maara")
-  private Integer numberOfShares;
-
-  @Column(name = "omistusosuus")
-  private double ownershipPercentage;
+  private int numberOfShares = 0;
 
   @Column(name = "pankkitili")
   private String bankAccount;
@@ -48,7 +46,7 @@ public class Person {
   }
 
   public Person(String firstname, String lastname, String email, String phone, String address, String postalCode,
-      String city, String ssn, int numberOfShares, double ownershipPercentage, String bankAccount) {
+      String city, String ssn, int numberOfShares, String bankAccount) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
@@ -59,7 +57,6 @@ public class Person {
     this.ssn = ssn;
     this.bankAccount = bankAccount;
     this.numberOfShares = numberOfShares;
-    this.ownershipPercentage = ownershipPercentage;
     this.bankAccount = bankAccount;
   }
 
@@ -137,14 +134,6 @@ public class Person {
 
   public void setNumberOfShares(int numberOfShares) {
     this.numberOfShares = numberOfShares;
-  }
-
-  public double getOwnershipPercentage() {
-    return ownershipPercentage;
-  }
-
-  public void setOwnershipPercentage(double ownershipPercentage) {
-    this.ownershipPercentage = ownershipPercentage;
   }
 
   public String getBankAccount() {

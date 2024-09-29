@@ -203,7 +203,8 @@
     "transferTaxPaid": true,
     "numberOfShares": 100,
     "pricePerShare": 10.50,
-    "notes": "Osakekauppa tehty onnistuneesti"
+    "notes": "Osakekauppa tehty onnistuneesti",
+    "status": "approved"
   },
   {
     "collectionDate": "2024-01-20",
@@ -217,7 +218,8 @@
     "transferTaxPaid": false,
     "numberOfShares": 150,
     "pricePerShare": 12.00,
-    "notes": "Odotetaan maksua"
+    "notes": "Odotetaan maksua",
+    "status": "approved"
   },
   {
     "collectionDate": "2024-02-05",
@@ -231,7 +233,8 @@
     "transferTaxPaid": true,
     "numberOfShares": 200,
     "pricePerShare": 15.00,
-    "notes": "Kauppa vahvistettu"
+    "notes": "Kauppa vahvistettu",
+    "status": "approved"
   },
   {
     "collectionDate": "2024-02-15",
@@ -245,7 +248,8 @@
     "transferTaxPaid": false,
     "numberOfShares": 120,
     "pricePerShare": 18.00,
-    "notes": "Varainsiirtovero maksetaan myöhemmin"
+    "notes": "Varainsiirtovero maksetaan myöhemmin",
+    "status": "rejected"
   },
   {
     "collectionDate": "2024-03-01",
@@ -259,7 +263,8 @@
     "transferTaxPaid": true,
     "numberOfShares": 180,
     "pricePerShare": 20.00,
-    "notes": "Kaikki kunnossa"
+    "notes": "Kaikki kunnossa",
+    "status": "approved"
   },
   {
     "collectionDate": "2024-03-10",
@@ -273,7 +278,8 @@
     "transferTaxPaid": false,
     "numberOfShares": 220,
     "pricePerShare": 22.00,
-    "notes": "Odotetaan vahvistusta"
+    "notes": "Odotetaan vahvistusta",
+    "status": "pending"
   },
   {
     "collectionDate": "2024-04-01",
@@ -287,7 +293,8 @@
     "transferTaxPaid": true,
     "numberOfShares": 140,
     "pricePerShare": 25.00,
-    "notes": "Toimitus suoritettu"
+    "notes": "Toimitus suoritettu",
+    "status": "approved"
   },
   {
     "collectionDate": "2024-04-20",
@@ -301,7 +308,8 @@
     "transferTaxPaid": false,
     "numberOfShares": 160,
     "pricePerShare": 23.00,
-    "notes": "Pieni viivästys"
+    "notes": "Pieni viivästys",
+    "status": "pending"
   },
   {
     "collectionDate": "2024-05-05",
@@ -315,7 +323,8 @@
     "transferTaxPaid": true,
     "numberOfShares": 170,
     "pricePerShare": 19.00,
-    "notes": "Maksettu etuajassa"
+    "notes": "Maksettu etuajassa",
+    "status": "approved"
   },
   {
     "collectionDate": "2024-05-15",
@@ -329,7 +338,8 @@
     "transferTaxPaid": false,
     "numberOfShares": 200,
     "pricePerShare": 21.00,
-    "notes": "Vielä odotellaan"
+    "notes": "Vielä odotellaan",
+    "status": "pending"
   },
   {
     "collectionDate": "2024-06-01",
@@ -343,7 +353,8 @@
     "transferTaxPaid": true,
     "numberOfShares": 210,
     "pricePerShare": 24.00,
-    "notes": "Kauppa valmis"
+    "notes": "Kauppa valmis",
+    "status": "approved"
   },
   {
     "collectionDate": "2024-06-10",
@@ -357,7 +368,8 @@
     "transferTaxPaid": false,
     "numberOfShares": 190,
     "pricePerShare": 26.00,
-    "notes": "Seurataan tilannetta"
+    "notes": "Seurataan tilannetta",
+    "status": "pending"
   },
   {
     "collectionDate": "2024-07-01",
@@ -371,7 +383,8 @@
     "transferTaxPaid": true,
     "numberOfShares": 230,
     "pricePerShare": 28.00,
-    "notes": "Kaikki selvä"
+    "notes": "Kaikki selvä",
+    "status": "approved"
   },
   {
     "collectionDate": "2024-07-15",
@@ -385,7 +398,8 @@
     "transferTaxPaid": false,
     "numberOfShares": 250,
     "pricePerShare": 30.00,
-    "notes": "Pieni epäselvyys"
+    "notes": "Pieni epäselvyys",
+    "status": "approved"
   },
   {
     "collectionDate": "2024-08-01",
@@ -399,6 +413,37 @@
     "transferTaxPaid": true,
     "numberOfShares": 220,
     "pricePerShare": 32.00,
-    "notes": "Odotetaan selvitystä"
+    "notes": "Odotetaan selvitystä",
+    "status": "pending"
+  },
+  {
+    "collectionDate": "2024-01-15",
+    "term": "2024-02-15",
+    "seller": {
+      "id": 3
+    },
+    "buyer": {
+      "id": 6
+    },
+    "transferTaxPaid": true,
+    "numberOfShares": 76,
+    "pricePerShare": 12.50,
+    "notes": "Osakekauppa tehty onnistuneesti",
+    "status": "approved"
+  },
+  {
+    "collectionDate": "2024-01-15",
+    "term": "2024-02-15",
+    "seller": {
+      "id": 6
+    },
+    "buyer": {
+      "id": 7
+    },
+    "transferTaxPaid": true,
+    "numberOfShares": 1000,
+    "pricePerShare": 11.50,
+    "notes": "Osakekauppa tehty onnistuneesti",
+    "status": "approved"
   }
 ]
