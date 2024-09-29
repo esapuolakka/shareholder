@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ArrayList;
 
+import com.example.shareholder.model.Person;
 import com.example.shareholder.model.SharePrice;
 import com.example.shareholder.model.ShareTransaction;
 import com.example.shareholder.repository.PersonRepository;
@@ -25,6 +26,9 @@ public class ShareTransactionService {
 
   @Autowired
   private SharePriceRepository sharePriceRepository;
+
+  @Autowired
+  private ShareOwnershipService shareOwnershipService;
 
   public List<ShareTransaction> getShareTransactions() {
     String status = "approved";
@@ -47,13 +51,20 @@ public class ShareTransactionService {
         || shareTransaction.getNumberOfShares() == 0) {
       throw new IllegalArgumentException("Kentät ovat pakollisia");
     }
-    if (shareTransaction.getNumberOfShares() < 0) {
-      throw new IllegalArgumentException("Osakkeiden lukumäärä ei voi olla negatiivinen");
+    if (shareTransaction.getNumberOfShares() < 0 || shareTransaction.getNumberOfShares() == 0) {
+      throw new IllegalArgumentException("Osakkeiden lukumäärä ei voi olla nolla tai negatiivinen");
     }
     if (shareTransaction.getBuyer().getId() == shareTransaction.getSeller().getId()) {
       throw new IllegalArgumentException("Myyjä ja ostaja eivät voi olla sama henkilö");
     }
 
+    Optional<Person> optionalSeller = personRepository.findById(shareTransaction.getSeller().getId());
+    if (optionalSeller.isPresent()) {
+      Person seller = optionalSeller.get();
+      if (seller.getNumberOfShares() < shareTransaction.getNumberOfShares()) {
+        throw new IllegalArgumentException("Myyjällä ei ole tarpeeksi osakkeita");
+      }
+    }
     // Set price per share
     Optional<SharePrice> optionalSharePrice = sharePriceRepository.findFirstByOrderByIdDesc();
     if (optionalSharePrice.isPresent()) {
@@ -77,6 +88,10 @@ public class ShareTransactionService {
     shareTransaction.setTotalAmount(numberOfShares.multiply(shareTransaction.getPricePerShare()));
 
     ShareTransaction newShareTransaction = shareTransactionRepository.save(shareTransaction);
+
+    // Update share ownership
+    shareOwnershipService.updateShareOwnership(shareTransaction);
+
     return newShareTransaction;
   }
 

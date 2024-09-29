@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "osake_omistus")
@@ -19,13 +18,13 @@ public class ShareOwnership {
   private Long id;
 
   @Column(name = "osakkeiden_lukumaara")
-  private BigDecimal numberOfShares;
+  private int numberOfShares;
 
   @Column(name = "osake_numero_alkaen")
-  private int startingLotNumber;
+  private int startingShareNumber;
 
   @Column(name = "osake_numero_loppuen")
-  private int endingLotNumber;
+  private int endingShareNumber;
 
   @Column(name = "osaketyyppi")
   private String shareClass;
@@ -37,10 +36,10 @@ public class ShareOwnership {
   public ShareOwnership() {
   }
 
-  public ShareOwnership(BigDecimal numberOfShares, int startingLotNumber, int endingLotNumber, Person owner) {
+  public ShareOwnership(int numberOfShares, int startingShareNumber, int endingShareNumber, Person owner) {
     this.numberOfShares = numberOfShares;
-    this.startingLotNumber = startingLotNumber;
-    this.endingLotNumber = endingLotNumber;
+    this.startingShareNumber = startingShareNumber;
+    this.endingShareNumber = endingShareNumber;
     this.owner = owner;
     this.shareClass = "A";
   }
@@ -49,35 +48,35 @@ public class ShareOwnership {
     return id;
   }
 
-  public BigDecimal getNumberOfShares() {
+  public int getNumberOfShares() {
     return numberOfShares;
   }
 
-  public void setNumberOfShares(BigDecimal numberOfShares) {
+  public void setNumberOfShares(int numberOfShares) {
     this.numberOfShares = numberOfShares;
   }
 
-  public int getStartingLotNumber() {
-    return startingLotNumber;
+  public int getStartingShareNumber() {
+    return startingShareNumber;
   }
 
-  public void setStartingLotNumber(int startingLotNumber) {
-    this.startingLotNumber = startingLotNumber;
+  public void setStartingShareNumber(int startingShareNumber) {
+    this.startingShareNumber = startingShareNumber;
   }
 
-  public int getEndingLotNumber() {
-    return endingLotNumber;
+  public int getEndingShareNumber() {
+    return endingShareNumber;
   }
 
-  public void setEndingLotNumber(int endingLotNumber) {
-    this.endingLotNumber = endingLotNumber;
+  public void setEndingShareNumber(int endingShareNumber) {
+    this.endingShareNumber = endingShareNumber;
   }
 
-  public Person getPrimaryOwner() {
+  public Person getOwner() {
     return owner;
   }
 
-  public void setPrimaryOwner(Person owner) {
+  public void setOwner(Person owner) {
     this.owner = owner;
   }
 

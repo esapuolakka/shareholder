@@ -19,22 +19,12 @@ import com.example.shareholder.service.ShareTransactionService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/shareholders")
+@RequestMapping("/api/transactions")
 public class ShareTransactionController {
 
   @Autowired
   private ShareTransactionService shareTransactionService;
 
-  @GetMapping("/search")
-  public ResponseEntity<List<ShareTransaction>> searchShareTransactions(@RequestParam(required = false) String search) {
-    List<ShareTransaction> shareholders = shareTransactionService.searchShareTransactions(search);
-    return ResponseEntity.ok().body(shareholders);
-  }
-
-  @GetMapping("/home")
-  public ResponseEntity<String> home() {
-    return ResponseEntity.ok("Welcome to Shareholder API");
-  }
 
   @GetMapping
   public ResponseEntity<List<ShareTransaction>> getShareTransactions() {
@@ -64,5 +54,11 @@ public class ShareTransactionController {
   public ResponseEntity<String> deleteTransaction(@PathVariable Long id) {
     shareTransactionService.deleteShareTransaction(id);
     return ResponseEntity.ok().body("Transaktio poistettu onnistuneesti");
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<List<ShareTransaction>> searchShareTransactions(@RequestParam(required = false) String search) {
+    List<ShareTransaction> shareholders = shareTransactionService.searchShareTransactions(search);
+    return ResponseEntity.ok().body(shareholders);
   }
 }

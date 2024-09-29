@@ -14,6 +14,9 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private ShareOwnershipService shareOwnershipService;
+
     public List<Person> getPersons() {
         return personRepository.findAll();
     }
@@ -29,8 +32,12 @@ public class PersonService {
                 || person.getPostalCode() == null || person.getCity() == null || person.getBankAccount() == null) {
             throw new IllegalArgumentException("Kentät ovat pakollisia");
         }
+        Person newPerson = personRepository.save(person);
 
-        return personRepository.save(person);
+        if (person.getNumberOfShares() > 0) {
+            shareOwnershipService.addShareOwnership(person);
+        }
+        return newPerson;
     }
 
     public Person updatePerson(Long id, Person person) {

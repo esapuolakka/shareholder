@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,11 +27,11 @@ public class ShareTransaction {
   private LocalDate term;
 
   @JoinColumn(name = "myyja_id")
-  @OneToOne
+  @ManyToOne
   private Person seller;
 
   @JoinColumn(name = "ostaja_id")
-  @OneToOne
+  @ManyToOne
   private Person buyer;
 
   @Column(name = "varainsiirtovero_maksettu")

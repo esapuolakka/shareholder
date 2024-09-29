@@ -37,7 +37,7 @@ public class Person {
   private String ssn;
 
   @Column(name = "osakkeiden_maara")
-  private BigDecimal numberOfShares = BigDecimal.ZERO;
+  private int numberOfShares = 0;
 
   @Column(name = "pankkitili")
   private String bankAccount;
@@ -46,7 +46,7 @@ public class Person {
   }
 
   public Person(String firstname, String lastname, String email, String phone, String address, String postalCode,
-      String city, String ssn, BigDecimal numberOfShares, String bankAccount) {
+      String city, String ssn, int numberOfShares, String bankAccount) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
@@ -128,11 +128,11 @@ public class Person {
     this.ssn = ssn;
   }
 
-  public BigDecimal getNumberOfShares() {
+  public int getNumberOfShares() {
     return numberOfShares;
   }
 
-  public void setNumberOfShares(BigDecimal numberOfShares) {
+  public void setNumberOfShares(int numberOfShares) {
     this.numberOfShares = numberOfShares;
   }
 
