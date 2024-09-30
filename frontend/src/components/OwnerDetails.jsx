@@ -1,30 +1,65 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./OwnerDetails.module.css";
 import api from "../api";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
-const SelectPerson = ({ owners, onChange }) => (
-  <select onChange={(e) => onChange(e.target.value)}>
-    <option value="">Valitse henkilö</option>
-    {owners.map((owner) => {
-      const { id, firstname, lastname } = owner;
-      return (
-        <option key={id} value={id}>
-          {firstname} {lastname}
-        </option>
-      );
-    })}
-  </select>
-);
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return (
+    <MuiAlert
+      elevation={0}
+      ref={ref}
+      variant="standard"
+      sx={{
+        marginRight: "1.5rem",
+        marginTop: "var(--navbar-height)",
+        backgroundColor: "white",
+        border: " 0.5px solid var(--border-color)",
+        color: "var(--heading-and-text-color)",
+        fontSize: "12px",
+      }}
+      {...props}
+    />
+  );
+});
+
+const SelectPerson = ({ owners, onChange }) =>
+  owners && owners.length > 0 ? (
+    <select onChange={(e) => onChange(e.target.value)}>
+      <option value="">Valitse henkilö</option>
+      {owners.map((owner) => {
+        const { id, firstname, lastname } = owner;
+        return (
+          <option key={id} value={id}>
+            {id} {firstname} {lastname}
+          </option>
+        );
+      })}
+    </select>
+  ) : (
+    <p>Ei henkilöitä valittavissa</p>
+  );
 
 const OwnerDetails = ({ owners }) => {
-  const [isEditing, setIsEditing] = useState(false); // Editspace control
+  const [isEditing, setIsEditing] = useState(false);
   const [selectedOwner, setSelectedOwner] = useState(null);
-  const [editedOwner, setEditedOwner] = useState(null); // Edit space
+  const [editedOwner, setEditedOwner] = useState(null);
+  const navigate = useNavigate(); // useNavigate hook for navigation
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
 
   const handlePersonChange = (personId) => {
-    const owner = owners.find((o) => o.id === parseInt(personId));
-    setSelectedOwner(owner);
-    setEditedOwner(owner);
+    const owner = owners.find((o) => o.id === parseInt(personId, 10)); //Radix 10
+    if (owner) {
+      setSelectedOwner(owner);
+      setEditedOwner(owner);
+      navigate(`/osakkaidentiedot/${owner.id}`);
+    } else {
+      setSelectedOwner(null);
+      setEditedOwner(null);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -35,17 +70,29 @@ const OwnerDetails = ({ owners }) => {
     }));
   };
 
-  const handleSave = async () => {
-    if (JSON.stringify(editedOwner) !== JSON.stringify(selectedOwner)) {
-      try {
-        await api.put(`/persons/${editedOwner.id}`, editedOwner);
-        setSelectedOwner(editedOwner); // set edited owner
-        setIsEditing(false); // exit edit space
-      } catch (error) {
-        console.error("Tietojen päivittäminen epäonnistui", error);
-      }
-    } else {
-      console.log("Ei muutoksia tallennettavaksi.");
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    if (JSON.stringify(editedOwner) === JSON.stringify(selectedOwner)) {
+      setMessage("Ei muutoksia tallennettavaksi");
+      setSeverity("warning");
+      setOpen(true);
+      setIsEditing(false);
+      return;
+    }
+
+    try {
+      await api.put(`/persons/${editedOwner.id}`, editedOwner);
+      setSelectedOwner(editedOwner);
+      setMessage("Henkilötietojen päivitys onnistui");
+      setSeverity("success");
+      setOpen(true);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Tietojen päivittäminen epäonnistui", error);
+      setMessage("Tietojen päivittäminen epäonnistui");
+      setSeverity("error");
+      setOpen(true);
     }
   };
 
@@ -54,12 +101,26 @@ const OwnerDetails = ({ owners }) => {
     setIsEditing(false);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
+      <Snackbar
+        open={open}
+        // autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert onClose={handleClose} severity={severity}>
+          {message}
+        </Alert>
+      </Snackbar>
       <SelectPerson owners={owners} onChange={handlePersonChange} />
 
       {selectedOwner && (
-        <div className={styles.generalItemContainer}>
+        <form className={styles.generalItemContainer}>
           <div className={styles.detailsItem}>
             <label>Osakkaan numero:</label>
             <span className={styles.nextRow}>{selectedOwner.id}</span>
@@ -108,35 +169,83 @@ const OwnerDetails = ({ owners }) => {
           </div>
 
           <div className={styles.shareNumberBoxContainerFlex}>
-            {selectedOwner.shareNumbers.map((range, index) => (
+            {selectedOwner.shareNumbers?.length > 0 ? (
+              selectedOwner.shareNumbers.map((range, index) => (
+                <div
+                  key={index}
+                  className={`${styles.generalSmallerBox} ${styles.fullWidth}`}
+                >
+                  <div>
+                    <label>Osakenumerot alkaen - loppuen: </label>
+                    <span className={styles.nextRow}>
+                      {range.beginning} - {range.ending}
+                    </span>
+                  </div>
+                  {isEditing ? (
+                    <>
+                      <div>
+                        <label>Saantopäivä: </label>
+                        <input
+                          type="date"
+                          name="collectionDate"
+                          value={editedOwner.collectionDate}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                      <div>
+                        <label>Maksupäivä: </label>
+                        <input
+                          type="date"
+                          name="term"
+                          value={editedOwner.term}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                      <div>
+                        <label>Varainsiirtovero: </label>
+                        <select
+                          name="transferTaxPaid"
+                          value={editedOwner.transferTaxPaid}
+                          onChange={handleInputChange}
+                        >
+                          <option value={true}>Maksettu</option>
+                          <option value={false}>Ei maksettu</option>
+                        </select>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <label>Saantopäivä: </label>
+                        <span className={styles.nextRow}>
+                          {selectedOwner.collectionDate}
+                        </span>
+                      </div>
+                      <div>
+                        <label>Maksupäivä: </label>
+                        <span className={styles.nextRow}>
+                          {selectedOwner.term}
+                        </span>
+                      </div>
+                      <div>
+                        <label>Varainsiirtovero: </label>
+                        <span className={styles.nextRow}>
+                          {selectedOwner.transferTaxPaid
+                            ? "Maksettu"
+                            : "Ei maksettu"}
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))
+            ) : (
               <div
-                key={index}
                 className={`${styles.generalSmallerBox} ${styles.fullWidth}`}
               >
-                <div>
-                  <label>Osakenumerot alkaen - loppuen: </label>
-                  <span className={styles.nextRow}>
-                    {range.beginning} - {range.ending}
-                  </span>
-                </div>
-                <div>
-                  <label>Saantopäivä: </label>
-                  <span className={styles.nextRow}>
-                    {selectedOwner.collectionDate}
-                  </span>
-                </div>
-                <div>
-                  <label>Maksupäivä: </label>
-                  <span className={styles.nextRow}>{selectedOwner.term}</span>
-                </div>
-                <div>
-                  <label>Varainsiirtovero: </label>
-                  <span className={styles.nextRow}>
-                    {selectedOwner.transferTaxPaid ? "Maksettu" : "Ei maksettu"}
-                  </span>
-                </div>
+                <p>Osakkeita ei omistuksessa tällä hetkellä</p>
               </div>
-            ))}
+            )}
           </div>
 
           <div className={styles.detailsItem}>
@@ -243,10 +352,18 @@ const OwnerDetails = ({ owners }) => {
           {isEditing ? (
             <>
               <div>
-                <button className={styles.styledButton} onClick={handleSave}>
+                <button
+                  className={styles.styledButton}
+                  type="button"
+                  onClick={handleSave}
+                >
                   Tallenna
                 </button>
-                <button className={styles.styledButton} onClick={handleCancel}>
+                <button
+                  className={styles.styledButton}
+                  type="button"
+                  onClick={handleCancel}
+                >
                   Peruuta
                 </button>
               </div>
@@ -256,6 +373,7 @@ const OwnerDetails = ({ owners }) => {
               <div>
                 <button
                   className={styles.styledButton}
+                  type="button"
                   onClick={() => setIsEditing(true)}
                 >
                   Muokkaa tietoja
@@ -263,7 +381,7 @@ const OwnerDetails = ({ owners }) => {
               </div>
             </>
           )}
-        </div>
+        </form>
       )}
     </>
   );
