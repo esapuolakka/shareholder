@@ -110,7 +110,7 @@ const OwnerDetails = ({ owners }) => {
     <>
       <Snackbar
         open={open}
-        autoHideDuration={3000}
+        autoHideDuration={4000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
@@ -170,76 +170,76 @@ const OwnerDetails = ({ owners }) => {
           </div>
 
           <div className={styles.shareNumberBoxContainerFlex}>
-            {selectedOwner.shareNumbers?.length > 0 ? (
-              selectedOwner.shareNumbers.map((range, index) => (
-                <div
-                  key={index}
-                  className={`${styles.generalSmallerBox} ${styles.fullWidth}`}
-                >
-                  <div>
-                    <label>Osakenumerot alkaen - loppuen: </label>
-                    <span className={styles.nextRow}>
-                      {range.beginning} - {range.ending}
-                    </span>
-                  </div>
-                  {isEditing ? (
-                    <>
-                      <div>
-                        <label>Saantopäivä: </label>
-                        <input
-                          type="date"
-                          name="collectionDate"
-                          value={editedOwner.collectionDate}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div>
-                        <label>Maksupäivä: </label>
-                        <input
-                          type="date"
-                          name="term"
-                          value={editedOwner.term}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div>
-                        <label>Varainsiirtovero: </label>
-                        <select
-                          name="transferTaxPaid"
-                          value={editedOwner.transferTaxPaid}
-                          onChange={handleInputChange}
-                        >
-                          <option value={true}>Maksettu</option>
-                          <option value={false}>Ei maksettu</option>
-                        </select>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div>
-                        <label>Saantopäivä: </label>
-                        <span className={styles.nextRow}>
-                          {selectedOwner.collectionDate}
-                        </span>
-                      </div>
-                      <div>
-                        <label>Maksupäivä: </label>
-                        <span className={styles.nextRow}>
-                          {selectedOwner.term}
-                        </span>
-                      </div>
-                      <div>
-                        <label>Varainsiirtovero: </label>
-                        <span className={styles.nextRow}>
-                          {selectedOwner.transferTaxPaid
-                            ? "Maksettu"
-                            : "Ei maksettu"}
-                        </span>
-                      </div>
-                    </>
-                  )}
+            {selectedOwner.shareNumbers &&
+            selectedOwner.shareNumbers.beginning &&
+            selectedOwner.shareNumbers.ending ? (
+              <div
+                className={`${styles.generalSmallerBox} ${styles.fullWidth}`}
+              >
+                <div>
+                  <label>Osakenumerot alkaen - loppuen: </label>
+                  <span className={styles.nextRow}>
+                    {selectedOwner.shareNumbers.beginning} -{" "}
+                    {selectedOwner.shareNumbers.ending}
+                  </span>
                 </div>
-              ))
+                {isEditing ? (
+                  <>
+                    <div>
+                      <label>Saantopäivä: </label>
+                      <input
+                        type="date"
+                        name="collectionDate"
+                        value={editedOwner.collectionDate}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div>
+                      <label>Maksupäivä: </label>
+                      <input
+                        type="date"
+                        name="term"
+                        value={editedOwner.term}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div>
+                      <label>Varainsiirtovero: </label>
+                      <select
+                        name="transferTaxPaid"
+                        value={editedOwner.transferTaxPaid}
+                        onChange={handleInputChange}
+                      >
+                        <option value={true}>Maksettu</option>
+                        <option value={false}>Ei maksettu</option>
+                      </select>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <label>Saantopäivä: </label>
+                      <span className={styles.nextRow}>
+                        {selectedOwner.collectionDate}
+                      </span>
+                    </div>
+                    <div>
+                      <label>Maksupäivä: </label>
+                      <span className={styles.nextRow}>
+                        {selectedOwner.term}
+                      </span>
+                    </div>
+                    <div>
+                      <label>Varainsiirtovero: </label>
+                      <span className={styles.nextRow}>
+                        {selectedOwner.transferTaxPaid
+                          ? "Maksettu"
+                          : "Ei maksettu"}
+                      </span>
+                    </div>
+                  </>
+                )}
+              </div>
             ) : (
               <div
                 className={`${styles.generalSmallerBox} ${styles.fullWidth}`}
