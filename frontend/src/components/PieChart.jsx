@@ -18,7 +18,7 @@ const PieChart = ({ data }) => {
     credits: {
       enabled: false,
     },
-    colors: ["#F7E897", "#FFB44F", "#F9C89B", "#FAFC8F", "#ED692F"],
+    colors: ["#F7E897", "#FFB44F", "#F9C89B", "#FAFC8F", "#ED692F", "#CCCCCC"],
     series: [
       {
         type: "pie",
