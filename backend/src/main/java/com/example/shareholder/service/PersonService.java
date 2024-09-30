@@ -26,6 +26,10 @@ public class PersonService {
                 .orElseThrow(() -> new IllegalArgumentException("Henkilöä ei löytynyt id:llä " + id));
     }
 
+    public List<Object[]> getTop5ShareholdersAndRest() {
+        return personRepository.findTop5ShareholdersAndRest();
+    }
+
     public Person addPerson(Person person) {
         if (person.getFirstname() == null || person.getLastname() == null || person.getEmail() == null
                 || person.getPhone() == null || person.getAddress() == null
