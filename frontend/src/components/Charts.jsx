@@ -8,7 +8,7 @@ import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LanguageIcon from "@mui/icons-material/Language";
 
-const Charts = () => {
+const Charts = ({ data }) => {
   return (
     <div className={styles.Charts}>
       <div className={styles.details}>
@@ -44,7 +44,7 @@ const Charts = () => {
         <ColumnChart />
       </div>
       <div className={styles.pieChart}>
-        <PieChart />
+        <PieChart data={data.top5Data} />
       </div>
     </div>
   );

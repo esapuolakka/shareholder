@@ -1,46 +1,40 @@
-import Highcharts, { chart } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-const options = {
-  chart: {
-    type: "pie",
-  },
-  title: {
-    text: "PÄÄOMARAKENNE",
-    align: "center",
-    style: {
-      fontWeight: "700",
-      fontSize: "14px",
-      fontFamily: "var(--font-family)",
-    },
-  },
-  credits: {
-    enabled: false,
-  },
-  colors: ["#F7E897", "#FFB44F", "#F9C89B", "#FAFC8F", "#ED692F"],
-  series: [
-    {
+const PieChart = ({ data }) => {
+  const options = {
+    chart: {
       type: "pie",
-      dataLabels: {
-        enabled: false,
-      },
-      data: [
-        ["ensimmäinen", 3000],
-        ["toinen", 8000],
-        ["kolmas", 14000],
-        ["neliäs", 25000],
-        ["visas", 50000],
-      ],
-      size: "80%",
-      innerSize: "70%",
     },
-  ],
-  xAxis: {
-    tickInterval: 1,
-  },
-};
+    title: {
+      text: "PÄÄOMARAKENNE",
+      align: "center",
+      style: {
+        fontWeight: "700",
+        fontSize: "14px",
+        fontFamily: "var(--font-family)",
+      },
+    },
+    credits: {
+      enabled: false,
+    },
+    colors: ["#F7E897", "#FFB44F", "#F9C89B", "#FAFC8F", "#ED692F"],
+    series: [
+      {
+        type: "pie",
+        dataLabels: {
+          enabled: false,
+        },
+        data,
+        size: "80%",
+        innerSize: "70%",
+      },
+    ],
+    xAxis: {
+      tickInterval: 1,
+    },
+  };
 
-const PieChart = () => {
   return (
     <div>
       <div style={{ width: "100%", paddingBlockStart: "1.5rem" }}>
