@@ -17,6 +17,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
         backgroundColor: "white",
         border: " 0.5px solid var(--border-color)",
         color: "var(--heading-and-text-color)",
+        fontFamily: "var(--font-family)",
         fontSize: "12px",
       }}
       {...props}
@@ -109,7 +110,7 @@ const OwnerDetails = ({ owners }) => {
     <>
       <Snackbar
         open={open}
-        // autoHideDuration={3000}
+        autoHideDuration={3000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >

@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
+import PropagateLoader from "react-spinners/PropagateLoader";
+import styles from "../components/OwnerDetails.module.css";
 import api from "../api";
 
 const columns = [
@@ -39,6 +42,35 @@ export async function loader() {
 
 const Osakenumerot = () => {
   const rows = useLoaderData();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (rows) {
+      setLoading(false);
+    }
+  }, [rows]);
+
+  if (loading) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Ladataan osakenumeroiden tietoja, odota hetki...
+        </p>
+      </div>
+    );
+  }
+
+  if (!rows || rows.length === 0) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Osakenumeroiden tietoja ei löytynyt. Lisää uusia tietoja tietokantaan.
+        </p>
+      </div>
+    );
+  }
   return (
     <>
       <h1>Osakenumerot</h1>

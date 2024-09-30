@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import TableWithPagination from "../components/TableWithPagination";
+import PropagateLoader from "react-spinners/PropagateLoader";
+import styles from "../components/OwnerDetails.module.css";
 import api from "../api";
 
 const columns = [
@@ -46,10 +49,15 @@ const columns = [
     label: "Huomioitavaa",
     minWidth: 200,
   },
+  {
+    id: "status",
+    label: "Status",
+    minWidth: 70,
+  },
 ];
 
 export async function loader() {
-  const { data: shareholdersData } = await api.get("/shareholders");
+  const { data: shareholdersData } = await api.get("/transactions");
 
   const rowData = shareholdersData.map((shareholder) => {
     return {
@@ -63,13 +71,45 @@ export async function loader() {
       pricePerShare: `${shareholder.pricePerShare}`,
       eur: `${shareholder.totalAmount}`,
       noteworthy: `${shareholder.notes}`,
+      status: `${shareholder.status}`,
     };
   });
 
   return rowData;
 }
+
 const Merkintahistoria = () => {
   const rows = useLoaderData();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (rows) {
+      setLoading(false);
+    }
+  }, [rows]);
+
+  if (loading) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Ladataan merkintähistoria tietoja, odota hetki...
+        </p>
+      </div>
+    );
+  }
+
+  if (!rows || rows.length === 0) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Merkintähistorian tietoja ei löytynyt. Lisää uusia tietoja
+          tietokantaan.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>

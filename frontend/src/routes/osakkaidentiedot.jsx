@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import OwnerDetails from "../components/OwnerDetails";
 import PropagateLoader from "react-spinners/PropagateLoader";
@@ -6,9 +7,9 @@ import api from "../api";
 
 export async function loader() {
   const { data: personsData } = await api.get("/persons");
-  const { data: shareholdersData } = await api.get("/shareholders");
+  const { data: shareholdersData } = await api.get("/transactions");
 
-  // unite person ja shareholder into owner object
+  // unite person ja transaction into owner object
   const owners = personsData.map((person) => {
     const shareholder = shareholdersData.find(
       (s) => s.buyer.id === person.id || s.seller.id === person.id
@@ -43,11 +44,32 @@ export async function loader() {
 
 const Osakkaidentiedot = () => {
   const { owners } = useLoaderData();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (owners) {
+      setLoading(false);
+    }
+  }, [owners]);
+
+  if (loading) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Ladataan osakkaiden tietoja, odota hetki...
+        </p>
+      </div>
+    );
+  }
 
   if (!owners || owners.length === 0) {
     return (
       <div>
         <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Osakkaiden tietoja ei löytynyt. Lisää uusia tietoja tietokantaan.
+        </p>
       </div>
     );
   }
