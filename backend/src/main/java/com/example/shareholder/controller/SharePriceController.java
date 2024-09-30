@@ -2,6 +2,7 @@ package com.example.shareholder.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import com.example.shareholder.model.SharePrice;
 import com.example.shareholder.service.SharePriceService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/shareprice")
 public class SharePriceController {
 
@@ -38,7 +40,7 @@ public class SharePriceController {
     SharePrice newSharePrice = sharePriceService.addSharePrice(sharePrice);
     return ResponseEntity.ok().body(newSharePrice);
   }
-  
+
   @PutMapping("/{id}")
   public ResponseEntity<SharePrice> updateSharePrice(@PathVariable Long id, @RequestBody SharePrice newSharePrice) {
     SharePrice updatedSharePrice = sharePriceService.updateSharePrice(id, newSharePrice);
