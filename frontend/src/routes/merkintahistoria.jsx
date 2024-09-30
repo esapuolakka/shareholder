@@ -57,21 +57,21 @@ const columns = [
 ];
 
 export async function loader() {
-  const { data: shareholdersData } = await api.get("/transactions");
-
-  const rowData = shareholdersData.map((shareholder) => {
+  const { data: transactionsData } = await api.get("/transactions");
+  //backend should also be chanded from shareholder terminology to transaction in ShareTransactionController
+  const rowData = transactionsData.map((transaction) => {
     return {
-      id: `${shareholder.id}`,
-      collectionDate: `${shareholder.collectionDate}`,
-      term: `${shareholder.term}`,
-      sellerName: `${shareholder.seller.firstname} ${shareholder.seller.lastname}`,
-      buyerName: `${shareholder.buyer.firstname} ${shareholder.buyer.lastname}`,
-      transferTax: shareholder.transferTaxPaid ? "Maksettu" : "Ei maksettu",
-      numbers: `${shareholder.numberOfShares}`,
-      pricePerShare: `${shareholder.pricePerShare}`,
-      eur: `${shareholder.totalAmount}`,
-      noteworthy: `${shareholder.notes}`,
-      status: `${shareholder.status}`,
+      id: `${transaction.id}`,
+      collectionDate: `${transaction.collectionDate}`,
+      term: `${transaction.term}`,
+      sellerName: `${transaction.seller.firstname} ${transaction.seller.lastname}`,
+      buyerName: `${transaction.buyer.firstname} ${transaction.buyer.lastname}`,
+      transferTax: transaction.transferTaxPaid ? "Maksettu" : "Ei maksettu",
+      numbers: `${transaction.numberOfShares}`,
+      pricePerShare: `${transaction.pricePerShare}`,
+      eur: `${transaction.totalAmount}`,
+      noteworthy: `${transaction.notes}`,
+      status: `${transaction.status}`,
     };
   });
 
@@ -104,7 +104,7 @@ const Merkintahistoria = () => {
       <div>
         <PropagateLoader className={styles.loaderimg} />
         <p style={{ textAlign: "center" }}>
-          Merkintähistorian tietoja ei löytynyt. Lisää uusia tietoja
+          Merkintähistoriasta ei löytynyt tietoja. Lisää uusia tietoja
           tietokantaan.
         </p>
       </div>
