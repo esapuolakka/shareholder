@@ -17,8 +17,6 @@ public class ReportService {
     private ExportToExcelService exportToExcelService;
 
     public void exportToExcel(HttpServletResponse response, List<Map<String, Object>> data, String[] fields, String title) throws IOException {
-        // export to pdf
         exportToExcelService.exportToExcel(response, data, fields, title);
-
     }
 }

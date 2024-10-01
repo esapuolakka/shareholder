@@ -35,8 +35,9 @@ public class ReportController {
     @GetMapping("/persons")
     public void exportPersonsToExcel(HttpServletResponse response) throws IOException {
         String title = "Osakasluettelo";
+
+        // Specify fields in the desired order
         String[] fields = new String[]{"id", "firstname", "lastname", "numberOfShares", "ssn", "city", "address", "email", "phone"};
-        // get all user
         List<Person> data = personRepository.findAll();
 
         List<Map<String, Object>> excelData = data.stream()
@@ -60,8 +61,9 @@ public class ReportController {
     @GetMapping("/transactions")
     public void exportShareholdersToExcel(HttpServletResponse response) throws IOException {
         String title = "Merkintähistoria";
+        
+        // Specify fields in the desired order
         String[] fields = new String[]{"id", "collectionDate", "term", "seller_name", "buyer_name", "transferTaxPaid", "numberOfShares", "pricePerShare", "totalAmount", "notes", "status"};
-        // get all history
         List<ShareTransaction> data = shareTransactionService.getShareTransactions();
         
         List<Map<String, Object>> excelData = data.stream()

@@ -62,8 +62,11 @@ public class ExportToExcelService {
     font.setBold(true);
     font.setFontHeight(16);
     style.setFont(font);
-    for (int i = 0; i < fields.length; i++) {
-        createCell(row, i, fields[i], style);
+
+    int i = 0; 
+    for (String field : fields) {
+        createCell(row, i, field, style);
+        i++;
     }
   }
 
@@ -114,7 +117,7 @@ public void writeTableData(List<Map<String, Object>> records, String[] fields) {
 
   public void exportToExcel(HttpServletResponse response, List<Map<String, Object>> data, String[] fields, String title) throws IOException {
     newReportExcel();
-    // response  writer to excel
+    // response writer to excel
     response = initResponseForExportExcel(response, title);
     ServletOutputStream outputStream = response.getOutputStream();
 
