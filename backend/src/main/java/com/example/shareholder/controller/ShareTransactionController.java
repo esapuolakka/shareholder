@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
-import org.slf4j.*;
-
 import com.example.shareholder.model.ShareTransaction;
 import com.example.shareholder.service.ShareTransactionService;
 
@@ -23,8 +21,6 @@ import com.example.shareholder.service.ShareTransactionService;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/transactions")
 public class ShareTransactionController {
-  
-  private final Logger logger = LoggerFactory.getLogger(ShareTransactionController.class);
 
   @Autowired
   private ShareTransactionService shareTransactionService;
@@ -44,8 +40,6 @@ public class ShareTransactionController {
 
   @PostMapping("/add")
   public ResponseEntity<ShareTransaction> addTransaction(@RequestBody ShareTransaction shareTransaction) {
-    logger.warn("YYYYYYYYYYY_controller: " + shareTransaction.getSeller().getFirstname());
-    logger.warn("YYYYYYYYYYY_controller: " + shareTransaction.getBuyer().getFirstname());
     ShareTransaction newShareholder = shareTransactionService.addShareTransaction(shareTransaction);
     return ResponseEntity.ok().body(newShareholder);
   }

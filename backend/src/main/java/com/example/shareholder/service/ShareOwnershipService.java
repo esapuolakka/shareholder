@@ -8,14 +8,11 @@ import com.example.shareholder.model.ShareTransaction;
 import com.example.shareholder.repository.PersonRepository;
 import com.example.shareholder.repository.ShareOwnershipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.slf4j.*;
 
 import java.util.List;
 
 @Service
 public class ShareOwnershipService {
-
-  private static final Logger logger = LoggerFactory.getLogger(ShareOwnershipService.class);
 
   @Autowired
   private ShareOwnershipRepository shareOwnershipRepository;
@@ -60,11 +57,6 @@ public class ShareOwnershipService {
     if (shareTransaction.getNumberOfShares() != 0) {
       Person buyer = shareTransaction.getBuyer();
       Person seller = shareTransaction.getSeller();
-
-      logger.warn("\n");
-      logger.warn("XXXXXXXXXXXXXX_Ownership_buyer: " + buyer.getFirstname());
-      logger.warn("XXXXXXXXXXXXXX_Ownership_seller: " + seller.getFirstname());
-      logger.warn("");
 
       if (!personRepository.findById(buyer.getId()).isPresent()) {
         throw new IllegalArgumentException("Ostajaa ei löydy annetulla ID:llä");

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.math.BigDecimal;
 
 import com.example.shareholder.model.Person;
 import com.example.shareholder.repository.PersonRepository;
