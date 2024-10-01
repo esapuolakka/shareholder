@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import TableWithPagination from "../components/TableWithPagination";
+import PropagateLoader from "react-spinners/PropagateLoader";
+import styles from "../components/OwnerDetails.module.css";
 import api from "../api";
 
 const columns = [
@@ -46,30 +49,66 @@ const columns = [
     label: "Huomioitavaa",
     minWidth: 200,
   },
+  {
+    id: "status",
+    label: "Status",
+    minWidth: 70,
+  },
 ];
 
 export async function loader() {
-  const { data: shareholdersData } = await api.get("/shareholders");
-
-  const rowData = shareholdersData.map((shareholder) => {
+  const { data: transactionsData } = await api.get("/transactions");
+  const rowData = transactionsData.map((transaction) => {
     return {
-      id: `${shareholder.id}`,
-      collectionDate: `${shareholder.collectionDate}`,
-      term: `${shareholder.term}`,
-      sellerName: `${shareholder.seller.firstname} ${shareholder.seller.lastname}`,
-      buyerName: `${shareholder.buyer.firstname} ${shareholder.buyer.lastname}`,
-      transferTax: shareholder.transferTaxPaid ? "Maksettu" : "Ei maksettu",
-      numbers: `${shareholder.numberOfShares}`,
-      pricePerShare: `${shareholder.pricePerShare}`,
-      eur: `${shareholder.totalAmount}`,
-      noteworthy: `${shareholder.notes}`,
+      id: `${transaction.id}`,
+      collectionDate: `${transaction.collectionDate}`,
+      term: `${transaction.term}`,
+      sellerName: `${transaction.seller.firstname} ${transaction.seller.lastname}`,
+      buyerName: `${transaction.buyer.firstname} ${transaction.buyer.lastname}`,
+      transferTax: transaction.transferTaxPaid ? "Maksettu" : "Ei maksettu",
+      numbers: `${transaction.numberOfShares}`,
+      pricePerShare: `${transaction.pricePerShare}`,
+      eur: `${transaction.totalAmount}`,
+      noteworthy: `${transaction.notes}`,
+      status: `${transaction.status}`,
     };
   });
 
   return rowData;
 }
+
 const Merkintahistoria = () => {
   const rows = useLoaderData();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (rows) {
+      setLoading(false);
+    }
+  }, [rows]);
+
+  if (loading) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Ladataan merkintähistoria tietoja, odota hetki...
+        </p>
+      </div>
+    );
+  }
+
+  if (!rows || rows.length === 0) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Merkintähistoriasta ei löytynyt tietoja. Lisää uusia tietoja
+          tietokantaan.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>

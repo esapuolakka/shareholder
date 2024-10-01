@@ -1,7 +1,10 @@
+import { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
 import Toolbar from "@mui/material/Toolbar";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import PropagateLoader from "react-spinners/PropagateLoader";
+import styles from "../components/OwnerDetails.module.css";
 import api from "../api";
 
 const columns = [
@@ -46,7 +49,6 @@ const columns = [
 ];
 
 export async function loader() {
-  //same axios get method
   const personsResponse = await api.get("/persons");
 
   const personsData = personsResponse.data;
@@ -71,6 +73,36 @@ export async function loader() {
 
 const Osakasluettelo = () => {
   const rows = useLoaderData();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (rows) {
+      setLoading(false);
+    }
+  }, [rows]);
+
+  if (loading) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Ladataan osakkaiden tietoja, odota hetki...
+        </p>
+      </div>
+    );
+  }
+
+  if (!rows || rows.length === 0) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Osakkaiden tietoja ei löytynyt. Lisää uusia tietoja tietokantaan.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
       <Toolbar style={{ padding: 0, display: "flex" }}>

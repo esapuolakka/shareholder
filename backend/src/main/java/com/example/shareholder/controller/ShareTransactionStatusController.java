@@ -1,5 +1,6 @@
 package com.example.shareholder.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import com.example.shareholder.model.ShareTransaction;
 import com.example.shareholder.service.ShareTransactionService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/sharetransactionstatus")
 public class ShareTransactionStatusController {
 

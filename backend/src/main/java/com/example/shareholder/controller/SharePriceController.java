@@ -40,7 +40,7 @@ public class SharePriceController {
     SharePrice newSharePrice = sharePriceService.addSharePrice(sharePrice);
     return ResponseEntity.ok().body(newSharePrice);
   }
-  
+
   @PutMapping("/{id}")
   public ResponseEntity<SharePrice> updateSharePrice(@PathVariable Long id, @RequestBody SharePrice newSharePrice) {
     SharePrice updatedSharePrice = sharePriceService.updateSharePrice(id, newSharePrice);

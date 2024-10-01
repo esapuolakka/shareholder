@@ -19,7 +19,7 @@ public class ShareOwnershipController {
 
   @Autowired
   private ShareOwnershipService shareOwnershipService;
-  
+
   @GetMapping("/all")
   public ResponseEntity<List<ShareOwnership>> getAllShareOwnerships() {
     List<ShareOwnership> shareOwnerships = shareOwnershipService.getAllShareOwnerships();
