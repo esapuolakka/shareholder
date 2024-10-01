@@ -9,6 +9,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LanguageIcon from "@mui/icons-material/Language";
 
 const Charts = ({ data }) => {
+  const { top5Data, totalShareOwners } = data;
   return (
     <div className={styles.Charts}>
       <div className={styles.details}>
@@ -44,7 +45,7 @@ const Charts = ({ data }) => {
         <ColumnChart />
       </div>
       <div className={styles.pieChart}>
-        <PieChart data={data.top5Data} />
+        <PieChart data={{ top5Data, totalShareOwners }} />
       </div>
     </div>
   );

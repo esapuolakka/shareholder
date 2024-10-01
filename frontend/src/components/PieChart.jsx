@@ -2,6 +2,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 const PieChart = ({ data }) => {
+  const { top5Data, totalShareOwners } = data;
   const options = {
     chart: {
       type: "pie",
@@ -25,13 +26,44 @@ const PieChart = ({ data }) => {
         dataLabels: {
           enabled: false,
         },
-        data,
+        data: top5Data,
         size: "80%",
         innerSize: "70%",
       },
     ],
     xAxis: {
       tickInterval: 1,
+    },
+    tooltip: {
+      style: {
+        fontSize: "1rem",
+      },
+    },
+    plotOptions: {
+      series: {
+        name: "määrä",
+        allowPointSelect: true,
+        cursor: "pointer",
+        borderRadius: 8,
+        dataLabels: [
+          {
+            enabled: true,
+            distance: 20,
+            format: "{point.name}",
+            style: {
+              fontSize: "1rem",
+            },
+          },
+          {
+            enabled: true,
+            distance: -20,
+            format: "{point.percentage:.0f}%",
+            style: {
+              fontSize: "0.9em",
+            },
+          },
+        ],
+      },
     },
   };
 
@@ -55,13 +87,15 @@ const PieChart = ({ data }) => {
           marginBlockEnd: "1.5rem",
         }}
       >
-        <div>
+        {/* <div>
           <span>Yhteensä sijoitettu: </span>
           <strong style={{ fontWeight: 400 }}>EUR 340,925,86</strong>
-        </div>
+        </div> */}
         <div style={{ textAlign: "center" }}>
           <span>Laimentamaton omistustaulukko: </span> <br />
-          <strong style={{ fontWeight: 400 }}>48 osakkeenomistajaa</strong>
+          <strong
+            style={{ fontWeight: 400 }}
+          >{`${totalShareOwners} osakkeenomistajaa`}</strong>
         </div>
       </div>
     </div>

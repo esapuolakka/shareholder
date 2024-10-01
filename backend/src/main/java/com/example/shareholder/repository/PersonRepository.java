@@ -18,7 +18,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
         
         UNION ALL
         
-        SELECT 'Others' AS ETUNIMI, '' AS SUKUNIMI, SUM(OSAKKEIDEN_MAARA) AS OSAKKEIDEN_MAARA
+        SELECT 'Muut' AS ETUNIMI, '' AS SUKUNIMI, SUM(OSAKKEIDEN_MAARA) AS OSAKKEIDEN_MAARA
         FROM (
           SELECT ETUNIMI, SUKUNIMI, OSAKKEIDEN_MAARA, RANK() OVER (ORDER BY OSAKKEIDEN_MAARA DESC) as rank
           FROM HENKILO

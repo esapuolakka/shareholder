@@ -8,11 +8,13 @@ export async function loader() {
     `${etunimi} ${sukunimi}`,
     amount,
   ]);
-  return { top5Data: top5DataWithName };
+  const { data: totalShareOwners } = await api.get("/shareownership/count");
+  return { top5Data: top5DataWithName, totalShareOwners };
 }
 
 const Dashboard = () => {
   const data = useLoaderData();
+
   return (
     <>
       <h1>Dashboard</h1>
