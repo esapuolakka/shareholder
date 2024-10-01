@@ -31,4 +31,9 @@ public class ShareOwnershipController {
     ShareOwnership shareOwnership = shareOwnershipService.getShareOwnershipById(id);
     return ResponseEntity.ok().body(shareOwnership);
   }
+
+  @GetMapping("/count")
+  public long getTotalShareOwnership() {
+      return shareOwnershipService.getTotalShareOwnership();
+  }
 }
