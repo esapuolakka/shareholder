@@ -8,11 +8,14 @@ import com.example.shareholder.model.ShareTransaction;
 import com.example.shareholder.repository.PersonRepository;
 import com.example.shareholder.repository.ShareOwnershipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.*;
 
 import java.util.List;
 
 @Service
 public class ShareOwnershipService {
+
+  private static final Logger logger = LoggerFactory.getLogger(ShareOwnershipService.class);
 
   @Autowired
   private ShareOwnershipRepository shareOwnershipRepository;
@@ -58,6 +61,11 @@ public class ShareOwnershipService {
       Person buyer = shareTransaction.getBuyer();
       Person seller = shareTransaction.getSeller();
 
+      logger.warn("\n");
+      logger.warn("XXXXXXXXXXXXXX_Ownership_buyer: " + buyer.getFirstname());
+      logger.warn("XXXXXXXXXXXXXX_Ownership_seller: " + seller.getFirstname());
+      logger.warn("");
+
       if (!personRepository.findById(buyer.getId()).isPresent()) {
         throw new IllegalArgumentException("Ostajaa ei löydy annetulla ID:llä");
       }
@@ -76,11 +84,13 @@ public class ShareOwnershipService {
         throw new IllegalArgumentException("Myyjällä ei ole tarpeeksi osakkeita");
       }
 
+      // Sort all the seller ownerships
       sellerOwnerships.sort((o1, o2) -> Integer.compare(o1.getNumberOfShares(), o2.getNumberOfShares()));
 
       ShareOwnership ownershipToSell = new ShareOwnership();
       int remainingSharesToSell = shareTransaction.getNumberOfShares();
 
+      // Iterate through all the seller ownerships to find suitable ownerships to sell
       for (ShareOwnership ownership : sellerOwnerships) {
         if (remainingSharesToSell == 0) {
           break;
@@ -113,6 +123,13 @@ public class ShareOwnershipService {
       if (remainingSharesToSell > 0) {
         throw new IllegalArgumentException("Myyjällä ei ollut tarpeeksi osakkeita myyntiin.");
       }
+
+      // Finally update person shares
+      seller.setNumberOfShares(totalSellerShares - shareTransaction.getNumberOfShares());
+      buyer.setNumberOfShares(buyer.getNumberOfShares() + shareTransaction.getNumberOfShares());
+
+      personRepository.save(seller);
+      personRepository.save(buyer);
 
       return ownershipToSell;
     } else {

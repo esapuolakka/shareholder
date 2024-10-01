@@ -29,7 +29,8 @@
     "postalCode": "00100",
     "city": "Helsinki",
     "ssn": "010101-123N",
-    "numberOfShares": 100
+    "numberOfShares": 100,
+    "bankAccount": "FI1234560000000001"
   },
   {
     "firstname": "Maija",
@@ -40,7 +41,8 @@
     "postalCode": "00200",
     "city": "Espoo",
     "ssn": "020202-234L",
-    "numberOfShares": 155
+    "numberOfShares": 155,
+    "bankAccount": "FI1234560000000002"
   },
   {
     "firstname": "Kalle",
@@ -51,7 +53,8 @@
     "postalCode": "00300",
     "city": "Vantaa",
     "ssn": "030303-345M",
-    "numberOfShares": 83
+    "numberOfShares": 83,
+    "bankAccount": "FI1234560000000003"
   },
   {
     "firstname": "Liisa",
@@ -62,7 +65,8 @@
     "postalCode": "00400",
     "city": "Tampere",
     "ssn": "040404-456P",
-    "numberOfShares": 120
+    "numberOfShares": 1200,
+    "bankAccount": "FI1234560000000004"
   },
   {
     "firstname": "Pekka",
@@ -73,7 +77,8 @@
     "postalCode": "00500",
     "city": "Turku",
     "ssn": "050505-567Q",
-    "numberOfShares": 200
+    "numberOfShares": 200,
+    "bankAccount": "FI1234560000000005"
   },
   {
     "firstname": "Sanna",
@@ -84,7 +89,8 @@
     "postalCode": "00600",
     "city": "Oulu",
     "ssn": "060606-678R",
-    "numberOfShares": 72
+    "numberOfShares": 72,
+    "bankAccount": "FI1234560000000006"
   },
   {
     "firstname": "Teemu",
@@ -95,7 +101,8 @@
     "postalCode": "00700",
     "city": "Jyväskylä",
     "ssn": "070707-789S",
-    "numberOfShares": 135
+    "numberOfShares": 135,
+    "bankAccount": "FI1234560000000007"
   },
   {
     "firstname": "Johanna",
@@ -106,7 +113,8 @@
     "postalCode": "00800",
     "city": "Kuopio",
     "ssn": "080808-890T",
-    "numberOfShares": 50
+    "numberOfShares": 50,
+    "bankAccount": "FI1234560000000008"
   },
   {
     "firstname": "Jussi",
@@ -117,7 +125,8 @@
     "postalCode": "00900",
     "city": "Lahti",
     "ssn": "090909-901U",
-    "numberOfShares": 140
+    "numberOfShares": 140,
+    "bankAccount": "FI1234560000000009"
   },
   {
     "firstname": "Anneli",
@@ -128,7 +137,8 @@
     "postalCode": "01000",
     "city": "Pori",
     "ssn": "101010-012V",
-    "numberOfShares": 165
+    "numberOfShares": 165,
+    "bankAccount": "FI1234560000000010"
   },
   {
     "firstname": "Timo",
@@ -139,7 +149,8 @@
     "postalCode": "01100",
     "city": "Lappeenranta",
     "ssn": "111111-123W",
-    "numberOfShares": 100
+    "numberOfShares": 100,
+    "bankAccount": "FI1234560000000011"
   },
   {
     "firstname": "Elina",
@@ -150,7 +161,8 @@
     "postalCode": "01200",
     "city": "Vaasa",
     "ssn": "121212-234X",
-    "numberOfShares": 98
+    "numberOfShares": 98,
+    "bankAccount": "FI1234560000000012"
   },
   {
     "firstname": "Jukka",
@@ -161,7 +173,8 @@
     "postalCode": "01300",
     "city": "Rovaniemi",
     "ssn": "131313-345Y",
-    "numberOfShares": 117
+    "numberOfShares": 117.87,
+    "bankAccount": "FI1234560000000013"
   },
   {
     "firstname": "Mari",
@@ -172,7 +185,8 @@
     "postalCode": "01400",
     "city": "Kajaani",
     "ssn": "141414-456Z",
-    "numberOfShares": 60
+    "numberOfShares": 0.66,
+    "bankAccount": "FI1234560000000014"
   },
   {
     "firstname": "Arto",
@@ -183,7 +197,8 @@
     "postalCode": "01500",
     "city": "Seinäjoki",
     "ssn": "151515-567A",
-    "numberOfShares": 43
+    "numberOfShares": 0,
+    "bankAccount": "FI1234560000000015"
   }
 ]
 
