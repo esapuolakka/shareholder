@@ -4,6 +4,8 @@ import TableWithPagination from "../components/TableWithPagination";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import styles from "../components/OwnerDetails.module.css";
 import api from "../api";
+import { Toolbar } from "@mui/material";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 const columns = [
   {
@@ -115,7 +117,7 @@ const Merkintahistoria = () => {
       <Toolbar style={{ padding: 0, display: "flex" }}>
         <h1>Merkintähistoria</h1>
         <p style={{ flex: 1 }}></p>
-        <a href="http://localhost:8080/api/report/shareholders">
+        <a href={`${import.meta.env.VITE_BASE_URL}/report/transactions`}>
           <CloudDownloadIcon fontSize="large" />
         </a>
       </Toolbar>
