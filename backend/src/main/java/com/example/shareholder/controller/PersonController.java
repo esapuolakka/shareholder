@@ -28,6 +28,11 @@ public class PersonController {
         return ResponseEntity.ok().body(person);
     }
 
+    @GetMapping("/top5")
+    public List<Object[]> getTop5Shareholders() {
+        return personService.getTop5ShareholdersAndRest();
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Person> addPerson(@RequestBody Person person) {
         Person newPerson = personService.addPerson(person);
