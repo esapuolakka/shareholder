@@ -22,18 +22,22 @@ const columns = [
 ];
 
 export async function loader() {
-  const { data: personsData } = await api.get("/persons");
+  const { data: shareOwnershipData } = await api.get("/shareownership/all"); //data now from OSAKE_OMISTUS table
 
-  const rowData = personsData.map((person) => {
-    const sharenumbersBeginning = 0;
-    const sharenumbersEnding = 0;
+  const rowData = shareOwnershipData.map((ownership) => {
+    const sharenumbersBeginning = ownership.startingShareNumber;
+    const sharenumbersEnding = ownership.endingShareNumber;
 
     return {
-      personId: `${person.id}` || "N/A",
-      name: `${person.firstname} ${person.lastname}` || "N/A",
+      personId:
+        ownership.owner.id ?? "Tietoa ei pystytty hakemaan tietokannasta",
+      name:
+        `${ownership.owner.firstname} ${ownership.owner.lastname}` ??
+        "Tietoa ei pystytty hakemaan tietokannasta",
       sharenumbersBeginning,
       sharenumbersEnding,
-      numberOfRowsShares: sharenumbersEnding - sharenumbersBeginning + 1,
+      numberOfRowsShares:
+        ownership.numberOfShares ?? "Tietoa ei pystytty hakemaan tietokannasta",
     };
   });
 

@@ -58,7 +58,6 @@ const columns = [
 
 export async function loader() {
   const { data: transactionsData } = await api.get("/transactions");
-  //backend should also be chanded from shareholder terminology to transaction in ShareTransactionController
   const rowData = transactionsData.map((transaction) => {
     return {
       id: `${transaction.id}`,
