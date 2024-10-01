@@ -9,9 +9,9 @@ import com.example.shareholder.repository.ShareTransactionRepository;
 public class ShareCalculatorService {
   
   @Autowired
-  private ShareTransactionRepository shareholderRepository;
+  private ShareTransactionRepository shareTransactionRepository;
 
   public Integer calculateTotalShares() {
-    return shareholderRepository.findAll().stream().mapToInt(shareholder -> shareholder.getNumberOfShares()).sum();
+    return shareTransactionRepository.findAll().stream().mapToInt(shareholder -> shareholder.getNumberOfShares()).sum();
   }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ShareTransactionRepository extends JpaRepository<ShareTransaction, Long> {
 
-    @Query("SELECT s FROM ShareTransaction s JOIN s.seller seller WHERE LOWER(seller.firstname) LIKE LOWER(CONCAT('%', ?1, '%')) OR LOWER(seller.lastname) LIKE LOWER(CONCAT('%', ?1, '%')) AND s.status = 'approved'")
+    @Query("SELECT s FROM ShareTransaction s JOIN s.seller seller WHERE LOWER(seller.firstname) LIKE LOWER(CONCAT('%', ?1, '%')) OR LOWER(seller.lastname) LIKE LOWER(CONCAT('%', ?1, '%'))")
     List<ShareTransaction> findBySellerFirstnameContainingIgnoreCaseOrSellerLastnameContainingIgnoreCase(String firstname,
             String lastname);
     

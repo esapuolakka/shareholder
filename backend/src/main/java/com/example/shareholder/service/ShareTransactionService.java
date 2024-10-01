@@ -18,6 +18,8 @@ import com.example.shareholder.repository.ShareTransactionRepository;
 @Service
 public class ShareTransactionService {
 
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ShareTransactionService.class);
+
   @Autowired
   private ShareTransactionRepository shareTransactionRepository;
 
@@ -31,8 +33,7 @@ public class ShareTransactionService {
   private ShareOwnershipService shareOwnershipService;
 
   public List<ShareTransaction> getShareTransactions() {
-    String status = "approved";
-    return shareTransactionRepository.findByStatus(status);
+    return shareTransactionRepository.findAll();
   }
 
   public ShareTransaction getShareTransactionById(Long id) {
@@ -41,12 +42,18 @@ public class ShareTransactionService {
   }
 
   public ShareTransaction addShareTransaction(ShareTransaction shareTransaction) {
-    if (!personRepository.existsById(shareTransaction.getBuyer().getId())) {
+
+    Optional<Person> optionalBuyer = personRepository.findById(shareTransaction.getBuyer().getId());
+    if (!optionalBuyer.isPresent()) {
       throw new IllegalArgumentException("Ostajaa ei löydy annetulla ID:llä: " + shareTransaction.getBuyer().getId());
     }
-    if (!personRepository.existsById(shareTransaction.getSeller().getId())) {
+    Optional<Person> optionalSeller = personRepository.findById(shareTransaction.getSeller().getId());
+    if (!optionalSeller.isPresent()) {
       throw new IllegalArgumentException("Myyjää ei löydy annetulla ID:llä: " + shareTransaction.getSeller().getId());
     }
+    shareTransaction.setBuyer(optionalBuyer.get());
+    shareTransaction.setSeller(optionalSeller.get());
+
     if (shareTransaction.getCollectionDate() == null || shareTransaction.getTerm() == null
         || shareTransaction.getNumberOfShares() == 0) {
       throw new IllegalArgumentException("Kentät ovat pakollisia");
@@ -58,12 +65,9 @@ public class ShareTransactionService {
       throw new IllegalArgumentException("Myyjä ja ostaja eivät voi olla sama henkilö");
     }
 
-    Optional<Person> optionalSeller = personRepository.findById(shareTransaction.getSeller().getId());
-    if (optionalSeller.isPresent()) {
-      Person seller = optionalSeller.get();
-      if (seller.getNumberOfShares() < shareTransaction.getNumberOfShares()) {
+    Person seller = optionalSeller.get();
+    if (seller.getNumberOfShares() < shareTransaction.getNumberOfShares()) {
         throw new IllegalArgumentException("Myyjällä ei ole tarpeeksi osakkeita");
-      }
     }
     // Set price per share
     Optional<SharePrice> optionalSharePrice = sharePriceRepository.findFirstByOrderByIdDesc();
@@ -74,12 +78,13 @@ public class ShareTransactionService {
       shareTransaction.setPricePerShare(BigDecimal.ZERO);
     }
 
+    // Set transaction status if empty
     if (shareTransaction.getStatus() == null || shareTransaction.getStatus().isEmpty()) {
       shareTransaction.setStatus("pending");
     }
-
+    // Check if status is valid
     if ((!shareTransaction.getStatus().equals("pending") && !shareTransaction.getStatus().equals("approved")
-            && !shareTransaction.getStatus().equals("rejected"))) {
+        && !shareTransaction.getStatus().equals("rejected"))) {
       throw new IllegalArgumentException("Status on pakollinen, joko 'pending', 'approved' tai 'rejected'");
     }
 

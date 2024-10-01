@@ -26,11 +26,11 @@ public class ShareTransaction {
   @Column(name = "maksu_pvm")
   private LocalDate term;
 
-  @JoinColumn(name = "myyja_id")
+  @JoinColumn(name = "myyja_id", nullable = false)
   @ManyToOne
   private Person seller;
 
-  @JoinColumn(name = "ostaja_id")
+  @JoinColumn(name = "ostaja_id", nullable = false)
   @ManyToOne
   private Person buyer;
 

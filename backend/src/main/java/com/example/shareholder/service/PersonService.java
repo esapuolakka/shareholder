@@ -17,6 +17,12 @@ public class PersonService {
     @Autowired
     private ShareOwnershipService shareOwnershipService;
 
+    @Autowired
+    private ShareCountTotalService shareCountTotalService;
+
+    @Autowired
+    private OwnerPercentageCalculator ownerPercentageCalculator;
+
     public List<Person> getPersons() {
         return personRepository.findAll();
     }
@@ -36,10 +42,15 @@ public class PersonService {
                 || person.getPostalCode() == null || person.getCity() == null || person.getBankAccount() == null) {
             throw new IllegalArgumentException("Kentät ovat pakollisia");
         }
+        if (person.getNumberOfShares() == null || person.getNumberOfShares() < 0) {
+            throw new IllegalArgumentException("Osakemäärän on oltava nolla tai suurempi.");
+        }
         Person newPerson = personRepository.save(person);
+        shareCountTotalService.updateTotalShareCount(person.getNumberOfShares());
 
         if (person.getNumberOfShares() > 0) {
             shareOwnershipService.addShareOwnership(person);
+            ownerPercentageCalculator.updateAllOwnershipPercentages();
         }
         return newPerson;
     }
@@ -59,7 +70,13 @@ public class PersonService {
         existingPerson.setNumberOfShares(person.getNumberOfShares());
         existingPerson.setBankAccount(person.getBankAccount());
 
-        return personRepository.save(existingPerson);
+        Person newPerson = personRepository.save(existingPerson);
+
+        if (!existingPerson.getNumberOfShares().equals(person.getNumberOfShares())) {
+            ownerPercentageCalculator.updateAllOwnershipPercentages();
+        }
+        shareCountTotalService.updateTotalShareCount(person.getNumberOfShares());
+        return newPerson;
     }
 
     public void deletePerson(Long id) {

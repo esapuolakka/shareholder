@@ -37,7 +37,7 @@ public class AddMultipleEntities {
     }
   }
 
-  @PostMapping("/shareholders")
+  @PostMapping("/transactions")
   public void addMultipleShareholders(@RequestBody List<ShareTransaction> shareholders) {
     for (ShareTransaction shareholder : shareholders) {
       shareholderService.addShareTransaction(shareholder);

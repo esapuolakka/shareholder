@@ -76,11 +76,13 @@ public class ShareOwnershipService {
         throw new IllegalArgumentException("Myyjällä ei ole tarpeeksi osakkeita");
       }
 
+      // Sort all the seller ownerships
       sellerOwnerships.sort((o1, o2) -> Integer.compare(o1.getNumberOfShares(), o2.getNumberOfShares()));
 
       ShareOwnership ownershipToSell = new ShareOwnership();
       int remainingSharesToSell = shareTransaction.getNumberOfShares();
 
+      // Iterate through all the seller ownerships to find suitable ownerships to sell
       for (ShareOwnership ownership : sellerOwnerships) {
         if (remainingSharesToSell == 0) {
           break;
@@ -113,6 +115,13 @@ public class ShareOwnershipService {
       if (remainingSharesToSell > 0) {
         throw new IllegalArgumentException("Myyjällä ei ollut tarpeeksi osakkeita myyntiin.");
       }
+
+      // Finally update person shares
+      seller.setNumberOfShares(totalSellerShares - shareTransaction.getNumberOfShares());
+      buyer.setNumberOfShares(buyer.getNumberOfShares() + shareTransaction.getNumberOfShares());
+
+      personRepository.save(seller);
+      personRepository.save(buyer);
 
       return ownershipToSell;
     } else {
