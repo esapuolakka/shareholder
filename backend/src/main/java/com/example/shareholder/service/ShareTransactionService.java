@@ -33,7 +33,7 @@ public class ShareTransactionService {
   private ShareOwnershipService shareOwnershipService;
 
   public List<ShareTransaction> getShareTransactions() {
-    return shareTransactionRepository.findAllTransactions();
+    return shareTransactionRepository.findAll();
   }
 
   public List<ShareTransaction> getShareTransactionsApproved() {

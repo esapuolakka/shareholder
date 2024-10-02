@@ -13,7 +13,4 @@ public interface ShareTransactionRepository extends JpaRepository<ShareTransacti
     List<ShareTransaction> findBySellerFirstnameContainingIgnoreCaseOrSellerLastnameContainingIgnoreCase(String firstname, String lastname);
     
     List<ShareTransaction> findByStatus(String status);
-
-    @Query("SELECT s FROM ShareTransaction s JOIN s.seller seller")
-    List<ShareTransaction> findAllTransactions();
 }
