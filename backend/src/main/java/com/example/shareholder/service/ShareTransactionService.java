@@ -36,6 +36,11 @@ public class ShareTransactionService {
     return shareTransactionRepository.findAll();
   }
 
+  public List<ShareTransaction> getShareTransactionsApproved() {
+    String status = "approved";
+    return shareTransactionRepository.findByStatus(status);
+  }
+
   public ShareTransaction getShareTransactionById(Long id) {
     return shareTransactionRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("Osakkeenomistajaa ei löytynyt id:llä " + id));

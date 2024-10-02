@@ -9,9 +9,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.List;
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -62,8 +62,11 @@ public class ExportToExcelService {
     font.setBold(true);
     font.setFontHeight(16);
     style.setFont(font);
-    for (int i = 0; i < fields.length; i++) {
-        createCell(row, i, fields[i], style);
+
+    int i = 0; 
+    for (String field : fields) {
+        createCell(row, i, field, style);
+        i++;
     }
   }
 
@@ -79,7 +82,7 @@ public class ExportToExcelService {
       } else if (value instanceof Long) {
           cell.setCellValue((Long) value);
       } else {
-          cell.setCellValue((String) value);
+          cell.setCellValue((String) value.toString());
       }
       cell.setCellStyle(style);
   }
@@ -93,7 +96,7 @@ public class ExportToExcelService {
       return style;
   }
 
-public <T> void writeTableData(List<T> records, String[] fields) {
+public void writeTableData(List<Map<String, Object>> records, String[] fields) {
 
       // font style content
       CellStyle style = getFontContentExcel();
@@ -102,35 +105,19 @@ public <T> void writeTableData(List<T> records, String[] fields) {
       int startRow = 2;
 
       // write content
-      for (T record : records) {
+      for (Map<String, Object> record : records) {
         Row row = sheet.createRow(startRow++);
         int columnCount = 0;
         for (String fieldName : fields) {
-          try {
-            Field field = record.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
-            try {
-                // Get the value of the field for the 'person' object
-                Object value = field.get(record);
-
-                // Put the value on the cell
-                createCell(row, columnCount++, value, style);
-
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-          } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        }
-          
+          String value = record.get(fieldName).toString();
+          createCell(row, columnCount++, value, style);
+        } 
       }
   }
 
-  public <T> void exportToExcel(HttpServletResponse response, List<T> data, String[] fields, String title) throws IOException {
+  public void exportToExcel(HttpServletResponse response, List<Map<String, Object>> data, String[] fields, String title) throws IOException {
     newReportExcel();
-    // response  writer to excel
+    // response writer to excel
     response = initResponseForExportExcel(response, title);
     ServletOutputStream outputStream = response.getOutputStream();
 
