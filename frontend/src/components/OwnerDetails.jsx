@@ -85,7 +85,7 @@ const OwnerDetails = ({ owners }) => {
     try {
       await api.put(`/persons/${editedOwner.id}`, editedOwner);
       setSelectedOwner(editedOwner);
-      setMessage("Henkilötietojen päivitys onnistui");
+      setMessage("Henkilötietojen päivittäminen onnistui");
       setSeverity("success");
       setOpen(true);
       setIsEditing(false);
@@ -118,6 +118,7 @@ const OwnerDetails = ({ owners }) => {
           {message}
         </Alert>
       </Snackbar>
+
       <SelectPerson owners={owners} onChange={handlePersonChange} />
 
       {selectedOwner && (

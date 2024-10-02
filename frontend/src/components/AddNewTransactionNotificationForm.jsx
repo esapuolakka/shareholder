@@ -1,5 +1,28 @@
 import React, { useState, useEffect } from "react";
+import api from "../api";
 import styles from "./Addnew.module.css";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return (
+    <MuiAlert
+      elevation={0}
+      ref={ref}
+      variant="standard"
+      sx={{
+        marginRight: "1.5rem",
+        marginTop: "var(--navbar-height)",
+        backgroundColor: "white",
+        border: " 0.5px solid var(--border-color)",
+        color: "var(--heading-and-text-color)",
+        fontFamily: "var(--font-family)",
+        fontSize: "12px",
+      }}
+      {...props}
+    />
+  );
+});
 
 const SelectPerson = ({ persons }) => (
   <select>
@@ -16,21 +39,33 @@ const SelectPerson = ({ persons }) => (
 );
 
 const AddNewTransactionForm = ({ persons }) => {
-  const [sharesStart, setSharesStart] = useState("");
-  const [sharesEnd, setSharesEnd] = useState("");
+  const [transaction, setTransaction] = useState({
+    seller: "",
+    buyer: "",
+    collectionDate: "",
+    term: "",
+    shareCount: "",
+    pricePerShare: "",
+    notes: "",
+  });
+  // const [sharesStart, setSharesStart] = useState("");
+  // const [sharesEnd, setSharesEnd] = useState("");
   const [pricePerShare, setPricePerShare] = useState("");
-  const [shareCount, setShareCount] = useState(0);
+  const [shareCount, setShareCount] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
 
   // share count
-  useEffect(() => {
-    if (sharesStart && sharesEnd) {
-      const count = Math.max(0, sharesEnd - sharesStart + 1);
-      setShareCount(count);
-    } else {
-      setShareCount(0);
-    }
-  }, [sharesStart, sharesEnd]);
+  // useEffect(() => {
+  //   if (sharesStart && sharesEnd) {
+  //     const count = Math.max(0, sharesEnd - sharesStart + 1);
+  //     setShareCount(count);
+  //   } else {
+  //     setShareCount(0);
+  //   }
+  // }, [sharesStart, sharesEnd]);
   // total
   useEffect(() => {
     if (pricePerShare && shareCount) {
@@ -41,8 +76,23 @@ const AddNewTransactionForm = ({ persons }) => {
     }
   }, [pricePerShare, shareCount]);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
+      <Snackbar
+        open={open}
+        autoHideDuration={4000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert onClose={handleClose} severity={severity}>
+          {message}
+        </Alert>
+      </Snackbar>
+
       <div className={styles.addBox}>
         <h2>Osakemyynti ilmoitus</h2>
         <form className={styles.generalItemContainer}>
