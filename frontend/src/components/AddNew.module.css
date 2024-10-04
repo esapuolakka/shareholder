@@ -42,6 +42,7 @@
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     gap: 3rem;
 
     > div {
@@ -100,6 +101,17 @@
     &:focus {
       border: 0.5px solid #ed692f;
     }
+  }
+}
+
+.radioGroup {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 50%;
+  label {
+    text-align: center;
   }
 }
 

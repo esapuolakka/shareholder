@@ -100,7 +100,7 @@ const AddNewPersonForm = () => {
       </Snackbar>
 
       <div className={styles.addBox}>
-        <h2>Lisää uusi osakkeenomistaja</h2>
+        <h2>Osakkeenomistaja</h2>
         <form className={styles.generalItemContainer} onSubmit={handleSubmit}>
           <div className={styles.formRow}>
             <label>Osakkaan nimi/ Yrityksen nimi:</label>
