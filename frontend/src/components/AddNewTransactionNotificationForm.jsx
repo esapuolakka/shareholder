@@ -118,8 +118,8 @@ const AddNewTransactionForm = ({ persons }) => {
     e.preventDefault();
     const transactionToSend = {
       ...transaction,
-      seller: transaction.seller.id,
-      buyer: transaction.buyer.id,
+      seller: { id: transaction.seller.id },
+      buyer: { id: transaction.buyer.id },
       transferTaxPaid: transaction.transferTaxPaid,
       pricePerShare: transaction.pricePerShare,
       numberOfShares: transaction.numberOfShares,
