@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
 import Toolbar from "@mui/material/Toolbar";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import DownloadIcon from "@mui/icons-material/Download";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import styles from "../components/OwnerDetails.module.css";
 import api from "../api";
@@ -109,7 +109,7 @@ const Osakasluettelo = () => {
         <h1>Osakasluettelo</h1>
         <p style={{ flex: 1 }}></p>
         <a href={`${import.meta.env.VITE_BASE_URL}/report/persons`}>
-          <CloudDownloadIcon
+          <DownloadIcon
             fontSize="large"
             sx={{
               color: "var(--heading-and-text-color)",

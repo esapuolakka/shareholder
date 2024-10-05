@@ -113,6 +113,9 @@
   label {
     text-align: center;
   }
+  input {
+    accent-color: var(--primary-color);
+  }
 }
 
 .styledButton {
@@ -132,7 +135,7 @@
   align-self: flex-end;
 
   &:hover {
-    background-color: rgb(255, 252, 226);
+    background-color: rgb(255, 252, 243);
     box-shadow: 0 4px 4px 0 rgba(124, 124, 124, 0.5);
     transition: all 0.3s ease;
   }

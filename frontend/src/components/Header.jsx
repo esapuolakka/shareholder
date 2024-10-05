@@ -100,11 +100,7 @@ export default function HeaderNavBar() {
               onClick={handleMenuClose}
               component={NavLink}
               to={page.path}
-              className={({ isActive }) =>
-                isActive
-                  ? `${styles.navbarItemMobile} ${styles.active}`
-                  : styles.navbarItemMobile
-              }
+              className={styles.navbarItemMobile}
             >
               {page.label}
             </MenuItem>

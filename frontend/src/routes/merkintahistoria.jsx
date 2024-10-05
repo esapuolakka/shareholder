@@ -5,7 +5,7 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 import styles from "../components/OwnerDetails.module.css";
 import api from "../api";
 import { Toolbar } from "@mui/material";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import DownloadIcon from "@mui/icons-material/Download";
 
 const columns = [
   {
@@ -118,7 +118,15 @@ const Merkintahistoria = () => {
         <h1>Merkintähistoria</h1>
         <p style={{ flex: 1 }}></p>
         <a href={`${import.meta.env.VITE_BASE_URL}/report/transactions`}>
-          <CloudDownloadIcon fontSize="large" />
+          <DownloadIcon
+            fontSize="large"
+            sx={{
+              color: "var(--heading-and-text-color)",
+              "&:hover": {
+                color: "var(--link-text-color-hover)",
+              },
+            }}
+          />
         </a>
       </Toolbar>
 
