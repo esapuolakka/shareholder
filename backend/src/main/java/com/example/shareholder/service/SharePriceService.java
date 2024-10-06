@@ -22,6 +22,10 @@ public class SharePriceService {
     return sharePriceRepository.findAll();
   }
 
+  public SharePrice getLatestPrice() {
+    return sharePriceRepository.findLatestSharePrice();
+  }
+
   public SharePrice getSharePrice(Long id) {
     return sharePriceRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Osakkeen hintaa ei löytynyt id:llä " + id));
