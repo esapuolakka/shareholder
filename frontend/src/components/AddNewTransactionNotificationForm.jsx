@@ -57,22 +57,23 @@ const AddNewTransactionForm = ({ persons }) => {
   const [severity, setSeverity] = useState("success");
 
   // Get price from backend
+  // NOT WORKING
   useEffect(() => {
-    const fetchDefaultPrice = async () => {
+    const fetchLatestPrice = async () => {
       try {
-        const response = await api.get("/shareprice/all");
-        const latestPrice = response.data[0]?.price || 0;
+        const response = await api.get("/shareprice/latest");
+        const latestPrice = response.data.price || 0;
         setDefaultPrice(latestPrice);
         setTransaction((prevState) => ({
           ...prevState,
           pricePerShare: latestPrice,
         }));
       } catch (error) {
-        console.error("Error fetching default price:", error);
+        console.error("Error fetching latest price:", error);
       }
     };
 
-    fetchDefaultPrice();
+    fetchLatestPrice();
   }, []);
 
   useEffect(() => {
