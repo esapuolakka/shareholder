@@ -29,6 +29,12 @@ public class SharePriceController {
     return ResponseEntity.ok().body(sharePrices);
   }
 
+  @GetMapping("/latest")
+  public ResponseEntity<SharePrice> getLatestPrice() {
+    SharePrice latest = sharePriceService.getLatestPrice();
+    return ResponseEntity.ok().body(latest);
+  }
+
   @GetMapping("/{id}")
   public ResponseEntity<SharePrice> getSharePrice(@PathVariable Long id) {
     SharePrice sharePrice = sharePriceService.getSharePrice(id);

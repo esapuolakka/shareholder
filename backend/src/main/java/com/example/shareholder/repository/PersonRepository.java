@@ -26,4 +26,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
           WHERE rank > 5
         """, nativeQuery = true)
     List<Object[]> findTop5ShareholdersAndRest();
+
+    Person findBySsn(String ssn);
 }

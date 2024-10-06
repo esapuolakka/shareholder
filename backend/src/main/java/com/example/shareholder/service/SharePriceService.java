@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Optional;
 import com.example.shareholder.model.SharePrice;
 import com.example.shareholder.repository.SharePriceRepository;
 
@@ -20,6 +20,16 @@ public class SharePriceService {
 
   public Iterable<SharePrice> getAllSharePrices() {
     return sharePriceRepository.findAll();
+  }
+
+  public SharePrice getLatestPrice() {
+    Optional<SharePrice> sharePriceOptional = sharePriceRepository.findFirstByOrderByIdDesc();
+    if (sharePriceOptional.isPresent()) {
+      SharePrice shareprice = sharePriceOptional.get();
+      return shareprice;
+    } else {
+      return new SharePrice();
+    }
   }
 
   public SharePrice getSharePrice(Long id) {

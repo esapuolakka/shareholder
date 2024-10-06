@@ -18,8 +18,6 @@ import com.example.shareholder.repository.ShareTransactionRepository;
 @Service
 public class ShareTransactionService {
 
-  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ShareTransactionService.class);
-
   @Autowired
   private ShareTransactionRepository shareTransactionRepository;
 
@@ -31,6 +29,9 @@ public class ShareTransactionService {
 
   @Autowired
   private ShareOwnershipService shareOwnershipService;
+
+  @Autowired
+  private OwnerPercentageCalculator ownerShiPercentageCalculator;
 
   public List<ShareTransaction> getShareTransactions() {
     return shareTransactionRepository.findAll();
@@ -72,7 +73,7 @@ public class ShareTransactionService {
 
     Person seller = optionalSeller.get();
     if (seller.getNumberOfShares() < shareTransaction.getNumberOfShares()) {
-        throw new IllegalArgumentException("Myyjällä ei ole tarpeeksi osakkeita");
+      throw new IllegalArgumentException("Myyjällä ei ole tarpeeksi osakkeita");
     }
     // Set price per share
     Optional<SharePrice> optionalSharePrice = sharePriceRepository.findFirstByOrderByIdDesc();
@@ -101,11 +102,30 @@ public class ShareTransactionService {
 
     // Update share ownership
     shareOwnershipService.updateShareOwnership(shareTransaction);
-
+    ownerShiPercentageCalculator.updateAllOwnershipPercentages();
+    
     return newShareTransaction;
   }
 
   public void deleteShareTransaction(Long id) {
+    Optional<ShareTransaction> transactionOptional = shareTransactionRepository.findById(id);
+
+    if (!transactionOptional.isPresent()) {
+      throw new RuntimeException("Poistettavaa transaktiota ei löydy.");
+    }
+
+    // Return deleted transaction shares to the seller
+    ShareTransaction transactionToDelete = transactionOptional.get();
+    Person seller = transactionToDelete.getSeller();
+    Person buyer = transactionToDelete.getBuyer();
+    seller.setNumberOfShares(seller.getNumberOfShares() + transactionToDelete.getNumberOfShares());
+    buyer.setNumberOfShares(buyer.getNumberOfShares() - transactionToDelete.getNumberOfShares());
+
+    personRepository.save(seller);
+    personRepository.save(buyer);
+    
+    ownerShiPercentageCalculator.updateAllOwnershipPercentages();
+
     shareTransactionRepository.deleteById(id);
   }
 
