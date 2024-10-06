@@ -42,16 +42,15 @@ const AddNewPersonForm = () => {
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("success");
 
-  // Uusi tila henkilö/yritys-vaihtoehdolle
-  const [tabValue, setTabValue] = useState(0); // 0: henkilö, 1: yritys
+  const [tabValue, setTabValue] = useState(0);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
-    // Jos valitsee yrityksen, kopioi etunimi sukunimeksi
+
     if (newValue === 1) {
       setPerson((prevState) => ({
         ...prevState,
-        lastname: prevState.firstname, // Kopioi etunimi sukunimeksi
+        lastname: prevState.firstname,
       }));
     }
   };
@@ -62,6 +61,24 @@ const AddNewPersonForm = () => {
       ...prevState,
       [name]: name === "numberOfShares" ? parseInt(value) || 0 : value, // because backend Integer
     }));
+  };
+
+  const handleFocus = (e) => {
+    if (e.target.name === "numberOfShares" && person.numberOfShares === 0) {
+      setPerson((prevState) => ({
+        ...prevState,
+        numberOfShares: "", // clear the field if it's 0
+      }));
+    }
+  };
+
+  const handleBlur = (e) => {
+    if (e.target.name === "numberOfShares" && e.target.value === "") {
+      setPerson((prevState) => ({
+        ...prevState,
+        numberOfShares: 0, // restore 0 if the input is empty
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -116,27 +133,11 @@ const AddNewPersonForm = () => {
 
       <div className={styles.addBox}>
         <h2>Osakkeenomistaja</h2>
-        {/* <form className={styles.generalItemContainer} onSubmit={handleSubmit}>
-          <div className={styles.formRow}>
-            <label>Osakkaan nimi/ Yrityksen nimi:</label>
-            <input
-              name="firstname"
-              value={person.firstname}
-              onChange={handleChange}
-              placeholder="Etunimi/ Yrityksen nimi"
-              required
-            />
-            <input
-              name="lastname"
-              value={person.lastname}
-              onChange={handleChange}
-              placeholder="Sukunimi"
-              required
-            />
-          </div> */}
-        {/* Välilehdet henkilö/yritys valintaan */}
 
-        <form className={styles.generalItemContainer} onSubmit={handleSubmit}>
+        <form
+          className={`${styles.generalItemContainer} ${styles.smallerPadding}`}
+          onSubmit={handleSubmit}
+        >
           <Box>
             <Tabs
               value={tabValue}
@@ -176,7 +177,7 @@ const AddNewPersonForm = () => {
               placeholder={tabValue === 0 ? "Etunimi" : "Yrityksen nimi"}
               required
             />
-            {/* Näytetään sukunimi vain jos henkilö on valittuna */}
+
             {tabValue === 0 && (
               <input
                 name="lastname"
@@ -250,7 +251,6 @@ const AddNewPersonForm = () => {
               name="bankAccount"
               value={person.bankAccount}
               onChange={handleChange}
-              placeholder="Tilinumero"
               required
             />
           </div>
@@ -263,6 +263,8 @@ const AddNewPersonForm = () => {
               type="number"
               value={person.numberOfShares}
               onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               min="0" // no negative values
               // step="0.01" // 1/2 ownership NOT possible now
               placeholder="Osakkeiden kokonaismäärä"
@@ -271,7 +273,7 @@ const AddNewPersonForm = () => {
           </div>
           <div className={styles.formRow}>
             <button className={styles.styledButton} type="submit">
-              Lisää uusi osakkeenomistaja
+              Lisää uusi
             </button>
           </div>
         </form>

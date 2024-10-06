@@ -143,9 +143,9 @@ select {
   width: fit-content;
   height: fit-content;
   margin-block-end: 1rem;
-  padding: 1.5rem 3rem;
+  padding: 1rem 3rem;
   font-family: var(--font-family);
-  font-weight: 200;
+  font-weight: 500;
   /* max-width: calc(100% - 30px); */
   color: var(--link-text-color);
   background-color: white;
@@ -155,12 +155,11 @@ select {
   cursor: pointer;
   z-index: 10;
   margin-inline-end: 1rem;
-}
-
-.styledButton:hover {
-  background-color: rgb(255, 252, 243);
-  box-shadow: 0 4px 4px 0 rgba(124, 124, 124, 0.5);
-  transition: all 0.3s ease;
+  text-transform: uppercase;
+  &:hover {
+    box-shadow: 0 5px 5px 0 rgba(124, 124, 124, 0.5);
+    transition: all 0.3s ease;
+  }
 }
 
 /* .styledButton:hover::before {

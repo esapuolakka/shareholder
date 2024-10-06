@@ -104,6 +104,24 @@ const AddNewTransactionForm = ({ persons }) => {
     }));
   };
 
+  const handleFocusShares = (e) => {
+    if (transaction.numberOfShares === 0) {
+      setTransaction((prevState) => ({
+        ...prevState,
+        numberOfShares: "",
+      }));
+    }
+  };
+
+  const handleBlurShares = (e) => {
+    if (e.target.value === "") {
+      setTransaction((prevState) => ({
+        ...prevState,
+        numberOfShares: 0,
+      }));
+    }
+  };
+
   // insert back backend price
   const handleBlurPrice = () => {
     if (transaction.pricePerShare === 0) {
@@ -215,7 +233,10 @@ const AddNewTransactionForm = ({ persons }) => {
               type="number"
               value={transaction.numberOfShares}
               onChange={handleChange}
+              onFocus={handleFocusShares}
+              onBlur={handleBlurShares}
               min="0"
+              placeholder="Osakkeiden kokonaismäärä"
               required
             />
           </div>
@@ -277,12 +298,12 @@ const AddNewTransactionForm = ({ persons }) => {
               value={transaction.notes}
               onChange={handleChange}
               className={styles.formRow}
-              rows="4"
+              rows="7"
             />
           </div>
           <div className={styles.formRow}>
             <button className={styles.styledButton} type="submit">
-              Lähetä uusi osakemyynti ilmoitus
+              Lähetä ilmoitus
             </button>
           </div>
         </form>
