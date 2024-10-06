@@ -49,7 +49,7 @@ public class PersonService {
             throw new IllegalArgumentException("Osakemäärän on oltava nolla tai suurempi.");
         }
         Person newPerson = personRepository.save(person);
-        shareCountTotalService.updateTotalShareCount(person.getNumberOfShares());
+        shareCountTotalService.addTotalShareCount(person.getNumberOfShares());
 
         if (person.getNumberOfShares() > 0) {
             shareOwnershipService.addShareOwnership(person);
@@ -84,7 +84,7 @@ public class PersonService {
         if (!existingPerson.getNumberOfShares().equals(person.getNumberOfShares())) {
             ownerPercentageCalculator.updateAllOwnershipPercentages();
         }
-        shareCountTotalService.updateTotalShareCount(person.getNumberOfShares());
+        shareCountTotalService.addTotalShareCount(person.getNumberOfShares());
         return newPerson;
     }
 
