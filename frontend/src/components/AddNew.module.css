@@ -42,6 +42,7 @@
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     gap: 3rem;
 
     > div {
@@ -103,6 +104,20 @@
   }
 }
 
+.radioGroup {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 50%;
+  label {
+    text-align: center;
+  }
+  input {
+    accent-color: var(--primary-color);
+  }
+}
+
 .styledButton {
   width: fit-content;
   margin-block-end: 1rem;
@@ -120,7 +135,7 @@
   align-self: flex-end;
 
   &:hover {
-    background-color: rgb(255, 252, 226);
+    background-color: rgb(255, 252, 243);
     box-shadow: 0 4px 4px 0 rgba(124, 124, 124, 0.5);
     transition: all 0.3s ease;
   }

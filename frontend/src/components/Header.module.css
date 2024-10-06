@@ -78,6 +78,10 @@
   }
 }
 
+.active {
+  color: var(--primary-color);
+}
+
 @media screen and (min-width: 1024px) {
   .navbarMenu {
     justify-content: flex-end;
