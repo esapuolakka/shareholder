@@ -40,7 +40,10 @@ public class PersonService {
         if (person.getFirstname() == null || person.getLastname() == null || person.getEmail() == null
                 || person.getPhone() == null || person.getAddress() == null
                 || person.getPostalCode() == null || person.getCity() == null || person.getBankAccount() == null) {
-            throw new IllegalArgumentException("Kentät ovat pakollisia");
+            throw new IllegalArgumentException("Kentät ovat pakollisia.");
+        }
+        if (personRepository.findBySsn(person.getSsn()) != null) {
+            throw new IllegalArgumentException("Palvelusta löytyy jo samalla henkilötunnuksella oleva henkilö.");
         }
         if (person.getNumberOfShares() == null || person.getNumberOfShares() < 0) {
             throw new IllegalArgumentException("Osakemäärän on oltava nolla tai suurempi.");
@@ -66,9 +69,15 @@ public class PersonService {
         existingPerson.setAddress(person.getAddress());
         existingPerson.setPostalCode(person.getPostalCode());
         existingPerson.setCity(person.getCity());
-        existingPerson.setSsn(person.getSsn());
         existingPerson.setNumberOfShares(person.getNumberOfShares());
         existingPerson.setBankAccount(person.getBankAccount());
+
+        if (personRepository.findBySsn(person.getSsn()) != null) {
+            throw new IllegalArgumentException("Palvelusta löytyy jo samalla henkilötunnuksella oleva henkilö.");
+        } else {
+            existingPerson.setSsn(person.getSsn());
+        }
+        
 
         Person newPerson = personRepository.save(existingPerson);
 
