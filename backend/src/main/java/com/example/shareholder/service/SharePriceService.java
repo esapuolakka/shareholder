@@ -3,6 +3,10 @@ package com.example.shareholder.service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -30,6 +34,23 @@ public class SharePriceService {
     } else {
       return new SharePrice();
     }
+  }
+
+  public Map<Integer, BigDecimal> getAveragePricePerYear() {
+    List<Object[]> results = sharePriceRepository.findAveragePricePerYear();
+    Map<Integer, BigDecimal> averagePrices = new HashMap<>();
+
+    for (Object[] result : results) {
+      Integer year = (Integer) result[0];
+      Double avgPriceAsDouble = (Double) result[1]; // Cast to Double
+      
+      // Convert Double to BigDecimal
+      BigDecimal avgPrice = BigDecimal.valueOf(avgPriceAsDouble);
+
+      averagePrices.put(year, avgPrice);
+    }
+
+    return averagePrices;
   }
 
   public SharePrice getSharePrice(Long id) {

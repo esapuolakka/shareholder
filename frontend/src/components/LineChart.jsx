@@ -1,42 +1,41 @@
 import Highcharts, { chart } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-const options = {
-  chart: {
-    type: "line",
-  },
-  title: {
-    text: "ARVONKEHITYS",
-    align: "center",
-    style: {
-      fontWeight: "700",
-      fontSize: "14px",
-      fontFamily: "var(--font-family)",
+const LineChart = ({ data }) => {
+  const options = {
+    chart: {
+      type: "line",
     },
-  },
-  credits: {
-    enabled: false,
-  },
-  series: [
-    {
-      data: [4200, 347, 4010, 760, 2260, 1120, 4500],
-      color: "#ed692f",
-      name: "Osakkeen hinta",
-      lineWidth: 1,
-      marker: {
-        radius: 6,
-        lineColor: "var(--primary-color)",
-        fillColor: "#FEFCE1",
-        lineWidth: 1,
+    title: {
+      text: "ARVONKEHITYS",
+      align: "center",
+      style: {
+        fontWeight: "700",
+        fontSize: "14px",
+        fontFamily: "var(--font-family)",
       },
     },
-  ],
-  xAxis: {
-    categories: [2018, 2019, 2020, 2021, 2022, 2023, 2024],
-  },
-};
-
-const LineChart = () => {
+    credits: {
+      enabled: false,
+    },
+    series: [
+      {
+        data: Object.values(data),
+        color: "#ed692f",
+        name: "Osakkeen hinta",
+        lineWidth: 1,
+        marker: {
+          radius: 6,
+          lineColor: "var(--primary-color)",
+          fillColor: "#FEFCE1",
+          lineWidth: 1,
+        },
+      },
+    ],
+    xAxis: {
+      categories: Object.keys(data),
+    },
+  };
   return (
     <div>
       <div style={{ width: "100%", paddingBlockStart: "1.5rem" }}>
