@@ -3,7 +3,7 @@ package com.example.shareholder.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "company")
+@Table(name = "yritys")
 public class Company {
 
     @Id
@@ -11,13 +11,13 @@ public class Company {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "nimi")
     private String name;
 
-    @Column(name = "company_id")
+    @Column(name = "y_tunnus")
     private String companyId;
 
-    @Column(name = "city")
+    @Column(name = "kaupunki")
     private String city;
 
     @Column(name = "url")
