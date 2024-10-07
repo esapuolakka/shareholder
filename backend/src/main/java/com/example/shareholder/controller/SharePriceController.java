@@ -1,5 +1,7 @@
 package com.example.shareholder.controller;
 
+import java.math.BigDecimal;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +30,12 @@ public class SharePriceController {
     Iterable<SharePrice> sharePrices = sharePriceService.getAllSharePrices();
     return ResponseEntity.ok().body(sharePrices);
   }
+  
+  @GetMapping("/averageperyear")
+  public ResponseEntity<Map<Integer, BigDecimal>> getAveragePricePerYear() {
+        Map<Integer, BigDecimal> averagePrices = sharePriceService.getAveragePricePerYear();
+        return ResponseEntity.ok(averagePrices);
+    }
 
   @GetMapping("/latest")
   public ResponseEntity<SharePrice> getLatestPrice() {
