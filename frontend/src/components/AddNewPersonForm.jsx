@@ -104,20 +104,22 @@ const AddNewPersonForm = () => {
       if (error.response) {
         console.log("Full error response:", error.response);
         console.log("Error data:", error.response.data);
-        // error for 500
-        if (error.response.status === 500) {
-          setMessage(
-            "Palvelinvirhe: Henkilö on todennäköisesti jo olemassa tällä henkilötunnuksella tietokannassa."
-          );
-          // error for 400
-        } else if (error.response.status === 400) {
-          const errorMessage =
-            error.response.data.error || "Virheellinen syöte. Tarkista kentät.";
-          setMessage("Virhe lisättäessä osakkeenomistajaa: " + errorMessage);
-        } else {
-          setMessage(
-            "Virhe lisättäessä osakkeenomistajaa: " + error.response.data.error
-          );
+
+        const status = error.response.status;
+        const errorMessage = error.response.data.error || "Tuntematon virhe.";
+
+        switch (status) {
+          case 500:
+            setMessage(
+              "Palvelinvirhe: Henkilö on todennäköisesti jo olemassa tällä henkilötunnuksella tietokannassa."
+            );
+            break;
+          case 400:
+            setMessage("Virhe lisättäessä osakkeenomistajaa: " + errorMessage);
+            break;
+          default:
+            setMessage("Virhe lisättäessä osakkeenomistajaa: " + errorMessage);
+            break;
         }
       } else {
         console.error("Unknown error:", error);
