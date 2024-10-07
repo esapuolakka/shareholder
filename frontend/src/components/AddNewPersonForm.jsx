@@ -101,14 +101,28 @@ const AddNewPersonForm = () => {
         numberOfShares: 0,
       });
     } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Error in backend:", error.response.data);
+      if (error.response) {
+        console.log("Full error response:", error.response);
+        console.log("Error data:", error.response.data);
+        // error for 500
+        if (error.response.status === 500) {
+          setMessage(
+            "Palvelinvirhe: Henkilö on todennäköisesti jo olemassa tällä henkilötunnuksella tietokannassa."
+          );
+          // error for 400
+        } else if (error.response.status === 400) {
+          const errorMessage =
+            error.response.data.error || "Virheellinen syöte. Tarkista kentät.";
+          setMessage("Virhe lisättäessä osakkeenomistajaa: " + errorMessage);
+        } else {
+          setMessage(
+            "Virhe lisättäessä osakkeenomistajaa: " + error.response.data.error
+          );
+        }
       } else {
         console.error("Unknown error:", error);
+        setMessage("Tuntematon virhe henkilön lisäämisessä.");
       }
-      setMessage(
-        "Virhe lisättäessä osakkeenomistajaa. Tarkista tiedot ja yritä uudelleen"
-      );
       setSeverity("error");
       setOpen(true);
     }
