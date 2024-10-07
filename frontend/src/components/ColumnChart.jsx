@@ -1,39 +1,51 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import highchartsAccessibility from "highcharts/modules/accessibility";
 
-const options = {
-  chart: {
-    type: "column",
-  },
-  title: {
-    text: "OSAKEKANNAN KEHITYS",
-    align: "center",
-    style: {
-      fontWeight: "700",
-      fontSize: "14px",
-      fontFamily: "var(--font-family)",
-    },
-  },
-  credits: {
-    enabled: false,
-  },
-  series: [
-    {
-      name: "Osakkeita yhteensä",
-      data: [4200000, 347000, 4010000, 760000, 2260000, 1120000, 4500000],
-      color: "#fefce2",
-      borderColor: "#ed692f",
-    },
-  ],
-  xAxis: {
-    categories: [2018, 2019, 2020, 2021, 2022, 2023, 2024],
-  },
-  yAxis: {
-    min: 0,
-  },
-};
+// init the module
+highchartsAccessibility(Highcharts);
 
-const ColumnChart = () => {
+const ColumnChart = ({ data }) => {
+  const { totalSharesPerYear, latestPrice } = data;
+  const totalShares = Object.values(totalSharesPerYear).reduce(
+    (acc, num, index) => {
+      return [...acc, (acc[index - 1] ?? 0) + num];
+    },
+    []
+  );
+
+  const options = {
+    chart: {
+      type: "column",
+    },
+    title: {
+      text: "OSAKEKANNAN KEHITYS",
+      align: "center",
+      style: {
+        fontWeight: "700",
+        fontSize: "14px",
+        fontFamily: "var(--font-family)",
+      },
+    },
+    credits: {
+      enabled: false,
+    },
+    series: [
+      {
+        name: "Osakkeita yhteensä",
+        data: totalShares,
+        color: "#fefce2",
+        borderColor: "#ed692f",
+      },
+    ],
+    xAxis: {
+      categories: Object.keys(data),
+    },
+    yAxis: {
+      min: 0,
+    },
+  };
+
   return (
     <div>
       <div style={{ width: "100%", paddingBlockStart: "1.5rem" }}>
@@ -53,11 +65,13 @@ const ColumnChart = () => {
       >
         <div>
           <span>Päivämäärä: </span>
-          <strong style={{ fontWeight: 400 }}>5.9.2024</strong>
+          <strong style={{ fontWeight: 400 }}>{latestPrice.date}</strong>
         </div>
         <div>
           <span>Osakkeita yhteensä: </span>
-          <strong style={{ fontWeight: 400 }}>4070921</strong>
+          <strong style={{ fontWeight: 400 }}>
+            {totalShares[totalShares.length - 1]}
+          </strong>
         </div>
       </div>
     </div>
