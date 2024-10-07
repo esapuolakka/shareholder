@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./OwnerDetails.module.css";
 import api from "../api";
 import Snackbar from "@mui/material/Snackbar";
@@ -47,19 +47,39 @@ const OwnerDetails = ({ owners }) => {
   const [selectedOwner, setSelectedOwner] = useState(null);
   const [editedOwner, setEditedOwner] = useState(null);
   const navigate = useNavigate(); // useNavigate hook for navigation
+  const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("success");
 
+  // Fetch owner by ID if present in URL
+  useEffect(() => {
+    if (id) {
+      const fetchPerson = async () => {
+        try {
+          const response = await api.get(`/persons/${id}`);
+          setSelectedOwner(response.data);
+          setEditedOwner(response.data);
+        } catch (error) {
+          console.error("Virhe haettaessa henkilöä", error);
+        }
+      };
+      fetchPerson();
+    }
+  }, [id]);
+
   const handlePersonChange = (personId) => {
-    const owner = owners.find((o) => o.id === parseInt(personId, 10)); //Radix 10
-    if (owner) {
-      setSelectedOwner(owner);
-      setEditedOwner(owner);
-      navigate(`/osakkaidentiedot/${owner.id}`);
-    } else {
+    if (personId === "") {
+      navigate("/osakkaidentiedot");
       setSelectedOwner(null);
       setEditedOwner(null);
+    } else {
+      const owner = owners.find((o) => o.id === parseInt(personId, 10)); //Radix 10
+      if (owner) {
+        setSelectedOwner(owner);
+        setEditedOwner(owner);
+        navigate(`/osakkaidentiedot/${owner.id}`);
+      }
     }
   };
 

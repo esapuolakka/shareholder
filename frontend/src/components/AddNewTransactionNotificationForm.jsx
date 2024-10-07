@@ -58,21 +58,21 @@ const AddNewTransactionForm = ({ persons }) => {
 
   // Get price from backend
   useEffect(() => {
-    const fetchDefaultPrice = async () => {
+    const fetchLatestPrice = async () => {
       try {
-        const response = await api.get("/shareprice/all");
-        const latestPrice = response.data[0]?.price || 0;
+        const response = await api.get("/shareprice/latest");
+        const latestPrice = response.data.price || 0;
         setDefaultPrice(latestPrice);
         setTransaction((prevState) => ({
           ...prevState,
           pricePerShare: latestPrice,
         }));
       } catch (error) {
-        console.error("Error fetching default price:", error);
+        console.error("Error fetching latest price:", error);
       }
     };
 
-    fetchDefaultPrice();
+    fetchLatestPrice();
   }, []);
 
   useEffect(() => {
@@ -102,6 +102,24 @@ const AddNewTransactionForm = ({ persons }) => {
       ...prevState,
       [name]: selectedPerson,
     }));
+  };
+
+  const handleFocusShares = (e) => {
+    if (transaction.numberOfShares === 0) {
+      setTransaction((prevState) => ({
+        ...prevState,
+        numberOfShares: "",
+      }));
+    }
+  };
+
+  const handleBlurShares = (e) => {
+    if (e.target.value === "") {
+      setTransaction((prevState) => ({
+        ...prevState,
+        numberOfShares: 0,
+      }));
+    }
   };
 
   // insert back backend price
@@ -215,7 +233,10 @@ const AddNewTransactionForm = ({ persons }) => {
               type="number"
               value={transaction.numberOfShares}
               onChange={handleChange}
+              onFocus={handleFocusShares}
+              onBlur={handleBlurShares}
               min="0"
+              placeholder="Osakkeiden kokonaismäärä"
               required
             />
           </div>
@@ -277,12 +298,12 @@ const AddNewTransactionForm = ({ persons }) => {
               value={transaction.notes}
               onChange={handleChange}
               className={styles.formRow}
-              rows="4"
+              rows="7"
             />
           </div>
           <div className={styles.formRow}>
             <button className={styles.styledButton} type="submit">
-              Lähetä uusi osakemyynti ilmoitus
+              Lähetä ilmoitus
             </button>
           </div>
         </form>

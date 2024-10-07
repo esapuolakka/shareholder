@@ -22,7 +22,7 @@
   background-color: var(--background-color);
   line-height: 2.8rem;
   margin-block-start: 2rem;
-  padding: 3rem 3rem;
+  padding: 3rem 3rem 2rem 3rem;
   border: 0.5px solid var(--border-color);
   border-radius: 5px;
   align-content: flex-start;
@@ -104,6 +104,10 @@
   }
 }
 
+.smallerPadding {
+  padding: 1.5rem 3rem;
+}
+
 .radioGroup {
   display: inline-flex;
   flex-direction: row;
@@ -120,10 +124,11 @@
 
 .styledButton {
   width: fit-content;
-  margin-block-end: 1rem;
-  padding: 1.5rem 3rem;
+  margin: 1rem 0;
+  padding: 1rem 3rem;
   font-family: var(--font-family);
-  font-weight: 200;
+  font-size: 1.2rem;
+  font-weight: 500;
   /* max-width: calc(100% - 30px); */
   color: var(--link-text-color);
   background-color: white;
@@ -133,10 +138,9 @@
   cursor: pointer;
   z-index: 10;
   align-self: flex-end;
-
+  text-transform: uppercase;
   &:hover {
-    background-color: rgb(255, 252, 243);
-    box-shadow: 0 4px 4px 0 rgba(124, 124, 124, 0.5);
+    box-shadow: 0 5px 5px 0 rgba(124, 124, 124, 0.5);
     transition: all 0.3s ease;
   }
 }
