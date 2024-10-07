@@ -39,7 +39,7 @@ const ColumnChart = ({ data }) => {
       },
     ],
     xAxis: {
-      categories: Object.keys(data),
+      categories: Object.keys(totalSharesPerYear),
     },
     yAxis: {
       min: 0,
