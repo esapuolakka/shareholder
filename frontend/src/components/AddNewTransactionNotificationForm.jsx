@@ -57,7 +57,6 @@ const AddNewTransactionForm = ({ persons }) => {
   const [severity, setSeverity] = useState("success");
 
   // Get price from backend
-  // NOT WORKING
   useEffect(() => {
     const fetchLatestPrice = async () => {
       try {
