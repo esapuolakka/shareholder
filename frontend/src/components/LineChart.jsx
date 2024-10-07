@@ -1,5 +1,9 @@
-import Highcharts, { chart } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import highchartsAccessibility from "highcharts/modules/accessibility";
+
+// init the module
+highchartsAccessibility(Highcharts);
 
 const LineChart = ({ data }) => {
   const { averagePerYear, latestPrice } = data;
