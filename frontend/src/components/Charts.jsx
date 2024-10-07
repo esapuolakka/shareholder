@@ -9,7 +9,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LanguageIcon from "@mui/icons-material/Language";
 
 const Charts = ({ data }) => {
-  const { top5Data, totalShareOwners, averagePerYear } = data;
+  const { top5Data, totalShareOwners, averagePerYear, latestPrice } = data;
   return (
     <div className={styles.Charts}>
       <div className={styles.details}>
@@ -38,7 +38,7 @@ const Charts = ({ data }) => {
         </div>
       </div>
       <div className={styles.lineChart}>
-        <LineChart data={averagePerYear} />
+        <LineChart data={{ averagePerYear, latestPrice }} />
       </div>
 
       <div className={styles.barChart}>
