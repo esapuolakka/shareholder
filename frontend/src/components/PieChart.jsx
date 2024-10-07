@@ -1,5 +1,9 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import highchartsAccessibility from "highcharts/modules/accessibility";
+
+// init the module
+highchartsAccessibility(Highcharts);
 
 const PieChart = ({ data }) => {
   const { top5Data, totalShareOwners } = data;
