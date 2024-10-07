@@ -1,8 +1,10 @@
 package com.example.shareholder.controller;
 
+import java.math.BigDecimal;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,13 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.shareholder.model.SharePrice;
 import com.example.shareholder.service.SharePriceService;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/shareprice")
-public class ShareController {
+public class SharePriceController {
 
   @Autowired
   private SharePriceService sharePriceService;
@@ -25,6 +29,18 @@ public class ShareController {
   public ResponseEntity<Iterable<SharePrice>> getAllSharePrices() {
     Iterable<SharePrice> sharePrices = sharePriceService.getAllSharePrices();
     return ResponseEntity.ok().body(sharePrices);
+  }
+  
+  @GetMapping("/averageperyear")
+  public ResponseEntity<Map<Integer, BigDecimal>> getAveragePricePerYear() {
+        Map<Integer, BigDecimal> averagePrices = sharePriceService.getAveragePricePerYear();
+        return ResponseEntity.ok(averagePrices);
+    }
+
+  @GetMapping("/latest")
+  public ResponseEntity<SharePrice> getLatestPrice() {
+    SharePrice latest = sharePriceService.getLatestPrice();
+    return ResponseEntity.ok().body(latest);
   }
 
   @GetMapping("/{id}")
@@ -38,7 +54,7 @@ public class ShareController {
     SharePrice newSharePrice = sharePriceService.addSharePrice(sharePrice);
     return ResponseEntity.ok().body(newSharePrice);
   }
-  
+
   @PutMapping("/{id}")
   public ResponseEntity<SharePrice> updateSharePrice(@PathVariable Long id, @RequestBody SharePrice newSharePrice) {
     SharePrice updatedSharePrice = sharePriceService.updateSharePrice(id, newSharePrice);

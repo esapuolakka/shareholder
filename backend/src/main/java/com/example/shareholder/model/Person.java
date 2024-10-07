@@ -1,6 +1,7 @@
 package com.example.shareholder.model;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "henkilo")
@@ -36,10 +37,10 @@ public class Person {
   private String ssn;
 
   @Column(name = "osakkeiden_maara")
-  private Integer numberOfShares;
+  private Integer numberOfShares = 0;
 
-  @Column(name = "omistusosuus")
-  private double ownershipPercentage;
+  @Column(name = "omistusprosentti")
+  private BigDecimal ownershipPercentage = BigDecimal.ZERO;
 
   @Column(name = "pankkitili")
   private String bankAccount;
@@ -48,7 +49,7 @@ public class Person {
   }
 
   public Person(String firstname, String lastname, String email, String phone, String address, String postalCode,
-      String city, String ssn, int numberOfShares, double ownershipPercentage, String bankAccount) {
+      String city, String ssn, Integer numberOfShares, BigDecimal ownershipPercentage, String bankAccount) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
@@ -130,19 +131,19 @@ public class Person {
     this.ssn = ssn;
   }
 
-  public int getNumberOfShares() {
+  public Integer getNumberOfShares() {
     return numberOfShares;
   }
 
-  public void setNumberOfShares(int numberOfShares) {
+  public void setNumberOfShares(Integer numberOfShares) {
     this.numberOfShares = numberOfShares;
   }
 
-  public double getOwnershipPercentage() {
+  public BigDecimal getOwnershipPercentage() {
     return ownershipPercentage;
   }
 
-  public void setOwnershipPercentage(double ownershipPercentage) {
+  public void setOwnershipPercentage(BigDecimal ownershipPercentage) {
     this.ownershipPercentage = ownershipPercentage;
   }
 

@@ -17,7 +17,7 @@ import Osakkaidentiedot, {
 import LisaaUusi, { loader as LisaaUusiLoader } from "./routes/lisaa-uusi";
 import "./reset.css";
 import "./index.css";
-import Dashboard from "./routes/dashboard";
+import Dashboard, { loader as dashboardLoader } from "./routes/dashboard";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +29,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />,
+        loader: dashboardLoader,
       },
       {
         path: "osakasluettelo",
@@ -47,6 +48,12 @@ const router = createBrowserRouter([
       },
       {
         path: "osakkaidentiedot",
+        element: <Osakkaidentiedot />,
+        loader: osakkaidentiedotLoader,
+      },
+      {
+        // route with person.id
+        path: "osakkaidentiedot/:id",
         element: <Osakkaidentiedot />,
         loader: osakkaidentiedotLoader,
       },

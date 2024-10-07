@@ -8,7 +8,8 @@ import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LanguageIcon from "@mui/icons-material/Language";
 
-const Charts = () => {
+const Charts = ({ data }) => {
+  const { top5Data, totalShareOwners, averagePerYear } = data;
   return (
     <div className={styles.Charts}>
       <div className={styles.details}>
@@ -37,14 +38,14 @@ const Charts = () => {
         </div>
       </div>
       <div className={styles.lineChart}>
-        <LineChart />
+        <LineChart data={averagePerYear} />
       </div>
 
       <div className={styles.barChart}>
         <ColumnChart />
       </div>
       <div className={styles.pieChart}>
-        <PieChart />
+        <PieChart data={{ top5Data, totalShareOwners }} />
       </div>
     </div>
   );

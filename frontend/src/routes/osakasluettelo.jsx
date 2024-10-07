@@ -1,8 +1,11 @@
+import { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
-import axios from "axios";
 import Toolbar from "@mui/material/Toolbar";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import DownloadIcon from "@mui/icons-material/Download";
+import PropagateLoader from "react-spinners/PropagateLoader";
+import styles from "../components/OwnerDetails.module.css";
+import api from "../api";
 
 const columns = [
   { id: "personId", label: "Nro", minWidth: 50 },
@@ -38,11 +41,15 @@ const columns = [
     label: "Puhelinnumero",
     minWidth: 70,
   },
+  {
+    id: "bankAccount",
+    label: "Tilinumero",
+    minWidth: 100,
+  },
 ];
 
 export async function loader() {
-  //same axios get method
-  const personsResponse = await axios.get("http://localhost:8080/api/persons");
+  const personsResponse = await api.get("/persons");
 
   const personsData = personsResponse.data;
 
@@ -57,6 +64,7 @@ export async function loader() {
       phone: person.phone || "N/A",
       numberOfShares: person.numberOfShares || 0,
       ownershipPercentage: person.ownershipPercentage || 0.0,
+      bankAccount: person.bankAccount || "N/A",
     };
   });
 
@@ -65,13 +73,43 @@ export async function loader() {
 
 const Osakasluettelo = () => {
   const rows = useLoaderData();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (rows) {
+      setLoading(false);
+    }
+  }, [rows]);
+
+  if (loading) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Ladataan osakkaiden tietoja, odota hetki...
+        </p>
+      </div>
+    );
+  }
+
+  if (!rows || rows.length === 0) {
+    return (
+      <div>
+        <PropagateLoader className={styles.loaderimg} />
+        <p style={{ textAlign: "center" }}>
+          Osakkaiden tietoja ei löytynyt. Lisää uusia tietoja tietokantaan.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
       <Toolbar style={{ padding: 0, display: "flex" }}>
         <h1>Osakasluettelo</h1>
         <p style={{ flex: 1 }}></p>
-        <a href="http://localhost:8080/api/report/persons">
-          <CloudDownloadIcon
+        <a href={`${import.meta.env.VITE_BASE_URL}/report/persons`}>
+          <DownloadIcon
             fontSize="large"
             sx={{
               color: "var(--heading-and-text-color)",

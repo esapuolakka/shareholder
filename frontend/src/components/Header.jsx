@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu"; // Burger icon
 import CloseIcon from "@mui/icons-material/Close"; // X icon
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 
 const pages = [
@@ -36,13 +36,13 @@ export default function HeaderNavBar() {
     <AppBar className={`${styles.navbar} ${styles.isFixedTop}`}>
       <Toolbar className={styles.navbar}>
         <Box className={styles.navbarBrand}>
-          <Link to="/">
+          <NavLink to="/">
             <img
               src="/sharevault.png"
               alt="Logo"
               className={styles.navbarLogo}
             />
-          </Link>
+          </NavLink>
         </Box>
         {/* Desktop menu */}
         <Box
@@ -50,9 +50,17 @@ export default function HeaderNavBar() {
           className={styles.navbarMenu}
         >
           {pages.map((page) => (
-            <Link key={page.label} to={page.path} className={styles.navbarItem}>
+            <NavLink
+              key={page.label}
+              to={page.path}
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.navbarItem} ${styles.active}`
+                  : styles.navbarItem
+              }
+            >
               {page.label}
-            </Link>
+            </NavLink>
           ))}
         </Box>
 
@@ -90,7 +98,7 @@ export default function HeaderNavBar() {
             <MenuItem
               key={page.label}
               onClick={handleMenuClose}
-              component={Link}
+              component={NavLink}
               to={page.path}
               className={styles.navbarItemMobile}
             >

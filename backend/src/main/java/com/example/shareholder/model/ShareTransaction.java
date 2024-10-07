@@ -6,14 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "osakas")
-public class Shareholder {
+@Table(name = "transaktio")
+public class ShareTransaction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +26,12 @@ public class Shareholder {
   @Column(name = "maksu_pvm")
   private LocalDate term;
 
-  @JoinColumn(name = "myyja_id")
-  @OneToOne
+  @JoinColumn(name = "myyja_id", nullable = false)
+  @ManyToOne
   private Person seller;
 
-  @JoinColumn(name = "ostaja_id")
-  @OneToOne
+  @JoinColumn(name = "ostaja_id", nullable = false)
+  @ManyToOne
   private Person buyer;
 
   @Column(name = "varainsiirtovero_maksettu")
@@ -49,10 +49,13 @@ public class Shareholder {
   @Column(name = "huom")
   private String notes;
 
-  public Shareholder() {
+  @Column(name = "status")
+  private String status;
+
+  public ShareTransaction() {
   }
 
-  public Shareholder(LocalDate collectionDate, LocalDate term, Person seller, Person buyer,
+  public ShareTransaction(LocalDate collectionDate, LocalDate term, Person seller, Person buyer,
       boolean transferTaxPaid, int numberOfShares, BigDecimal pricePerShare, BigDecimal totalAmount, String notes) {
     this.collectionDate = collectionDate;
     this.term = term;
@@ -63,6 +66,7 @@ public class Shareholder {
     this.pricePerShare = pricePerShare;
     this.totalAmount = totalAmount;
     this.notes = notes;
+    this.status = "pending";
   }
 
   public Long getId() {
@@ -139,5 +143,13 @@ public class Shareholder {
 
   public void setNotes(String notes) {
     this.notes = notes;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
   }
 }
