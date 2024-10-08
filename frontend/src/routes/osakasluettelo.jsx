@@ -81,6 +81,8 @@ const Osakasluettelo = () => {
     }
   }, [rows]);
 
+  const totalShares = rows.reduce((acc, row) => acc + row.numberOfShares, 0);
+
   if (loading) {
     return (
       <div>
@@ -122,6 +124,7 @@ const Osakasluettelo = () => {
       </Toolbar>
 
       <Table columns={columns} rows={rows} />
+      <p className={styles.totalShares}>Osakkeita yhteensä: {totalShares}</p>
     </>
   );
 };

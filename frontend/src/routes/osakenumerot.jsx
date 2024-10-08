@@ -54,6 +54,11 @@ const Osakenumerot = () => {
     }
   }, [rows]);
 
+  const totalShares = rows.reduce(
+    (acc, row) => acc + row.numberOfRowsShares,
+    0
+  );
+
   if (loading) {
     return (
       <div>
@@ -79,6 +84,7 @@ const Osakenumerot = () => {
     <>
       <h1>Osakenumerot</h1>
       <Table columns={columns} rows={rows} />
+      <p className={styles.totalShares}>Osakkeita yhteensä: {totalShares}</p>
     </>
   );
 };

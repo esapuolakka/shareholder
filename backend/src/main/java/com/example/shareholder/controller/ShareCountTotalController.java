@@ -31,7 +31,7 @@ public class ShareCountTotalController {
     return ResponseEntity.ok().body(shareCountTotal);
   }
   @GetMapping("/peryear")
-   public Map<Integer, Long> getTotalSharesPerYear() {
-        return shareCountTotalService.getTotalSharesPerYear();
+   public Map<Integer, Integer> getLatestTotalSharesPerYear() {
+        return shareCountTotalService.getLatestTotalSharesPerYear();
     }
 }
