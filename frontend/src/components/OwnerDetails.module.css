@@ -172,6 +172,10 @@ select {
   display: flex !important;
   justify-content: center !important;
 }
+.totalShares {
+  margin-top: 2rem;
+  font-weight: 400;
+}
 
 @media screen and (min-width: 768px) {
   .generalItemContainer {
