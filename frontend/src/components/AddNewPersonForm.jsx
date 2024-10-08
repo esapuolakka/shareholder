@@ -111,7 +111,7 @@ const AddNewPersonForm = () => {
         switch (status) {
           case 500:
             setMessage(
-              "Palvelinvirhe: Henkilö on todennäköisesti jo olemassa tällä henkilötunnuksella tietokannassa."
+              "Osakkeenomistajan lisääminen ei onnistunut. Henkilö/yritys on todennäköisesti jo olemassa tällä henkilötunnuksella tietokannassa."
             );
             break;
           case 400:

@@ -49,7 +49,6 @@ const AddNewTransactionForm = ({ persons }) => {
     transferTaxPaid: false,
     notes: "",
   });
-
   const [defaultPrice, setDefaultPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [open, setOpen] = useState(false);
@@ -138,12 +137,6 @@ const AddNewTransactionForm = ({ persons }) => {
       ...transaction,
       seller: { id: transaction.seller.id },
       buyer: { id: transaction.buyer.id },
-      transferTaxPaid: transaction.transferTaxPaid,
-      pricePerShare: transaction.pricePerShare,
-      numberOfShares: transaction.numberOfShares,
-      collectionDate: transaction.collectionDate,
-      term: transaction.term,
-      notes: transaction.notes,
     };
     try {
       await api.post("/transactions/add", transactionToSend);
@@ -161,10 +154,34 @@ const AddNewTransactionForm = ({ persons }) => {
         notes: "",
       });
     } catch (error) {
-      console.error("Backend-virhe:", error.response?.data || error.message);
-      setMessage(
-        "Virhe lisättäessä osakemyyntiä. Tarkista tiedot ja yritä uudelleen"
-      );
+      if (error.response) {
+        console.log("Full error response:", error.response);
+        console.log("Error data:", error.response.data);
+
+        const status = error.response.status;
+        const errorMessage = error.response.data.error || "Tuntematon virhe.";
+
+        switch (status) {
+          case 500:
+            setMessage(
+              "Palvelinvirhe: Myyjällä ei todennäköisesti ole riittävästi osakkeita myytäväksi ilmoitetulla osakemäärällä."
+            );
+            break;
+          case 400:
+            setMessage(
+              "Virhe lisättäessä osakemyynti ilmoitusta: " + errorMessage
+            );
+            break;
+          default:
+            setMessage(
+              "Virhe lisättäessä osakemyynti ilmoitusta: " + errorMessage
+            );
+            break;
+        }
+      } else {
+        console.error("Unknown error:", error);
+        setMessage("Tuntematon virhe osakemyynti ilmoituksen lisäämisessä.");
+      }
       setSeverity("error");
       setOpen(true);
     }

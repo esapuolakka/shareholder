@@ -5,53 +5,67 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 import styles from "../components/OwnerDetails.module.css";
 import api from "../api";
 
-export async function loader() {
-  const { data: personsData } = await api.get("/persons");
-  const { data: transactionsData } = await api.get("/transactions");
-  const { data: shareOwnershipsData } = await api.get("/shareownership/all");
+export async function loader({ params }) {
+  const { id } = params;
+  try {
+    // all owners
+    const ownersResponse = await api.get(`/persons`);
+    const owners = ownersResponse.data;
 
-  // unite into owner object
-  const owners = personsData.map((person) => {
-    const ownership = shareOwnershipsData.find((o) => o.owner.id === person.id);
-    const transaction = transactionsData.find(
-      (t) => t.buyer.id === person.id || t.seller.id === person.id
+    // If id is not provided, return just the owners list
+    if (!id) {
+      return { owner: null, owners, shareOwnerships: [], transactions: [] };
+    }
+
+    // one owner
+    const ownerResponse = await api.get(`/persons/${id}`);
+    const person = ownerResponse.data;
+
+    // individual owner's shares
+    const sharesResponse = await api.get(
+      `/shareownership/persons/${id}/shares`
     );
+    const shareOwnerships = sharesResponse.data;
 
+    // individual owner's transactions
+    const transactionsResponse = await api.get(
+      `/transactions/persons/${id}/transactions`
+    );
+    const transactions = transactionsResponse.data;
+
+    // Return separate objects for owner, share ownerships and transactions
     return {
-      id: person.id,
-      firstname: person.firstname ?? "Tietoa ei löydy tietokannasta",
-      lastname: person.lastname ?? "Tietoa ei löydy tietokannasta",
-      numberOfShares: ownership ? ownership.numberOfShares : 0,
-      ownershipPercentage: person.ownershipPercentage ?? 0, // ownership percentage not in person entity anymore??
-      shareNumbers: ownership
-        ? {
-            beginning: ownership.startingShareNumber,
-            ending: ownership.endingShareNumber,
-          }
-        : "Henkilöllä ei ole osakkeita omistuksessa",
-      collectionDate:
-        transaction?.collectionDate ?? "Tietoa ei löydy tietokannasta",
-      term: transaction?.term ?? "Tietoa ei löydy tietokannasta",
-      transferTaxPaid: transaction?.transferTaxPaid ?? false,
-      ssn: person.ssn ?? "Tietoa ei löydy tietokannasta",
-      city: person.city ?? "Tietoa ei löydy tietokannasta",
-      address: person.address ?? "Tietoa ei löydy tietokannasta",
-      postalCode: person.postalCode ?? "Tietoa ei löydy tietokannasta",
-      email: person.email ?? "Tietoa ei löydy tietokannasta",
-      phone: person.phone ?? "Tietoa ei löydy tietokannasta",
-      bankAccount: person.bankAccount ?? "Tietoa ei löydy tietokannasta",
+      owner: {
+        id: person.id,
+        firstname: person.firstname ?? "Tietoa ei löydy tietokannasta",
+        lastname: person.lastname ?? "Tietoa ei löydy tietokannasta",
+        ssn: person.ssn ?? "Tietoa ei löydy tietokannasta",
+        address: person.address ?? "Tietoa ei löydy tietokannasta",
+        postalCode: person.postalCode ?? "Tietoa ei löydy tietokannasta",
+        city: person.city ?? "Tietoa ei löydy tietokannasta",
+        email: person.email ?? "Tietoa ei löydy tietokannasta",
+        phone: person.phone ?? "Tietoa ei löydy tietokannasta",
+        bankAccount: person.bankAccount ?? "Tietoa ei löydy tietokannasta",
+        numberOfShares:
+          person.numberOfShares ?? "Tietoa ei löydy tietokannasta",
+        ownershipPercentage: person.ownershipPercentage ?? 0,
+      },
+      owners,
+      shareOwnerships: shareOwnerships.length > 0 ? shareOwnerships : [],
+      transactions: transactions.length > 0 ? transactions : [],
     };
-  });
-
-  return { owners };
+  } catch (error) {
+    console.error("Virhe haettaessa tietoja", error);
+    return { owner: null, owners: [], shareOwnerships: [], transactions: [] };
+  }
 }
 
 const Osakkaidentiedot = () => {
-  const { owners } = useLoaderData();
+  const { owner, owners, shareOwnerships, transactions } = useLoaderData();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (owners) {
+    if (owners.length > 0) {
       setLoading(false);
     }
   }, [owners]);
@@ -67,13 +81,10 @@ const Osakkaidentiedot = () => {
     );
   }
 
-  if (!owners || owners.length === 0) {
+  if (!owners.length) {
     return (
       <div>
-        <PropagateLoader className={styles.loaderimg} />
-        <p style={{ textAlign: "center" }}>
-          Osakkaiden tietoja ei löytynyt. Lisää uusia tietoja tietokantaan.
-        </p>
+        <p style={{ textAlign: "center" }}>Osakkaiden tietoja ei löytynyt.</p>
       </div>
     );
   }
@@ -81,7 +92,12 @@ const Osakkaidentiedot = () => {
   return (
     <>
       <h1>Osakkaiden tiedot</h1>
-      <OwnerDetails owners={owners} />
+      <OwnerDetails
+        owner={owner}
+        owners={owners}
+        shareOwnerships={shareOwnerships}
+        transactions={transactions}
+      />
     </>
   );
 };
