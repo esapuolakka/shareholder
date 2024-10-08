@@ -40,13 +40,13 @@ public class ShareCountTotalService {
     }
   }
 
-  public Map<Integer, Long> getTotalSharesPerYear() {
-    List<Object[]> result = shareCountTotalRepository.findTotalSharesPerYear();
-    Map<Integer, Long> sharesPerYear = new HashMap<>();
+  public Map<Integer, Integer> getLatestTotalSharesPerYear() {
+    List<Object[]> result = shareCountTotalRepository.findLatestTotalSharesPerYear();
+    Map<Integer, Integer> sharesPerYear = new HashMap<>();
 
     for (Object[] row : result) {
       Integer year = (Integer) row[0];
-      Long totalShares = (Long) row[1];
+      Integer totalShares = (Integer) row[1];
       sharesPerYear.put(year, totalShares);
     }
 
