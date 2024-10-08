@@ -1,0 +1,26 @@
+#Note! docker-compose.yml is the dev env by PHZ convention
+services:
+
+  frontend:
+    build:
+      context: frontend
+    env_file:
+     - .env.dev
+    volumes:
+     - ./frontend/:/app
+    ports:
+      - 3022:3000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  backend:
+    build:
+      context: backend
+    env_file:
+     - .env.dev
+    volumes:
+     - ./backend/:/app
+    ports:
+      - 3032:8080
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
