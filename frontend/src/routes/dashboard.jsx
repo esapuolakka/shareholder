@@ -14,6 +14,7 @@ export async function loader() {
     timeout: 5000,
   });
   const { data: totalSharesPerYear } = await api.get("/totalshares/peryear");
+  const { data: companyData } = await api.get("/company");
 
   return {
     top5Data: top5DataWithName,
@@ -21,6 +22,7 @@ export async function loader() {
     averagePerYear,
     latestPrice,
     totalSharesPerYear,
+    companyData,
   };
 }
 
