@@ -25,7 +25,6 @@ public class ShareTransactionController {
   @Autowired
   private ShareTransactionService shareTransactionService;
 
-
   @GetMapping
   public ResponseEntity<List<ShareTransaction>> getShareTransactions() {
     List<ShareTransaction> shareholders = shareTransactionService.getShareTransactions();
@@ -45,7 +44,8 @@ public class ShareTransactionController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<ShareTransaction> updateTransaction(@PathVariable Long id, @RequestBody ShareTransaction shareTransaction) {
+  public ResponseEntity<ShareTransaction> updateTransaction(@PathVariable Long id,
+      @RequestBody ShareTransaction shareTransaction) {
     ShareTransaction updatedShareholder = shareTransactionService.updateShareTransaction(id, shareTransaction);
     return ResponseEntity.ok().body(updatedShareholder);
   }
@@ -60,5 +60,11 @@ public class ShareTransactionController {
   public ResponseEntity<List<ShareTransaction>> searchShareTransactions(@RequestParam(required = false) String search) {
     List<ShareTransaction> shareholders = shareTransactionService.searchShareTransactions(search);
     return ResponseEntity.ok().body(shareholders);
+  }
+
+  @GetMapping("/persons/{id}/transactions")
+  public ResponseEntity<List<ShareTransaction>> getTransactionsByPersonId(@PathVariable Long id) {
+    List<ShareTransaction> transactions = shareTransactionService.findTransactionsByPersonId(id);
+    return ResponseEntity.ok().body(transactions);
   }
 }

@@ -34,6 +34,12 @@ public class ShareOwnershipController {
 
   @GetMapping("/count")
   public long getTotalShareOwnership() {
-      return shareOwnershipService.getTotalShareOwnership();
+    return shareOwnershipService.getTotalShareOwnership();
+  }
+
+  @GetMapping("/persons/{id}/shares")
+  public ResponseEntity<List<ShareOwnership>> getSharesByPersonId(@PathVariable Long id) {
+    List<ShareOwnership> shares = shareOwnershipService.findByOwnerId(id);
+    return ResponseEntity.ok().body(shares);
   }
 }
