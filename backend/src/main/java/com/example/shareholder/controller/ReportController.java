@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/report")
 public class ReportController {
 
