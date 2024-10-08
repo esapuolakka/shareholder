@@ -9,7 +9,6 @@ import com.example.shareholder.model.Person;
 import com.example.shareholder.service.PersonService;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/persons")
 public class PersonController {
 

@@ -8,7 +8,6 @@ import com.example.shareholder.model.Company;
 import com.example.shareholder.service.CompanyService;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/company")
 public class CompanyController {
 
