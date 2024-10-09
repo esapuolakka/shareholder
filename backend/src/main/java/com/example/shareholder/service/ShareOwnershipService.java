@@ -23,7 +23,7 @@ public class ShareOwnershipService {
   public List<ShareOwnership> getAllShareOwnerships() {
     return shareOwnershipRepository.findAll();
   }
-  
+
   public ShareOwnership getShareOwnershipById(Long id) {
     return shareOwnershipRepository.findById(id).orElse(null);
   }
@@ -32,6 +32,9 @@ public class ShareOwnershipService {
     return shareOwnershipRepository.count();
   }
 
+  public List<ShareOwnership> findByOwnerId(Long ownerId) {
+    return shareOwnershipRepository.findByOwnerId(ownerId);
+  }
 
   public ShareOwnership addShareOwnership(Person person) {
     if (person.getNumberOfShares() != 0) {
