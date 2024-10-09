@@ -24,3 +24,6 @@ services:
       - 3032:8080
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  db:
+    image: oscarfonts/h2
