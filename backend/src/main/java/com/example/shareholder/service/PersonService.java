@@ -72,12 +72,8 @@ public class PersonService {
         existingPerson.setNumberOfShares(person.getNumberOfShares());
         existingPerson.setBankAccount(person.getBankAccount());
 
-        if (personRepository.findBySsn(person.getSsn()) != null) {
-            throw new IllegalArgumentException("Palvelusta löytyy jo samalla henkilötunnuksella oleva henkilö.");
-        } else {
-            existingPerson.setSsn(person.getSsn());
-        }
-        
+        // delete ssn validation here
+        existingPerson.setSsn(person.getSsn());
 
         Person newPerson = personRepository.save(existingPerson);
 
