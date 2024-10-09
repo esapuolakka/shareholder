@@ -10,7 +10,8 @@
 if test -z $DOCKER_REGISTRY_USERNAME; then
     echo "Warn: DOCKER_REGISTRY_USERNAME is empty, skipping login"
 else
-    docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD
+    docker logout
+    #docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD
 fi
 
 export DOCKER_HOST=
