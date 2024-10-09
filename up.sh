@@ -7,6 +7,12 @@
 #either docker-compose or vagrant. Let's NOT use program language specific tools
 #such as pyenv or nvm since they are not language agnostic
 
+if test -z $DOCKER_REGISTRY_USERNAME; then
+    echo "Warn: DOCKER_REGISTRY_USERNAME is empty, skipping login"
+else
+    docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD
+fi
+
 export DOCKER_HOST=
 docker-compose build --no-cache
 docker-compose up -d
