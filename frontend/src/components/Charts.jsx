@@ -15,6 +15,7 @@ const Charts = ({ data }) => {
     averagePerYear,
     latestPrice,
     totalSharesPerYear,
+    companyData,
   } = data;
   return (
     <div className={styles.Charts}>
@@ -23,23 +24,25 @@ const Charts = ({ data }) => {
 
         <div className={styles.detailsRow}>
           <BusinessIcon />
-          <h3>PHZ Full Stack Oy</h3>
+          <h3>{companyData.name}</h3>
         </div>
 
         <div className={styles.detailsRow}>
           <AssignmentIndIcon />
-          <h3>Y-2765147-9</h3>
+          <h3>{companyData.companyId}</h3>
         </div>
 
         <div className={styles.detailsRow}>
           <LocationOnIcon />
-          <h3>Helsinki, Finland</h3>
+          <h3>{companyData.city}</h3>
         </div>
 
         <div className={styles.detailsRow}>
           <LanguageIcon />
           <h3>
-            <a href="https://phz.fi/">phz.fi</a>
+            <a href={`https://${companyData.url}/`} target="_blank">
+              {companyData.url}
+            </a>
           </h3>
         </div>
       </div>
