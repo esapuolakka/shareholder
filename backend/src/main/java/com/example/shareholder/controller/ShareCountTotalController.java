@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.Map;
 import com.example.shareholder.model.ShareCountTotal;
 import com.example.shareholder.service.ShareCountTotalService;
 
@@ -29,4 +30,8 @@ public class ShareCountTotalController {
     ShareCountTotal shareCountTotal = shareCountTotalService.getLatestTotalCount();
     return ResponseEntity.ok().body(shareCountTotal);
   }
+  @GetMapping("/peryear")
+   public Map<Integer, Integer> getLatestTotalSharesPerYear() {
+        return shareCountTotalService.getLatestTotalSharesPerYear();
+    }
 }

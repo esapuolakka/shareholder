@@ -9,8 +9,21 @@ export async function loader() {
     amount,
   ]);
   const { data: totalShareOwners } = await api.get("/shareownership/count");
-  const { data: averagePerYear } = await api.get("shareprice/averageperyear");
-  return { top5Data: top5DataWithName, totalShareOwners, averagePerYear };
+  const { data: averagePerYear } = await api.get("/shareprice/averageperyear");
+  const { data: latestPrice } = await api.get("/shareprice/latest", {
+    timeout: 5000,
+  });
+  const { data: totalSharesPerYear } = await api.get("/totalshares/peryear");
+  const { data: companyData } = await api.get("/company");
+
+  return {
+    top5Data: top5DataWithName,
+    totalShareOwners,
+    averagePerYear,
+    latestPrice,
+    totalSharesPerYear,
+    companyData,
+  };
 }
 
 const Dashboard = () => {

@@ -1,7 +1,12 @@
-import Highcharts, { chart } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import highchartsAccessibility from "highcharts/modules/accessibility";
+
+// init the module
+highchartsAccessibility(Highcharts);
 
 const LineChart = ({ data }) => {
+  const { averagePerYear, latestPrice } = data;
   const options = {
     chart: {
       type: "line",
@@ -20,7 +25,7 @@ const LineChart = ({ data }) => {
     },
     series: [
       {
-        data: Object.values(data),
+        data: Object.values(averagePerYear),
         color: "#ed692f",
         name: "Osakkeen hinta",
         lineWidth: 1,
@@ -33,7 +38,17 @@ const LineChart = ({ data }) => {
       },
     ],
     xAxis: {
-      categories: Object.keys(data),
+      categories: Object.keys(averagePerYear),
+    },
+    yAxis: {
+      title: {
+        text: "Osakkeen hinta (EUR)",
+      },
+      labels: {
+        format: "{value} €",
+      },
+      tickPositions: [0, 50, 100, 150, 200],
+      gridLineColor: "#e6e6e6",
     },
   };
   return (
@@ -55,11 +70,11 @@ const LineChart = ({ data }) => {
       >
         <div>
           <span>Päivämäärä: </span>
-          <strong style={{ fontWeight: 400 }}>5.9.2024</strong>
+          <strong style={{ fontWeight: 400 }}>{latestPrice.date}</strong>
         </div>
         <div>
           <span>Osakkeen hinta: </span>
-          <strong style={{ fontWeight: 400 }}> EUR 0.135</strong>
+          <strong style={{ fontWeight: 400 }}> EUR {latestPrice.price}</strong>
         </div>
       </div>
     </div>

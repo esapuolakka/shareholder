@@ -2,7 +2,11 @@ package com.example.shareholder.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.Map;
 
 import com.example.shareholder.model.ShareCountTotal;
 import com.example.shareholder.repository.ShareCountTotalRepository;
@@ -34,5 +38,18 @@ public class ShareCountTotalService {
       shareCountTotalRepository.save(newTotal);
       return newTotal.getTotalShares();
     }
+  }
+
+  public Map<Integer, Integer> getLatestTotalSharesPerYear() {
+    List<Object[]> result = shareCountTotalRepository.findLatestTotalSharesPerYear();
+    Map<Integer, Integer> sharesPerYear = new HashMap<>();
+
+    for (Object[] row : result) {
+      Integer year = (Integer) row[0];
+      Integer totalShares = (Integer) row[1];
+      sharesPerYear.put(year, totalShares);
+    }
+
+    return sharesPerYear;
   }
 }

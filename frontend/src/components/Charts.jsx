@@ -9,7 +9,14 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LanguageIcon from "@mui/icons-material/Language";
 
 const Charts = ({ data }) => {
-  const { top5Data, totalShareOwners, averagePerYear } = data;
+  const {
+    top5Data,
+    totalShareOwners,
+    averagePerYear,
+    latestPrice,
+    totalSharesPerYear,
+    companyData,
+  } = data;
   return (
     <div className={styles.Charts}>
       <div className={styles.details}>
@@ -17,32 +24,34 @@ const Charts = ({ data }) => {
 
         <div className={styles.detailsRow}>
           <BusinessIcon />
-          <h3>PHZ Full Stack Oy</h3>
+          <h3>{companyData.name}</h3>
         </div>
 
         <div className={styles.detailsRow}>
           <AssignmentIndIcon />
-          <h3>Y-2765147-9</h3>
+          <h3>{companyData.companyId}</h3>
         </div>
 
         <div className={styles.detailsRow}>
           <LocationOnIcon />
-          <h3>Helsinki, Finland</h3>
+          <h3>{companyData.city}</h3>
         </div>
 
         <div className={styles.detailsRow}>
           <LanguageIcon />
           <h3>
-            <a href="https://phz.fi/">phz.fi</a>
+            <a href={`https://${companyData.url}/`} target="_blank">
+              {companyData.url}
+            </a>
           </h3>
         </div>
       </div>
       <div className={styles.lineChart}>
-        <LineChart data={averagePerYear} />
+        <LineChart data={{ averagePerYear, latestPrice }} />
       </div>
 
       <div className={styles.barChart}>
-        <ColumnChart />
+        <ColumnChart data={{ totalSharesPerYear, latestPrice }} />
       </div>
       <div className={styles.pieChart}>
         <PieChart data={{ top5Data, totalShareOwners }} />

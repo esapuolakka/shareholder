@@ -37,6 +37,10 @@ public class ShareTransactionService {
     return shareTransactionRepository.findAll();
   }
 
+  public List<ShareTransaction> findTransactionsByPersonId(Long personId) {
+    return shareTransactionRepository.findByBuyerIdOrSellerId(personId, personId);
+  }
+
   public List<ShareTransaction> getShareTransactionsApproved() {
     String status = "approved";
     return shareTransactionRepository.findByStatus(status);
@@ -103,7 +107,7 @@ public class ShareTransactionService {
     // Update share ownership
     shareOwnershipService.updateShareOwnership(shareTransaction);
     ownerShiPercentageCalculator.updateAllOwnershipPercentages();
-    
+
     return newShareTransaction;
   }
 
@@ -123,7 +127,7 @@ public class ShareTransactionService {
 
     personRepository.save(seller);
     personRepository.save(buyer);
-    
+
     ownerShiPercentageCalculator.updateAllOwnershipPercentages();
 
     shareTransactionRepository.deleteById(id);
