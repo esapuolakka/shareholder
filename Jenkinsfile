@@ -7,7 +7,7 @@ pipeline {
   agent { label 'slave && docker' }
 
   environment {
-    PROJECT_NAME = "Shareholder-list-team2"
+    PROJECT_NAME = "shareholder-list-team2"
     //the idea is that the team is full stack (meaning able to fix also CI issues), values high quality,
     //and is able and willing to fix errors on CI immediately, receiving notifications on project channel
     SLACK_CHANNEL = "#ci"
@@ -78,7 +78,11 @@ pipeline {
     stage("Provision") {
       steps {
         timeout(time: 30, unit: 'MINUTES') {
-          sh script: "./up.sh", returnStatus: true
+          withCredentials([
+            [$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_REGISTRY_USERNAME', passwordVariable: 'DOCKER_REGISTRY_PASSWORD']
+          ]) {
+            sh script: "./up.sh", returnStatus: true
+          }
         }
       }
     }
@@ -116,7 +120,7 @@ pipeline {
     stage("Build") {
       steps {
         withCredentials([
-          [$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_REGISTRY', usernameVariable: 'DOCKER_REGISTRY_USERNAME', passwordVariable: 'DOCKER_REGISTRY_PASSWORD']
+          [$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_REGISTRY_USERNAME', passwordVariable: 'DOCKER_REGISTRY_PASSWORD']
         ]) {
           script {
             currentBuild.result = hudson.model.Result.SUCCESS.toString()
@@ -130,7 +134,7 @@ pipeline {
       }
     }
 
-    stage("Git Tag") {
+    stage("Tag") {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'git-ssh-ci', keyFileVariable: 'SSH_KEY')]) {
           script {
@@ -154,7 +158,7 @@ pipeline {
     stage("Deploy") {
       steps {
         withCredentials([
-          [$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_REGISTRY', usernameVariable: 'DOCKER_REGISTRY_USERNAME', passwordVariable: 'DOCKER_REGISTRY_PASSWORD']
+          [$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_REGISTRY_USERNAME', passwordVariable: 'DOCKER_REGISTRY_PASSWORD']
         ]) {
           script {
             currentBuild.result = hudson.model.Result.SUCCESS.toString()
